@@ -1,7 +1,6 @@
 package ru.tcgeo.application;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import ru.tcgeo.gilib.AddressSearchAdapterItem;
@@ -18,7 +17,6 @@ import ru.tcgeo.gilib.GILayer.GILayerType;
 import ru.tcgeo.gilib.GILonLat;
 import ru.tcgeo.gilib.GIMap;
 import ru.tcgeo.gilib.GIPList;
-import ru.tcgeo.gilib.GIPositionControl;
 import ru.tcgeo.gilib.GIProjection;
 import ru.tcgeo.gilib.GIRuleToolControl;
 import ru.tcgeo.gilib.GISQLLayer;
@@ -28,17 +26,11 @@ import ru.tcgeo.gilib.GIScaleRange;
 import ru.tcgeo.gilib.GISquareToolControl;
 import ru.tcgeo.gilib.GITouchControl;
 import ru.tcgeo.gilib.GITuple;
-import ru.tcgeo.gilib.GIVectorLayer;
 import ru.tcgeo.gilib.GIVectorStyle;
-import ru.tcgeo.gilib.gps.GICompassView;
 import ru.tcgeo.gilib.gps.GIDirectionToPOIArrow;
 import ru.tcgeo.gilib.gps.GIGPSButtonView;
 import ru.tcgeo.gilib.gps.GIGPSLocationListener;
-import ru.tcgeo.gilib.gps.GILocator;
-import ru.tcgeo.gilib.gps.GILocatorRange;
 import ru.tcgeo.gilib.gps.GILocatorView;
-import ru.tcgeo.gilib.gps.GIYandexUtils;
-import ru.tcgeo.gilib.gps.MockLocationProvider;
 import ru.tcgeo.gilib.parser.GIProjectProperties;
 import ru.tcgeo.gilib.parser.GIPropertiesGroup;
 import ru.tcgeo.gilib.parser.GIPropertiesLayer;
@@ -47,9 +39,7 @@ import ru.tcgeo.gilib.parser.GIRange;
 import ru.tcgeo.gilib.parser.GISQLDB;
 import ru.tcgeo.gilib.parser.GISource;
 import ru.tcgeo.gilib.script.GIScriptExpression;
-import ru.tcgeo.wkt.GIWKTParser;
 import ru.tcgeo.wkt.GI_WktGeometry;
-import ru.tcgeo.wkt.GI_WktLinestring;
 import ru.tcgeo.wkt.GI_WktPoint;
 import android.app.Activity;
 import android.app.Dialog;
@@ -66,8 +56,6 @@ import android.graphics.Paint.Style;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Environment;
@@ -75,7 +63,6 @@ import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
@@ -1072,32 +1059,6 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 						map.AddLayer(layer, new GIScaleRange(
 								current_layer.m_range), current_layer.m_enabled);
 
-						/**/
-						if (current_layer.m_label != null) {
-
-							current_layer.m_label.m_label_style.m_Color
-									.setFromName();
-							layer.setLabel(current_layer.m_label);
-							if (current_layer.m_label.m_layer != null) {
-								GILayer sign;
-								GIPropertiesLayer curr = current_layer.m_label.m_layer;
-								if (current_layer.m_source.m_location
-										.equalsIgnoreCase("local")) {
-
-									sign = GILayer.CreateLayer(
-											curr.m_source.GetLocalPath(),
-											GILayerType.VECTOR_LAYER, vstyle,
-											curr.m_encoding);
-									sign.setName(curr.m_name);
-									layer.m_layer_properties = current_layer;
-									layer.m_label.m_vector_layer = (GIVectorLayer) sign;
-									// layer.AddLayer(sign, new
-									// GIScaleRange(curr.m_range),
-									// curr.m_enabled);
-								}
-							}
-						}
-						/**/
 					} else {
 						continue;
 					}
@@ -1120,23 +1081,6 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 								current_layer.m_encoding);
 						layer.setName(current_layer.m_name);
 						layer.m_layer_properties = current_layer;
-						if (current_layer.m_label != null) {
-							layer.setLabel(current_layer.m_label);
-							if (current_layer.m_label.m_layer != null) {
-								GILayer sign;
-								GIPropertiesLayer curr = current_layer.m_label.m_layer;
-								if (current_layer.m_source.m_location
-										.equalsIgnoreCase("local")) {
-									sign = GILayer.CreateLayer(
-											curr.m_source.GetLocalPath(),
-											GILayerType.VECTOR_LAYER, vstyle,
-											curr.m_encoding);
-									sign.setName(curr.m_name);
-									layer.m_layer_properties = current_layer;
-									layer.m_label.m_vector_layer = (GIVectorLayer) sign;
-								}
-							}
-						}
 						map.AddLayer(layer, new GIScaleRange(
 								current_layer.m_range), current_layer.m_enabled);
 

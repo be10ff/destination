@@ -145,7 +145,5 @@ public class GIEditableRenderer extends GIRenderer {
 	{
 		return 0;
 	}
-	
-	native int drawFeature (String wkt, int bitmapWidth, int bitmapHeight, GIBounds area, float scale);
 
 }

@@ -8,7 +8,6 @@ import org.xmlpull.v1.XmlSerializer;
 import ru.tcgeo.gilib.GIColor;
 import ru.tcgeo.gilib.GIEncoding;
 import ru.tcgeo.gilib.GIIcon;
-import ru.tcgeo.gilib.GILabel;
 import ru.tcgeo.gilib.GILayer;
 
 public class GIPropertiesLayer implements ILayersRoot
@@ -21,7 +20,6 @@ public class GIPropertiesLayer implements ILayersRoot
 	public GIIcon m_icon;
 	public GISource m_source;
 	public GIEncoding m_encoding;
-	public GILabel m_label;
 	public GIPropertiesStyle m_style;
 	public GIRange m_range;
 	public GISQLDB m_sqldb;
@@ -53,10 +51,6 @@ public class GIPropertiesLayer implements ILayersRoot
 		if(m_encoding != null)
 		{
 		Res += m_encoding.ToString() + "\n" ;
-		}
-		if(m_label != null)
-		{
-		Res += m_label.ToString() + "\n" ;
 		}
 		if(m_style != null)
 		{
@@ -106,10 +100,7 @@ public class GIPropertiesLayer implements ILayersRoot
 			serializer.attribute("", "name", m_encoding.m_encoding);
 			serializer.endTag("", "Encoding");
 		}
-		if(m_label != null)
-		{
-			serializer = m_label.Save(serializer);
-		}
+
 		
 		if(m_icon != null)
 		{

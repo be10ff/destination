@@ -5,7 +5,6 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import ru.tcgeo.gilib.GIEncoding;
 import ru.tcgeo.gilib.GIIcon;
-import ru.tcgeo.gilib.GILabel;
 import ru.tcgeo.gilib.GILayer.GILayerType;
 
 public class GIParserLayer extends GIParser 
@@ -118,12 +117,7 @@ public class GIParserLayer extends GIParser
 			GIParserIcon parser = new GIParserIcon(m_ParserCurrent, m_current.m_icon);
 			m_ParserCurrent = parser.ReadSection();			
 		}
-		if(CurrentSectionName.equalsIgnoreCase("Label"))
-		{
-			m_current.m_label = new GILabel();
-			GIParserLabel parser = new GIParserLabel(m_ParserCurrent, m_current.m_label);
-			m_ParserCurrent = parser.ReadSection();
-		}
+
 	}
 	
 	@Override

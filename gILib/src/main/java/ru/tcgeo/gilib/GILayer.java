@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 public abstract class GILayer
 {
 	public GILayerType type_;
-	public GILabel m_label;
 
 	public enum GILayerType
 	{
@@ -23,24 +22,12 @@ public abstract class GILayer
 	public long            m_id;
 	public GIPropertiesLayer m_layer_properties;
 	
-	// TODO: Deallocate native memory
+
 
 	public static GILayer CreateLayer (String path, GILayerType type)
 	{
 		switch (type)
 		{
-			case RASTER_LAYER:
-			{
-				return new GIRasterLayer(path);
-			}
-			case VECTOR_LAYER:
-			{
-				return new GIVectorLayer(path, new GIVectorStyle());
-			}
-			case TILE_LAYER:
-			{
-				return new GITileLayer(path);
-			}
 			case ON_LINE:
 			{
 				if(path.equalsIgnoreCase("OSM"))
@@ -89,18 +76,6 @@ public abstract class GILayer
 	{
 		switch (type)
 		{
-			case RASTER_LAYER:
-			{
-				return new GIRasterLayer(path);
-			}
-			case VECTOR_LAYER:
-			{
-				return new GIVectorLayer(path, (GIVectorStyle)style);
-			}
-			case TILE_LAYER:
-			{
-				return new GITileLayer(path);
-			}
 			case ON_LINE:
 			{
 				if(path.equalsIgnoreCase("OSM"))
@@ -149,18 +124,6 @@ public abstract class GILayer
 	{
 		switch (type)
 		{
-			case RASTER_LAYER:
-			{
-				return new GIRasterLayer(path);
-			}
-			case VECTOR_LAYER:
-			{
-				return new GIVectorLayer(path, (GIVectorStyle)style, encoding);
-			}
-			case TILE_LAYER:
-			{
-				return new GITileLayer(path);
-			}
 			case ON_LINE:
 			{
 				if(path.equalsIgnoreCase("OSM"))
@@ -205,18 +168,6 @@ public abstract class GILayer
 	public void AddStyle(GIStyle style)
 	{
 		m_renderer.AddStyle(style);
-	}
-
-	public Boolean HasLabel ()
-	{
-		return (m_label != null);
-		// TODO
-	}
-	
-	public void setLabel(GILabel label)
-	{
-		// TODO
-		m_label = label;
 	}
 
 	public Boolean LabelByCharacteristic (String name)

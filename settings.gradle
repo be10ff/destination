@@ -1,0 +1,2 @@
+include ':gILib'
+include ':androidApplication'

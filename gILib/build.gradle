@@ -12,9 +12,6 @@ android {
             targetCompatibility JavaVersion.VERSION_1_5
         }
 
-        ndk {
-            moduleName "gilib-native"
-        }
     }
 
     buildTypes {

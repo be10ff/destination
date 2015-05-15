@@ -20,7 +20,6 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-//public class GIMap extends View
 public class GIMap extends SurfaceView //implements SurfaceHolder.Callback//implements Runnable SurfaceView
 {
 
@@ -580,7 +579,6 @@ public class GIMap extends SurfaceView //implements SurfaceHolder.Callback//impl
 			double scale_ = GIMap.getScale(m_bounds, m_view);
 			synchronized(m_layers)
 			{
-				GIVectorRenderer.ResetUsed();
 				m_layers.Redraw(actual_bounds, tmp_bitmap, 255, scale_);
 			}
 			
@@ -1086,50 +1084,7 @@ public class GIMap extends SurfaceView //implements SurfaceHolder.Callback//impl
 		
 
 	}
-	public double MetersInPixelORG()
-	{
-		GIBounds gsc_bounds = m_bounds.Reprojected(GIProjection.GCS_Moscow());
-		ArrayList<GILonLat> curve = new ArrayList<GILonLat>();
-		curve.add(new GILonLat(gsc_bounds.m_left, gsc_bounds.m_top));
-		curve.add(new GILonLat(gsc_bounds.m_right, gsc_bounds.m_bottom));
-		double dist = GetGeometryLength(curve);
-		double px_dist = Math.hypot(m_view.width(), m_view.height());
-		double meters_in_px = dist/px_dist;
-		return meters_in_px;
-	}
-	
-	public double GetGeometryLength()
-	{
-		ArrayList<GILonLat> curve = new ArrayList<GILonLat>();// curve = new ArrayList<GILonLat>();
-		
-		GIBounds wgs_bounds = m_bounds.Reprojected(GIProjection.WGS84());
-		curve.add(new GILonLat(wgs_bounds.m_left, wgs_bounds.m_top));
-		curve.add(new GILonLat(wgs_bounds.m_right, wgs_bounds.m_bottom));
-		
-		//String projection_onfo = GetProjectionInfo(m_bounds.m_projection.m_id);
-		
-		//GIProjection wgs84 = GIProjection.WGS84();
-		//projection_onfo = GetProjectionInfo(wgs84.m_id);
-		
-		//GIProjection WorldMercator = GIProjection.WorldMercator();
-		//projection_onfo = GetProjectionInfo(WorldMercator.m_id);
-		
-		//GIProjection GCS_Moscow = GIProjection.GCS_Moscow();
-		//projection_onfo = GetProjectionInfo(GCS_Moscow.m_id);
-		
-		GIBounds gsc_bounds = m_bounds.Reprojected(GIProjection.GCS_Moscow());
-		ArrayList<GILonLat> curve_ = new ArrayList<GILonLat>();
-		curve_.add(new GILonLat(gsc_bounds.m_left, gsc_bounds.m_top));
-		curve_.add(new GILonLat(gsc_bounds.m_right, gsc_bounds.m_bottom));
-		
-		
-		double ogr_len = GetGeometryLength(curve);
-		//double ogr_len_ = GetGeometryLength(curve_);	
-		//double lllenn = Math.hypot(m_bounds.m_right - m_bounds.m_left, m_bounds.m_top - m_bounds.m_bottom);
-		return ogr_len;
-		
-	}
-	
+
 	public void Synhronize()
 	{
 		GIBounds wgs_bounds = m_bounds.Reprojected(GIProjection.WGS84());
@@ -1145,13 +1100,8 @@ public class GIMap extends SurfaceView //implements SurfaceHolder.Callback//impl
 	}
 	public int getOffsetY()
 	{
-		//DisplayMetrics displayMetrics = new DisplayMetrics();
 		DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
-		//GIMap.offsetY = displayMetrics.heightPixels - getMeasuredHeight();
 		return displayMetrics.heightPixels - getMeasuredHeight();
 	}
-
-	native String GetProjectionInfo(long source);
-	native double GetGeometryLength(ArrayList<GILonLat> curve);
 
 }
