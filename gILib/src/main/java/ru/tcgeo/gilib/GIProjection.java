@@ -5,10 +5,14 @@ import ru.tcgeo.gilib.gps.GIYandexUtils;
 public class GIProjection
 {
 //	long m_id;
+	int mId;
+	private String mWKT;
 	
-	private GIProjection (String wkt_description)
+	private GIProjection (String wkt_description, int id)
     {
 //		m_id = initProjection(wkt_description);
+		mWKT = wkt_description;
+		mId = id;
     }
 	public GIProjection (long epgs)
     {
@@ -32,7 +36,7 @@ public class GIProjection
                          "UNIT[\"degree\"," +
                         	    "0.01745329251994328," +
                         	    "AUTHORITY[\"EPSG\",\"9122\"]]," +
-						 "AUTHORITY[\"EPSG\",\"4326\"]]");
+						 "AUTHORITY[\"EPSG\",\"4326\"]]", 0);
 						 
 	}
 	
@@ -67,20 +71,21 @@ public class GIProjection
         				 "PARAMETER[\"false_northing\",0]," +
         				 "AUTHORITY[\"EPSG\",\"3395\"]," +
         				 "AXIS[\"Easting\",EAST]," +
-    					 "AXIS[\"Northing\",NORTH]]");
+    					 "AXIS[\"Northing\",NORTH]]", 1);
 	}
 	
 	public static GILonLat ReprojectLonLat (GILonLat point, GIProjection source, GIProjection dest)
 	{
-		if(source != dest)
-		{
-			if(source == WorldMercator() && dest == WGS84())
-			{
+//		if(source != dest)
+//		{
+//			if(source == WorldMercator() && dest == WGS84())
+			if(WorldMercator().mId == source.mId && WGS84().mId == dest.mId) {
 				return GIYandexUtils.MercatorToGeo(point);
-			}else if(dest == WorldMercator() && source == WGS84()){
+//			}else if(dest == WorldMercator() && source == WGS84()){
+			}if(WGS84().mId == source.mId && WorldMercator().mId == dest.mId){
 				return GIYandexUtils.GeoToMercator(point);
 			}
-		}
+//		}
 		return point;
 
 	}
