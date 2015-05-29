@@ -597,7 +597,7 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 	 * other styles issued positioning errors.
 	 */
 	public void layersDialogClicked(final View layers_button) {
-		final int layers_dialog_max_height = 420;
+		final int layers_dialog_max_height = 1200;
 		layers_button.setActivated(true);
 
 		final Dialog layers_dialog = new Dialog(this,
@@ -679,7 +679,7 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 	 * Mostly copied from Layer_Dialog
 	 */
 	public void ProjectSelectorDialogClicked(final View button) {
-		final int dialog_max_height = 420;
+		final int dialog_max_height = 1200;
 		button.setActivated(true);
 
 		projects_dialog = new Dialog(this, R.style.Theme_layers_dialog);
