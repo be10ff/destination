@@ -1,5 +1,7 @@
 package ru.tcgeo.gilib.gps;
-
+/**
+ * Локатор - указывает направление на точку на местности
+ */
 import ru.tcgeo.wkt.GI_WktGeometry;
 import android.content.Context;
 import android.graphics.PixelFormat;

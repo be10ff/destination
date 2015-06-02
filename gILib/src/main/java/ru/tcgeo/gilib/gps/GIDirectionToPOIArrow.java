@@ -23,6 +23,10 @@ import ru.tcgeo.gilib.R;
 import ru.tcgeo.wkt.GI_WktGeometry;
 import ru.tcgeo.wkt.GI_WktPoint;
 
+/**
+ * направление на точку на карте
+ */
+
 public class GIDirectionToPOIArrow  extends View implements GIControl
 {
 	public GI_WktGeometry m_POI;

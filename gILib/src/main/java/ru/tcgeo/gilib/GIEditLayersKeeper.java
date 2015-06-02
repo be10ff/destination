@@ -946,7 +946,9 @@ public class GIEditLayersKeeper {
 
 		Location location = m_location_manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 		/**/
-		String mocLocationProvider = "mock";
+//		String mocLocationProvider = "mock";
+		String mocLocationProvider = LocationManager.GPS_PROVIDER;
+
 		if (null != m_location_manager.getProvider(mocLocationProvider))
 		{
 			location = m_location_manager.getLastKnownLocation(mocLocationProvider);

@@ -679,7 +679,7 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 	 * Mostly copied from Layer_Dialog
 	 */
 	public void ProjectSelectorDialogClicked(final View button) {
-		final int dialog_max_height = 1200;
+		final int dialog_max_height = getWindowManager().getDefaultDisplay().getHeight() / 2;
 		button.setActivated(true);
 
 		projects_dialog = new Dialog(this, R.style.Theme_layers_dialog);
@@ -793,7 +793,7 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 	}
 
 	public void MarkersDialogClicked(final View button) {
-		final int dialog_max_height = 420;
+		final int dialog_max_height = getWindowManager().getDefaultDisplay().getHeight() / 2;
 		button.setActivated(true);
 		markers_dialog = new Dialog(this, R.style.Theme_layers_dialog);
 		markers_dialog.setContentView(R.layout.markers_dialog);
@@ -901,7 +901,7 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 	}
 
 	public void EditableLayersDialogClicked(final View button) {
-		final int dialog_max_height = 420;
+		final int dialog_max_height = getWindowManager().getDefaultDisplay().getHeight() / 2;
 		button.setActivated(true);
 		editablelayers_dialog = new Dialog(this, R.style.Theme_layers_dialog);
 		editablelayers_dialog.setContentView(R.layout.markers_dialog);
