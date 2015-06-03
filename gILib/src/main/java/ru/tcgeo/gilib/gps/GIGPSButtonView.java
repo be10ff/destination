@@ -1,6 +1,5 @@
 package ru.tcgeo.gilib.gps;
 
-import ru.tcgeo.gilib.GIEditLayersKeeper;
 import ru.tcgeo.gilib.R;
 import android.content.Context;
 import android.graphics.Bitmap;

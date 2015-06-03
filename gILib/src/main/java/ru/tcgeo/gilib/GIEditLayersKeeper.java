@@ -8,11 +8,9 @@ import java.util.Locale;
 
 import ru.tcgeo.gilib.GIEditableLayer.GIEditableLayerStatus;
 import ru.tcgeo.gilib.gps.GICompassFragment;
-import ru.tcgeo.gilib.gps.GIGPSButtonView;
 import ru.tcgeo.gilib.gps.GIGPSDialog;
 import ru.tcgeo.gilib.gps.GILocatorFragment;
 import ru.tcgeo.gilib.gps.GILocatorRange;
-import ru.tcgeo.gilib.gps.GILocatorView;
 import ru.tcgeo.gilib.gps.GIXMLTrack;
 import ru.tcgeo.wkt.GIDBaseField;
 import ru.tcgeo.wkt.GIGeometryControl;
@@ -27,7 +25,6 @@ import android.content.Context;
 import android.graphics.Point;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.Bundle;
 import android.view.View;
 
 
@@ -67,7 +64,7 @@ public class GIEditLayersKeeper {
 	public GIEditAttributesFragment m_EditAttributesFragment;
 	private FragmentManager m_FragmentManager;
 	GIGeometryControl m_current_geometry_editing_control;
-	GIGeometryControl m_current_track_control;
+	public GIGeometryControl m_current_track_control;
 	ArrayList<GIGeometryControl> m_controls;
 	private GIPositionControl m_position;
 	//private GIGPSButtonView m_GPSButton;
@@ -763,6 +760,10 @@ public class GIEditLayersKeeper {
 		GILonLatInputDialog m_GILonLatInputFragment = new GILonLatInputDialog(control);
 		m_GILonLatInputFragment.show(m_FragmentManager, "lon_lat");
 	}
+
+//	public void setAutoFollow(boolean follow){
+//		m_AutoFollow = follow;
+//	}
 	
 
 	//one point is one datarow
@@ -807,6 +808,9 @@ public class GIEditLayersKeeper {
 				{
 					GI_WktPoint point = new GI_WktPoint();
 					point.Set(deg);
+//					if(m_current_track_control != null) {
+//						m_current_track_control.Show(m_TrackLayer.m_layer_properties.m_enabled);
+//					}
 					AddPointToTrack(deg, accurancy);
 				}
 			}
@@ -836,8 +840,12 @@ public class GIEditLayersKeeper {
 			res = ((GIXMLTrack)m_CurrentTrack).Create(getCurrentTime(), m_TrackLayer.m_style, m_TrackLayer.m_encoding);
 			m_CurrentTrack.m_status = GIWKTGeometryStatus.NEW;
 			m_TrackLayer.m_shapes.add(m_CurrentTrack);
+
+			//todo
 			m_current_track_control = new GIGeometryControl(m_TrackLayer, m_CurrentTrack);
 			m_current_track_control.setMap(m_Map);
+
+//			m_current_track_control.Show(m_TrackLayer.m_layer_properties.m_enabled);
 			m_TrackLayer.Save();
 		}
 		return res;

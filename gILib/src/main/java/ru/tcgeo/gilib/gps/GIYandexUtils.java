@@ -4,7 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
-import android.graphics.RectF;
+
 import ru.tcgeo.gilib.GIBounds;
 import ru.tcgeo.gilib.GILonLat;
 import ru.tcgeo.gilib.planimetry.Vertex;
@@ -27,7 +27,7 @@ public class GIYandexUtils
 		double j = Math.pow(Math.tan(Math.PI / 4 + Math.asin(f) / 2), k);
 		double i = h/j;
 
-		double[] lonlat = Mercator.merc(point.lon(), point.lat());
+//		double[] lonlat = Mercator.merc(point.lon(), point.lat());
 
 
 		return new GILonLat(R*d, R*Math.log(i));

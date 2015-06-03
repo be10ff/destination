@@ -1,44 +1,24 @@
 package ru.tcgeo.gilib;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserFactory;
-import org.xmlpull.v1.XmlSerializer;
 
 import ru.tcgeo.gilib.GIEditableLayer.GIEditableLayerStatus;
 import ru.tcgeo.gilib.GILayer.GILayerType;
-import ru.tcgeo.gilib.gps.GIYandexUtils;
-import ru.tcgeo.gilib.specs.GICameraPList;
 import ru.tcgeo.gilib.specs.GIQuadTreeDouble;
 import ru.tcgeo.gilib.specs.GISpeedCamera;
 import ru.tcgeo.gilib.specs.GISpeedCar;
 import ru.tcgeo.gilib.specs.GITreeTile;
-import ru.tcgeo.gilib.specs.GeoBounds;
-import ru.tcgeo.wkt.GIDBaseField;
-import ru.tcgeo.wkt.GIGPSParser;
-import ru.tcgeo.wkt.GIWKTParser;
 import ru.tcgeo.wkt.GI_WktGeometry;
 import ru.tcgeo.wkt.GI_WktPolygon;
-import ru.tcgeo.wkt.GI_WktUserTrack;
-import ru.tcgeo.wkt.GI_WktGeometry.GIWKTGeometryStatus;
-import ru.tcgeo.wkt.GI_WktGeometry.GIWKTGeometryType;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.RectF;
 import android.location.Location;
 import android.os.Environment;
 import android.util.Log;
-import android.util.Xml;
 
 public class GISPECSLayer extends GIEditableLayer
 {

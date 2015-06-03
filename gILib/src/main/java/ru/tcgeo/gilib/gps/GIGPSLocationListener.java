@@ -4,8 +4,7 @@ import ru.tcgeo.gilib.GIEditLayersKeeper;
 import ru.tcgeo.gilib.GILonLat;
 import ru.tcgeo.gilib.GIMap;
 import ru.tcgeo.gilib.GIProjection;
-import ru.tcgeo.wkt.GIWKTParser;
-import ru.tcgeo.wkt.GI_WktLinestring;
+
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;

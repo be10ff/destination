@@ -17,7 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:text="TextView"
             android:textSize="12sp" />
 
         <Button
@@ -27,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:text="Close" />
+            android:text="@string/button_close" />
 
     <ScrollView
         android:id="@+id/scrollView1"
@@ -42,8 +41,7 @@
             style="@style/Theme.Text_Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:text="TextView" />
+            android:background="@null"/>
     </ScrollView>
 
 

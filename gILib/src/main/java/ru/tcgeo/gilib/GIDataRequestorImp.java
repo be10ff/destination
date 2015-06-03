@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import ru.tcgeo.gilib.parser.GIProjectProperties;
-import ru.tcgeo.gilib.script.GIScriptExpression;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,7 +13,6 @@ import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Gravity;
 import android.widget.TextView;
 
 public class GIDataRequestorImp implements GIDataRequestor {

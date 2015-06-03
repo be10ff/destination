@@ -19,8 +19,8 @@ import ru.tcgeo.gilib.planimetry.Vertex;
 import ru.tcgeo.wkt.GI_WktGeometry;
 import ru.tcgeo.wkt.GI_WktPoint;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Path;
-import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.os.Environment;
@@ -55,10 +55,14 @@ public class GIXMLTrack extends GI_WktGeometry {
 	@Override
 	public void Draw(Canvas canvas, GIBounds area, float scale, android.graphics.Paint paint) 
 	{
-
+		//todo
 		if( GIEditLayersKeeper.Instance().m_CurrentTrack == this)
 		{
+////			android.graphics.Paint current = new android.graphics.Paint(paint);
+//			paint.setColor(Color.MAGENTA);
+
 			return;
+
 		}
 		if(m_points.size() > 2)
 		{
@@ -116,8 +120,8 @@ public class GIXMLTrack extends GI_WktGeometry {
 			GIBounds area = GIEditLayersKeeper.Instance().getMap().Bounds();
 			int[] offset = { 0, 0 };
 			GIEditLayersKeeper.Instance().getMap().getLocationOnScreen(offset);
-			float offset_x = GIEditLayersKeeper.Instance().getMap().getX();
-			float offset_y = GIEditLayersKeeper.Instance().getMap().getY();
+//			float offset_x = GIEditLayersKeeper.Instance().getMap().getX();
+//			float offset_y = GIEditLayersKeeper.Instance().getMap().getY();
 			if(this != GIEditLayersKeeper.Instance().m_CurrentTrack)
 			{
 				((GI_WktPoint)m_points.get(0)).TrackPaint(canvas, style);

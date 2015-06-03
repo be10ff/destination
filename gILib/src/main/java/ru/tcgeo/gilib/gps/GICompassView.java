@@ -2,7 +2,6 @@ package ru.tcgeo.gilib.gps;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
@@ -37,8 +36,7 @@ public class GICompassView extends SurfaceView implements SurfaceHolder.Callback
 	}
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,	int height) 
 	{
-		// TODO Auto-generated method stub
-		int i  = width;
+
 	}
 
 	public void surfaceCreated(SurfaceHolder holder) 
@@ -72,14 +70,12 @@ public class GICompassView extends SurfaceView implements SurfaceHolder.Callback
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
     {
     	super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    	int i = 0;
     }
     
     @Override
     protected void onWindowVisibilityChanged(int visibility)
     {
     	super.onWindowVisibilityChanged(visibility);
-    	int i = 0;
     }
     @Override
     protected void onLayout (boolean changed, int left, int top, int right, int bottom)

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/home/a_belov/AndroidProjects/AndroidApplication/gILib/src/main/res/values-normal/styles.xml -->
+    <!-- From: file:/media/a_belov/TOSHIBA%20EXT/Android/GeoInfo/AndroidApplication/gILib/src/main/res/values-normal/styles.xml -->
     <eat-comment/>
     <style name="Theme.Layer_Dialog_Padding" parent="android:Theme">
 	    <item name="android:paddingLeft">10dp</item>

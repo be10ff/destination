@@ -273,7 +273,7 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 
 				@Override
 				public void onClick(View v) {
-					if (item.m_project_settings.m_path != map.ps.m_path) {
+					if (!item.m_project_settings.m_path.equals(map.ps.m_path)) {
 						map.Clear();
 						LoadPro(item.m_project_settings.m_path);
 						map.UpdateMap();
@@ -281,6 +281,7 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 						SharedPreferences.Editor editor = sp.edit();
 						editor.putString(SAVED_PATH,
 								item.m_project_settings.m_path);
+						editor.apply();
 						editor.commit();
 						projects_dialog.cancel();
 					}
@@ -597,7 +598,7 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 	 * other styles issued positioning errors.
 	 */
 	public void layersDialogClicked(final View layers_button) {
-		final int layers_dialog_max_height = 1200;
+		final int layers_dialog_max_height = getWindowManager().getDefaultDisplay().getHeight() / 2;
 		layers_button.setActivated(true);
 
 		final Dialog layers_dialog = new Dialog(this,
@@ -1781,6 +1782,7 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 			sp = getPreferences(MODE_PRIVATE);
 			SharedPreferences.Editor editor = sp.edit();
 			editor.putString(SAVED_PATH, Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + map.ps.m_SaveAs);
+			editor.apply();
 			editor.commit();
 			//String path_ = sp.getString(SAVED_PATH,	getResources().getString(R.string.default_project_path));
 			touchControl.InitMap(map);

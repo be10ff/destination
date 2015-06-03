@@ -1,7 +1,5 @@
 package ru.tcgeo.gilib;
 
-import android.util.Log;
-
 public class GIBounds
 {
 	protected double       m_top;

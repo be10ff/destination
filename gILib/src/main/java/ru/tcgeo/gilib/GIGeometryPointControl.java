@@ -70,7 +70,7 @@ public class GIGeometryPointControl extends LinearLayout implements GIControl, O
 		//TODO something wrong with removing listeners... may be
 		if(active)
 		{
-			Bitmap m_bitmap = BitmapFactory.decodeResource(m_context.getResources(), R.drawable.unselected_point_large);
+//			Bitmap m_bitmap = BitmapFactory.decodeResource(m_context.getResources(), R.drawable.unselected_point_large);
 //			m_offset = new int[] {m_bitmap.getWidth()/2, m_bitmap.getHeight()/2};
 			m_button.setBackgroundDrawable(m_context.getResources().getDrawable(R.drawable.point_selection_status));
 			m_button.setOnClickListener(this);
@@ -87,7 +87,7 @@ public class GIGeometryPointControl extends LinearLayout implements GIControl, O
 		}
 		else
 		{
-			Bitmap m_bitmap = BitmapFactory.decodeResource(m_context.getResources(), R.drawable.edit_point);
+//			Bitmap m_bitmap = BitmapFactory.decodeResource(m_context.getResources(), R.drawable.edit_point);
 //			m_offset = new int[] {m_bitmap.getWidth()/2, m_bitmap.getHeight()/2};
 			m_button.setBackgroundDrawable(m_context.getResources().getDrawable(R.drawable.edit_point)); //measure_point
 			m_button.setOnClickListener(null);

@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/home/a_belov/AndroidProjects/AndroidApplication/gILib/src/main/res/values/strings.xml -->
+    <!-- From: file:/media/a_belov/TOSHIBA%20EXT/Android/GeoInfo/AndroidApplication/gILib/src/main/res/values/strings.xml -->
     <eat-comment/>
     <color name="Item_Background_Selected">#ffdaffda</color>
     <color name="Item_Background_Unselected">#0a0a0a0a</color>
     <color name="dark_text">#ff0f050f</color>
-    <!-- From: file:/home/a_belov/AndroidProjects/AndroidApplication/gILib/src/main/res/values/color.xml -->
+    <!-- From: file:/media/a_belov/TOSHIBA%20EXT/Android/GeoInfo/AndroidApplication/gILib/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="layers_dialog_dividers">#22222222</color>
     <color name="measure_line_color">#ff0fb129</color>
-    <!-- From: file:/home/a_belov/AndroidProjects/AndroidApplication/gILib/src/main/res/values/strings.xml -->
+    <!-- From: file:/media/a_belov/TOSHIBA%20EXT/Android/GeoInfo/AndroidApplication/gILib/src/main/res/values/strings.xml -->
     <eat-comment/>
     <color name="transparent_background">#05050505</color>
-    <!-- From: file:/home/a_belov/AndroidProjects/AndroidApplication/gILib/src/main/res/values/digits.xml -->
+    <!-- From: file:/media/a_belov/TOSHIBA%20EXT/Android/GeoInfo/AndroidApplication/gILib/src/main/res/values/digits.xml -->
     <eat-comment/>
     <integer name="accurancy_limit">200</integer>
-    <!-- From: file:/home/a_belov/AndroidProjects/AndroidApplication/gILib/src/main/res/values/strings.xml -->
+    <!-- From: file:/media/a_belov/TOSHIBA%20EXT/Android/GeoInfo/AndroidApplication/gILib/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="ProjectServer_BtnClose">Закрыть</string>
     <string name="ProjectServer_BtnDelete">Удалить</string>
@@ -28,6 +28,7 @@
     <string name="auto_follow_off">Auto Follow Off</string>
     <string name="auto_follow_on">Auto Follow On</string>
     <string name="background">background</string>
+    <string name="button_close">Close</string>
     <string name="button_position">Position</string>
     <string name="button_rule_tool">button_rule_tool</string>
     <string name="button_square_tool">button_square_tool</string>
@@ -46,6 +47,7 @@
     <string name="edit_layer_new_stop">Stop creating</string>
     <string name="format_accurancy">±%%02d m</string>
     <string name="format_datetime">A%%02d-%%02d-%%02d-%%02d-%%02d</string>
+    <string name="gps_accurancy">-- m</string>
     <string name="gps_off">GPS Off</string>
     <string name="gps_on">GPS On</string>
     <string name="hello">Hello World, GILibActivity!</string>
@@ -55,6 +57,7 @@
     <string name="layers_general_button">General</string>
     <string name="layers_list_default_text">Default text is very long and almost pointless.</string>
     <string name="longtitude">longtitude</string>
+    <string name="lontitude">lontitude</string>
     <string name="markers_button">Markers</string>
     <string name="new_attribute_name">параметр</string>
     <string name="new_attribute_value">значение</string>
@@ -84,7 +87,7 @@
     <string name="top_bar_layers_button">Layers</string>
     <string name="unzipping">разархивирование</string>
     <string name="yes">Yes</string>
-    <!-- From: file:/home/a_belov/AndroidProjects/AndroidApplication/gILib/src/main/res/values/styles.xml -->
+    <!-- From: file:/media/a_belov/TOSHIBA%20EXT/Android/GeoInfo/AndroidApplication/gILib/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppBaseTheme" parent="android:Theme.Light">
         <!--
@@ -96,7 +99,7 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
-    <!-- From: file:/home/a_belov/AndroidProjects/AndroidApplication/gILib/src/main/res/values/theme.xml -->
+    <!-- From: file:/media/a_belov/TOSHIBA%20EXT/Android/GeoInfo/AndroidApplication/gILib/src/main/res/values/theme.xml -->
     <eat-comment/>
     <style name="Theme.layers_dialog" parent="@android:Theme">
         <item name="android:windowBackground">@null</item>

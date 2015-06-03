@@ -1,11 +1,9 @@
 package ru.tcgeo.gilib.specs;
 
 import ru.tcgeo.gilib.GIBounds;
-import android.graphics.RectF;
 
 
-
-public class GITreeTile 
+public class GITreeTile
 {
 	//String urlStr = "http://a.tile.openstreetmap.org/" + n + "/" + x + "/" + y + ".png";
 	public int m_zoom;

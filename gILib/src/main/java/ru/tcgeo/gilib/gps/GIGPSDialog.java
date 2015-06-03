@@ -68,6 +68,7 @@ public class GIGPSDialog extends Fragment implements OnClickListener, OnLongClic
 		if(v.getId() == R.id.auto_follow)
 		{
 			GIEditLayersKeeper.Instance().m_AutoFollow = m_btnAutoFollow.isChecked();
+
 			if(m_btnAutoFollow.isChecked())
 			{
 				Location location = GIEditLayersKeeper.Instance().m_location_manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -200,6 +201,10 @@ public class GIGPSDialog extends Fragment implements OnClickListener, OnLongClic
 
 	public boolean onLongClick(View v) 
 	{
+		if(v.getId() == R.id.auto_follow) {
+			GIEditLayersKeeper.Instance().m_current_track_control.Show(!GIEditLayersKeeper.Instance().m_current_track_control.mShow);
+		}
+
 //		if(v.getId() == R.id.auto_follow)
 //		{
 //			GIEditLayersKeeper.Instance().m_AutoFollow = m_btnAutoFollow.isChecked();

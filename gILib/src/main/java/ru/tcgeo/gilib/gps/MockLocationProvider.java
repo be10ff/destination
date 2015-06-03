@@ -1,9 +1,5 @@
 package ru.tcgeo.gilib.gps;
 
-import java.io.IOException;
-import java.util.List;
-
-import ru.tcgeo.wkt.GI_WktGeometry;
 import ru.tcgeo.wkt.GI_WktLinestring;
 import ru.tcgeo.wkt.GI_WktPoint;
 import android.location.Location;

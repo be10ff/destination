@@ -25,9 +25,9 @@
         android:shadowRadius="5"
         android:text="-- m"
         android:textColor="@color/measure_line_color"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:typeface="normal" />
 
 </RelativeLayout>
-<!-- From: file:/home/a_belov/AndroidProjects/AndroidApplication/gILib/src/main/res/layout/gps_button_layout.xml -->
+<!-- From: file:/media/a_belov/TOSHIBA%20EXT/Android/GeoInfo/AndroidApplication/gILib/src/main/res/layout/gps_button_layout.xml -->

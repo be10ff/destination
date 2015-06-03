@@ -25,7 +25,7 @@
         android:shadowRadius="5"
         android:text="-- m"
         android:textColor="@color/measure_line_color"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:typeface="normal" />
 

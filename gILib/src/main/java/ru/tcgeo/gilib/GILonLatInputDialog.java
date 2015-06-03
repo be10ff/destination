@@ -25,6 +25,9 @@ public class GILonLatInputDialog extends DialogFragment
 	private TextView m_lat_grad_min;
 	GI_WktPoint m_point;
 	GIGeometryPointControl m_control;
+//	public GILonLatInputDialog()
+//	{
+//	}
 	
 	public GILonLatInputDialog(GIGeometryPointControl control) 
 	{

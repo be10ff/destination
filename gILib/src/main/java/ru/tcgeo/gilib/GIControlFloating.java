@@ -152,8 +152,7 @@ public class GIControlFloating extends LinearLayout implements GIControl
 //    	m_map.getLocationOnScreen(map_location);
 //		map_location[0] -= m_offset[0];
 //		map_location[1] -= m_offset[1];	
-		int width = this.getWidth();
-		int height = this.getHeight();
+
 		setX(point.x + map_location[0] -  m_offset[0]);
         setY(point.y + map_location[1] -  m_offset[1]);
         invalidate();

@@ -85,7 +85,7 @@ public class GIWMSLayer extends GILayer {
 	
 	public String getSessionKey()
 	{
-		if(m_session_key == "")
+		if(m_session_key.equals(""))
 		{
 			m_session_key = Login();
 		}

@@ -71,4 +71,11 @@
     <string name="provider_out_of_service">мертв</string>
     <string name="format_accurancy">±%%02d m</string>
     <string name="format_datetime">A%%02d-%%02d-%%02d-%%02d-%%02d</string>
+
+    <string name="button_close">Close</string>
+    <string name="gps_accurancy">-- m</string>
+
+
+    <string name="lontitude">lontitude</string>
+
 </resources>

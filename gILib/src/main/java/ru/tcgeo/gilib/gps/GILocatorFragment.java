@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 public class GILocatorFragment extends Fragment
 {
 	GI_WktGeometry m_poi;
+	public GILocatorFragment(){}
 	public GILocatorFragment(GI_WktGeometry poi) 
 	{
 		m_poi = poi;

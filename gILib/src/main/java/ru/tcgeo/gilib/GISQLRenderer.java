@@ -1,6 +1,5 @@
 package ru.tcgeo.gilib;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -12,7 +11,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.os.Environment;
 
 public class GISQLRenderer extends GIRenderer {
 

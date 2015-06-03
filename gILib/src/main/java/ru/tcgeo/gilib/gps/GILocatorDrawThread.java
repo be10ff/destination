@@ -1,15 +1,13 @@
 package ru.tcgeo.gilib.gps;
 
-import ru.tcgeo.gilib.GIControl;
 import ru.tcgeo.gilib.GIEditLayersKeeper;
 import ru.tcgeo.gilib.GILonLat;
 import ru.tcgeo.gilib.GIMap;
 import ru.tcgeo.gilib.GIProjection;
-import ru.tcgeo.gilib.GIRuleToolControl;
 import ru.tcgeo.gilib.R;
 import ru.tcgeo.wkt.GI_WktGeometry;
 import ru.tcgeo.wkt.GI_WktPoint;
-import android.content.Context;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;

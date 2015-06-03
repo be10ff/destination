@@ -22,6 +22,7 @@ public class GIGeometryControl extends View implements GIControl
 	public ArrayList<GIGeometryPointControl> m_points;
 	public GI_WktGeometry m_geometry;
 	public GIEditableLayer m_layer;
+	public boolean mShow = true;
 	
 	public GIGeometryControl(GIEditableLayer layer, GI_WktGeometry geometry) 
 	{
@@ -93,7 +94,9 @@ public class GIGeometryControl extends View implements GIControl
 	@Override
     protected void onDraw(Canvas canvas)
 	{
-		m_geometry.Paint(canvas, m_layer.getPaint(m_geometry.m_status));
+		if(mShow) {
+			m_geometry.Paint(canvas, m_layer.getPaint(m_geometry.m_status));
+		}
 	}
 
 	public GIMap Map() 
@@ -148,4 +151,10 @@ public class GIGeometryControl extends View implements GIControl
     		m_points.remove(i);
     	}
 	}
+
+	public void Show(boolean show){
+		mShow = show;
+	}
+
+
 }

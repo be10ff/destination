@@ -2,7 +2,6 @@ package ru.tcgeo.wkt;
 
 import java.util.ArrayList;
 
-import ru.tcgeo.gilib.GIEditLayersKeeper;
 import ru.tcgeo.gilib.GILonLat;
 import ru.tcgeo.gilib.GIProjection;
 import ru.tcgeo.gilib.script.GIScriptQueue;

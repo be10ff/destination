@@ -1,18 +1,13 @@
 package ru.tcgeo.gilib.specs;
 
-import java.util.ArrayList;
-
 import android.graphics.PointF;
 import android.graphics.RectF;
-import android.location.Location;
+
 import ru.tcgeo.gilib.GIBounds;
 import ru.tcgeo.gilib.GILonLat;
-import ru.tcgeo.gilib.GIProjection;
 import ru.tcgeo.gilib.gps.GIYandexUtils;
 import ru.tcgeo.gilib.planimetry.Edge;
-import ru.tcgeo.gilib.planimetry.GIGeometryPolygon;
 import ru.tcgeo.gilib.planimetry.Vertex;
-import ru.tcgeo.wkt.GI_WktGeometry;
 import ru.tcgeo.wkt.GI_WktLinestring;
 import ru.tcgeo.wkt.GI_WktPoint;
 import ru.tcgeo.wkt.GI_WktPolygon;

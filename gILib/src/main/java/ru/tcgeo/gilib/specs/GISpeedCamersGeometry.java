@@ -7,7 +7,6 @@ import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GILonLat;
 import ru.tcgeo.gilib.gps.GIYandexUtils;
 import ru.tcgeo.gilib.planimetry.GIGeometryPolygon;
 
