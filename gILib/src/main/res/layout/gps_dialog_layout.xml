@@ -72,7 +72,8 @@
         android:textOff=""
         android:textOn=""
         android:textSize="0sp" />
-    
+
+
     <!-- tracking_status -->
     <ToggleButton
         android:id="@+id/track_control"
@@ -83,8 +84,17 @@
         android:gravity="center_vertical|center_horizontal"
         android:textOff=""
         android:textOn=""
-        android:textSize="0sp" />    
-    
+        android:textSize="0sp" />
+    <ToggleButton
+        android:id="@+id/show_track"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:background="@drawable/fixable_button"
+        android:gravity="center_vertical|center_horizontal"
+        android:textOff=""
+        android:textOn=""
+        android:textSize="0sp" />
+
     <ToggleButton
         android:id="@+id/poi_control"
         android:layout_width="wrap_content"

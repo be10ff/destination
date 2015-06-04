@@ -18,7 +18,6 @@ public class GIGeometryControl extends View implements GIControl
 {
 	Context m_context;
 	GIMap m_map;
-//	int[] map_location = { 0, 0 };
 	public ArrayList<GIGeometryPointControl> m_points;
 	public GI_WktGeometry m_geometry;
 	public GIEditableLayer m_layer;
@@ -33,9 +32,6 @@ public class GIGeometryControl extends View implements GIControl
 		m_layer = layer;
 		m_context = GIEditLayersKeeper.Instance().getMap().getContext();	
 		m_map = GIEditLayersKeeper.Instance().getMap();
-//    	m_map.getLocationOnScreen(map_location);
-//		this.setX(map_location[0]);
-//		this.setY(map_location[1]);
         m_map.registerGIControl(this);
         AddPoints();
 		RelativeLayout rl = (RelativeLayout)m_map.getParent();//

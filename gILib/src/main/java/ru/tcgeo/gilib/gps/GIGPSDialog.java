@@ -24,6 +24,7 @@ public class GIGPSDialog extends Fragment implements OnClickListener, OnLongClic
 	//public ToggleButton m_btnGPSStatus;
 	public ToggleButton m_btnAutoFollow;
 	public ToggleButton m_btnTrack;
+	public ToggleButton m_btnShowTrack;
 	public ToggleButton m_btnPOI;
 	//public TextView m_StatusText;
 	//public TextView m_GPSOnOff;
@@ -37,34 +38,7 @@ public class GIGPSDialog extends Fragment implements OnClickListener, OnLongClic
 
 	public void onClick(View v) 
 	{
-		/*if(v.getId() == R.id.gps_status)
-		{
-			if(m_btnGPSStatus.isChecked())
-			{
-				GIEditLayersKeeper.Instance().turnGPSOn();
-			}
-			else
-			{
-				GIEditLayersKeeper.Instance().turnGPSOff();
-			}
-		}*/
-		//TODO moved to onLongClick
-//		if(v.getId() == R.id.auto_follow)
-//		{
-//			//GIEditLayersKeeper.Instance().m_AutoFollow = m_btnAutoFollow.isChecked();
-//			//if(m_btnAutoFollow.isChecked())
-//			{
-//				Location location = GIEditLayersKeeper.Instance().m_location_manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-//				if(location != null)
-//				{
-//					GILonLat go_to = GILonLat.fromLocation(location);
-//					GILonLat go_to_map = GIProjection.ReprojectLonLat(go_to, GIProjection.WGS84(), GIProjection.WorldMercator());
-//					GIEditLayersKeeper.Instance().getMap().SetCenter(go_to_map);
-//					//TODO
-//					GIEditLayersKeeper.Instance().GetPositionControl();
-//				}
-//			}
-//		}	
+
 		if(v.getId() == R.id.auto_follow)
 		{
 			GIEditLayersKeeper.Instance().m_AutoFollow = m_btnAutoFollow.isChecked();
@@ -99,6 +73,13 @@ public class GIGPSDialog extends Fragment implements OnClickListener, OnLongClic
 				GIEditLayersKeeper.Instance().StopTrack();
 			}
 		}
+		if(v.getId() == R.id.show_track)
+		{
+			if(GIEditLayersKeeper.Instance().m_current_track_control != null) {
+				GIEditLayersKeeper.Instance().m_current_track_control.Show(m_btnShowTrack.isChecked());
+				GIEditLayersKeeper.Instance().getMap().UpdateMap();
+			}
+		}
 		if(v.getId() == R.id.poi_control)
 		{
 			if(GIEditLayersKeeper.Instance().getState() != GIEditingStatus.EDITING_POI && GIEditLayersKeeper.Instance().getState() != GIEditingStatus.EDITING_GEOMETRY)
@@ -119,7 +100,7 @@ public class GIGPSDialog extends Fragment implements OnClickListener, OnLongClic
 		//m_btnGPSStatus = (ToggleButton)v.findViewById(R.id.gps_status);
 		m_btnAutoFollow = (ToggleButton)v.findViewById(R.id.auto_follow);		
 		m_btnTrack = (ToggleButton)v.findViewById(R.id.track_control);
-		
+		m_btnShowTrack = (ToggleButton)v.findViewById(R.id.show_track);
 		m_btnPOI = (ToggleButton)v.findViewById(R.id.poi_control);
 		//m_StatusText = (TextView)v.findViewById(R.id.textViewStatus);
 		//m_GPSOnOff = (TextView)v.findViewById(R.id.textViewGpsOnOff);
@@ -132,6 +113,7 @@ public class GIGPSDialog extends Fragment implements OnClickListener, OnLongClic
 		//m_btnGPSStatus.setOnClickListener(this);
 		m_btnAutoFollow.setOnClickListener(this);
 		m_btnTrack.setOnClickListener(this);
+		m_btnShowTrack.setOnClickListener(this);
 		m_btnPOI.setOnClickListener(this);
 		m_btnAutoFollow.setOnLongClickListener(this);
 		

@@ -24,7 +24,7 @@
     <string name="ProjectServer_Locals">Проекты на устройстве</string>
     <string name="ProjectServer_Offline">Сервер недоступен</string>
     <string name="ProjectServer_Remotes">Проекты на сервере</string>
-    <string name="app_name">Geoinfo</string>
+    <string name="app_name">GeoInfo</string>
     <string name="auto_follow_off">Auto Follow Off</string>
     <string name="auto_follow_on">Auto Follow On</string>
     <string name="background">background</string>
