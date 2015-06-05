@@ -35,6 +35,9 @@
     <string name="button_stop_search">button_stop_search</string>
     <string name="button_zoomin">Zoom In</string>
     <string name="button_zoomout">Zoom Out</string>
+    <string name="dd_hint">DD.DDDDDDDD°</string>
+    <string name="dd_mm_hint">DD° MM.MMMMMM\'</string>
+    <string name="dd_mm_ss_hint">DD° MM\' SS.SSSS\"</string>
     <string name="default_project_path">/sdcard/moscow.pro</string>
     <string name="dialog_layers">Layers</string>
     <string name="edit_layer_delete">Delete</string>

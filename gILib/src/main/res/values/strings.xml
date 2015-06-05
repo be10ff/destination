@@ -77,5 +77,10 @@
 
 
     <string name="lontitude">lontitude</string>
+    <string name="dd_mm_ss_hint">DD° MM\' SS.SSSS\"</string>
+    <string name="dd_mm_hint">DD° MM.MMMMMM\'</string>
+    <string name="dd_hint">DD.DDDDDDDD°</string>
+
+
 
 </resources>

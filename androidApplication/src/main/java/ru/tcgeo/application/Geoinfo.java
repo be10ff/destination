@@ -994,7 +994,8 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 		GIPropertiesGroup current_group = map.ps.m_Group;
 		GIEditLayersKeeper.Instance().ClearLayers();
 		loadGroup(current_group);
-		// touchControl.m_project_settings = map.ps;                                                                          
+		// touchControl.m_project_settings = map.ps;
+		GIProjectProperties prop = map.ps;
 	}
 
 	// private void loadGroup(ru.tcgeo.gilib.parser.GIPropertiesGroup
