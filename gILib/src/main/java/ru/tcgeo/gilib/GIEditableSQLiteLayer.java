@@ -1,4 +1,8 @@
 package ru.tcgeo.gilib;
+/**
+ * класс пользовательской геометрии в SQLite
+ * в проекте прописывается как DBase
+ */
 
 import java.io.File;
 import java.util.HashMap;

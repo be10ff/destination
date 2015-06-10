@@ -18,6 +18,7 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
@@ -59,24 +60,22 @@ public class GILonLatInputDialog extends DialogFragment
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 			}
 
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-			}
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
 			public void afterTextChanged(Editable s) {
 				if (m_lon_dec.hasFocus()) {
 					try {
-//						int index = m_lon_dec.getSelectionEnd();
 						m_point.m_lon = GIYandexUtils.DoubleLonLatFromString(s.toString());
-						//m_point.m_lon = Double.valueOf(s.toString());
-
 						m_lon_can.setText(getCanonicalCoordString(m_point.m_lon));
 						m_lon_grad_min.setText(getGradMinCoordString(m_point.m_lon));
-//						m_lon_dec.setSelection(index);
+
 					} catch (NumberFormatException e) {
 					}
 				}
 			}
 		});
+		m_lat_dec.setRawInputType(InputType.TYPE_CLASS_NUMBER);
+		m_lat_dec.addTextChangedListener(new MaskedWatcher("##.########°", null));
 		m_lat_dec.addTextChangedListener(new TextWatcher() {
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 			}
@@ -155,11 +154,11 @@ public class GILonLatInputDialog extends DialogFragment
 			public void afterTextChanged(Editable s) {
 				if (m_lon_can.hasFocus()) {
 					try {
-//						int index = m_lon_can.getSelectionEnd();
+						int index = m_lon_can.getSelectionEnd();
 						m_point.m_lon = GIYandexUtils.DoubleLonLatFromString(s.toString().replaceAll("[^0-9.,]", ""));
 						m_lon_grad_min.setText(getGradMinCoordString(m_point.m_lon));
 						m_lon_dec.setText(String.valueOf(m_point.m_lon));
-//						m_lon_can.setSelection(index);
+						m_lon_can.setSelection(index);
 					} catch (NumberFormatException e) {
 					}
 				}
@@ -187,8 +186,8 @@ public class GILonLatInputDialog extends DialogFragment
 			}
 		});
 		/**/
-		m_lon_dec.setText(String.valueOf(m_point.m_lon));
-		m_lat_dec.setText(String.valueOf(m_point.m_lat));
+		m_lon_dec.setText(String.format("%.8f", m_point.m_lon));
+		m_lat_dec.setText(String.format("%.8f", m_point.m_lat));
 
 		m_lon_grad_min.setText(getGradMinCoordString(m_point.m_lon));
 		m_lat_grad_min.setText(getGradMinCoordString(m_point.m_lat));
@@ -196,7 +195,7 @@ public class GILonLatInputDialog extends DialogFragment
 		m_lon_can.setText(getCanonicalCoordString(m_point.m_lon));
 		m_lat_can.setText(getCanonicalCoordString(m_point.m_lat));
 
-		this.getDialog().setCanceledOnTouchOutside(true);
+
 		return v;
 	}
 
@@ -232,18 +231,23 @@ public class GILonLatInputDialog extends DialogFragment
     	int degrees = (int)Math.floor(coord);//º   ° ctrl+shift+u +code +space
     	int mins = (int)Math.floor((coord - degrees)*60);
     	double secs = ((coord - degrees)*60-mins)*60;
+//		String res =  String.format("%02d° %02d\' %07.4f\"", 1, 1, 0.1f);
 
-    	String res =  String.format("%2d° %2d\' %2.4f\"", degrees, mins, secs);
-		getDoubleCoordFromGGMMSSString(res);
+    	String res =  String.format("%02d° %02d' %07.4f\"", degrees, mins, secs);
+
+//		String res =  customFormat("00", degrees) + "° " + customFormat("00", mins) + "' " + customFormat("00.####", secs)  + "\"";
+//		getDoubleCoordFromGGMMSSString(res);
 		return res;
     }
     public String getGradMinCoordString(double coord)
     {
     	int degrees = (int)Math.floor(coord);//º   ° ctrl+shift+u +code +space
     	float mins = (float) ((coord - degrees)*60);
-		String res =  String.format("%2d° %2.6f\'", degrees, mins);
-		getDoubleCoordFromGGMMMMtring(res);
+		String res =  String.format("%02d° %09.6f'", degrees, mins);
+//		String res =  customFormat("00", degrees)+ "° " + customFormat("00.######", mins) + "'";
+//		getDoubleCoordFromGGMMMMtring(res);
 		return res;
+
     }
 
 	public double getDoubleCoordFromGGMMSSString(String input){
@@ -280,4 +284,9 @@ public class GILonLatInputDialog extends DialogFragment
 		double res = grad + (1f/60)*(min);
 		return res;
 	}
+	static public String customFormat(String pattern, double value ) {
+		DecimalFormat myFormatter = new DecimalFormat(pattern);
+		return myFormatter.format(value);
+	}
+
 }

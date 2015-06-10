@@ -88,7 +88,6 @@ import android.widget.Toast;
 public class Geoinfo extends Activity implements IFolderItemListener// implements
 																	// OnTouchListener
 {
-	public final String LOG_TAG = "myLogsMainApp";
 	GIMap map;
 	GITouchControl touchControl;
 	SharedPreferences sp;
@@ -110,7 +109,6 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 	GILocatorView m_locator;
 	GIGPSButtonView m_gps_button;
 
-	public final static String edit_layer_tag = "EDIT_LAYER_TAG";
 	public final IFolderItemListener m_fileOpenListener = this;
 
 //	public class GPSLocationListener implements LocationListener 
@@ -424,7 +422,7 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 					.findViewById(R.id.markers_list_item_text);
 
 			text_name.setText(item.m_layer.getName());
-			GIEditableSQLiteLayer gov;
+
 			GIEditableLayer layer = (GIEditableLayer) item.m_layer;
 			switch (layer.m_Status) {
 			case UNEDITED: {
@@ -1528,6 +1526,9 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		String res =  String.format("%02d° %02d\' %07.4f\"", 1, 1, 0.1f);
+
 		GIEditLayersKeeper.Instance().setContext(this);
 
 		getWindow().requestFeature(Window.FEATURE_NO_TITLE);
@@ -1829,9 +1830,5 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 		map.UpdateMap();
 	}
 
-//	static {
-//		System.loadLibrary("geos-3.3.6");
-//		System.loadLibrary("geos_c-1.7.6");
-//		System.loadLibrary("gilib-native");
-//	}
+
 }

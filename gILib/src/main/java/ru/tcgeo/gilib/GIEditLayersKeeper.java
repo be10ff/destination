@@ -837,7 +837,14 @@ public class GIEditLayersKeeper {
 			field.m_name = "Description";
 			field.m_value = time;
 			m_CurrentTrack.m_attributes.put("Description", field);
-			res = ((GIXMLTrack)m_CurrentTrack).Create(getCurrentTime(), m_TrackLayer.m_style, m_TrackLayer.m_encoding);
+
+			GIDBaseField proj_field = new GIDBaseField();
+			proj_field.m_name = "Project";
+			proj_field.m_value = m_Map.ps.m_name;
+			m_CurrentTrack.m_attributes.put("Project", proj_field);
+
+
+			res = ((GIXMLTrack)m_CurrentTrack).Create(getCurrentTimeShort(), m_TrackLayer.m_style, m_TrackLayer.m_encoding);
 			m_CurrentTrack.m_status = GIWKTGeometryStatus.NEW;
 			m_TrackLayer.m_shapes.add(m_CurrentTrack);
 
@@ -879,6 +886,17 @@ public class GIEditLayersKeeper {
         int second = calendar.get(Calendar.SECOND);
        
         return String.format(Locale.ENGLISH, "%02d_%02d_%02d_%02d_%02d", mounth+1, day, hour, minute, second);
+	}
+	private String getCurrentTimeShort()
+	{
+		Calendar calendar = Calendar.getInstance();
+		int day = calendar.get(Calendar.DATE);
+		int mounth = calendar.get(Calendar.MONTH);
+		int hour = calendar.get(Calendar.HOUR_OF_DAY);
+		int minute = calendar.get(Calendar.MINUTE);
+		int second = calendar.get(Calendar.SECOND);
+
+		return m_Map.ps.m_name + String.format(Locale.ENGLISH, "%02d_%02d_%02d_%02d", mounth+1, day, hour, minute);
 	}
 	
 	public void AddPointToTrack()
@@ -935,6 +953,12 @@ public class GIEditLayersKeeper {
 			field.m_name = "DateTime";
 			field.m_value = getCurrentTime();
 			point.m_attributes.put("DateTime", field);
+
+
+			GIDBaseField proj_field = new GIDBaseField();
+			proj_field.m_name = "Project";
+			proj_field.m_value = m_Map.ps.m_name;
+			point.m_attributes.put("Project", proj_field);
 			
 			m_POILayer.AddGeometry(point);
 			StartEditingPOI(m_POILayer, point);
