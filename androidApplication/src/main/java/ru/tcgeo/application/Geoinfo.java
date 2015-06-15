@@ -718,19 +718,19 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 		// Fill list with data
 		ListView project_list = (ListView) projects_dialog
 				.findViewById(R.id.projects_list);
-		View header = getLayoutInflater().inflate(
-				R.layout.project_list_management_item, null);
-		header.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				projects_dialog.cancel();
-				ru.tcgeo.gilib.projectmanagement.GIServer.Instance()
-						.getPresenter().getDialog()
-						.show(getFragmentManager(), "dialog");
-			}
-		});
-		project_list.addHeaderView(header);
+//		View header = getLayoutInflater().inflate(
+//				R.layout.project_list_management_item, null);
+//		header.setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				projects_dialog.cancel();
+//				ru.tcgeo.gilib.projectmanagement.GIServer.Instance()
+//						.getPresenter().getDialog()
+//						.show(getFragmentManager(), "dialog");
+//			}
+//		});
+//		project_list.addHeaderView(header);
 		ProjectsAdapter adapter = new ProjectsAdapter(this,
 				R.layout.project_selector_list_item,
 				R.id.project_list_item_path);
@@ -738,58 +738,58 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 		project_list.setAdapter(adapter);
 		projects_dialog.show();
 	}
-
-	public void ProjectSelectorDialog() {
-		final int dialog_max_height = 420;
-
-		projects_dialog = new Dialog(this, R.style.Theme_layers_dialog);
-		projects_dialog.setContentView(R.layout.project_selector_dialog);
-		projects_dialog.getWindow().setBackgroundDrawable(
-				new ColorDrawable(android.graphics.Color.TRANSPARENT));
-		projects_dialog.setCanceledOnTouchOutside(true);
-
-		// Place dialog under the button
-		LayoutParams parameters = projects_dialog.getWindow().getAttributes();
-		parameters.height = dialog_max_height; // Some hard-coded size
-
-		int[] button_location = { 200, 10 };
-
-		// Official documentation says that this will give actual screen size,
-		// without taking into account decor elements (status bar).
-		// But it works exactly as I expected - gives full accessible window
-		// size.
-		int screenCenterX = getWindowManager().getDefaultDisplay().getWidth() / 2;
-		int screenCenterY = getWindowManager().getDefaultDisplay().getHeight() / 2;
-
-		// Dialog's 0,0 coordinates are in the middle of the screen
-		parameters.x = button_location[0] - screenCenterX;
-		parameters.y = button_location[1] - screenCenterY;
-
-		projects_dialog.getWindow().setAttributes(parameters);
-
-		// Fill list with data
-		ListView project_list = (ListView) projects_dialog
-				.findViewById(R.id.projects_list);
-		View header = getLayoutInflater().inflate(
-				R.layout.project_list_management_item, null);
-		header.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				projects_dialog.cancel();
-				ru.tcgeo.gilib.projectmanagement.GIServer.Instance()
-						.getPresenter().getDialog()
-						.show(getFragmentManager(), "dialog");
-			}
-		});
-		project_list.addHeaderView(header);
-		ProjectsAdapter adapter = new ProjectsAdapter(this,
-				R.layout.project_selector_list_item,
-				R.id.project_list_item_path);
-		AddProjects(adapter);
-		project_list.setAdapter(adapter);
-		projects_dialog.show();
-	}
+//
+//	public void ProjectSelectorDialog() {
+//		final int dialog_max_height = 420;
+//
+//		projects_dialog = new Dialog(this, R.style.Theme_layers_dialog);
+//		projects_dialog.setContentView(R.layout.project_selector_dialog);
+//		projects_dialog.getWindow().setBackgroundDrawable(
+//				new ColorDrawable(android.graphics.Color.TRANSPARENT));
+//		projects_dialog.setCanceledOnTouchOutside(true);
+//
+//		// Place dialog under the button
+//		LayoutParams parameters = projects_dialog.getWindow().getAttributes();
+//		parameters.height = dialog_max_height; // Some hard-coded size
+//
+//		int[] button_location = { 200, 10 };
+//
+//		// Official documentation says that this will give actual screen size,
+//		// without taking into account decor elements (status bar).
+//		// But it works exactly as I expected - gives full accessible window
+//		// size.
+//		int screenCenterX = getWindowManager().getDefaultDisplay().getWidth() / 2;
+//		int screenCenterY = getWindowManager().getDefaultDisplay().getHeight() / 2;
+//
+//		// Dialog's 0,0 coordinates are in the middle of the screen
+//		parameters.x = button_location[0] - screenCenterX;
+//		parameters.y = button_location[1] - screenCenterY;
+//
+//		projects_dialog.getWindow().setAttributes(parameters);
+//
+//		// Fill list with data
+//		ListView project_list = (ListView) projects_dialog
+//				.findViewById(R.id.projects_list);
+////		View header = getLayoutInflater().inflate(
+////				R.layout.project_list_management_item, null);
+////		header.setOnClickListener(new OnClickListener() {
+////
+////			@Override
+////			public void onClick(View v) {
+////				projects_dialog.cancel();
+////				ru.tcgeo.gilib.projectmanagement.GIServer.Instance()
+////						.getPresenter().getDialog()
+////						.show(getFragmentManager(), "dialog");
+////			}
+////		});
+////		project_list.addHeaderView(header);
+//		ProjectsAdapter adapter = new ProjectsAdapter(this,
+//				R.layout.project_selector_list_item,
+//				R.id.project_list_item_path);
+//		AddProjects(adapter);
+//		project_list.setAdapter(adapter);
+//		projects_dialog.show();
+//	}
 
 	public void MarkersDialogClicked(final View button) {
 		final int dialog_max_height = getWindowManager().getDefaultDisplay().getHeight() / 2;
@@ -1177,18 +1177,15 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 					layer = GILayer.CreateLayer(current_layer.m_source.GetAbsolutePath(),	GILayerType.SQL_LAYER);
 					layer.setName(current_layer.m_name);
 					if (current_layer.m_sqldb != null) {
-						if (current_layer.m_sqldb.m_zoom_type
-								.equalsIgnoreCase("SMART")) {
+						if (current_layer.m_sqldb.m_zoom_type.equalsIgnoreCase("SMART")) {
 							((GISQLLayer) layer).m_zooming_type = GISQLiteZoomingType.SMART;
 							((GISQLLayer) layer).m_max_z = current_layer.m_sqldb.m_max_z;
 							((GISQLLayer) layer).m_min_z = current_layer.m_sqldb.m_min_z;
 						}
-						if (current_layer.m_sqldb.m_zoom_type
-								.equalsIgnoreCase("AUTO")) {
+						if (current_layer.m_sqldb.m_zoom_type.equalsIgnoreCase("AUTO")) {
 							((GISQLLayer) layer).m_zooming_type = GISQLiteZoomingType.AUTO;
 						}
-						if (current_layer.m_sqldb.m_zoom_type
-								.equalsIgnoreCase("ADAPTIVE")) {
+						if (current_layer.m_sqldb.m_zoom_type.equalsIgnoreCase("ADAPTIVE")) {
 							((GISQLLayer) layer).m_zooming_type = GISQLiteZoomingType.ADAPTIVE;
 							((GISQLLayer) layer).getAvalibleLevels();
 						}
@@ -1527,7 +1524,6 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		String res =  String.format("%02d° %02d\' %07.4f\"", 1, 1, 0.1f);
 
 		GIEditLayersKeeper.Instance().setContext(this);
 

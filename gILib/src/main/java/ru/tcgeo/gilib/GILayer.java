@@ -48,7 +48,6 @@ public abstract class GILayer
 			case SQL_YANDEX_LAYER:
 			{
 				GISQLLayer layer = new GISQLLayer(path);
-				//layer.m_projection = GIProjection.WorldMercator();
 				layer.type_ = type;
 				return layer;
 			}

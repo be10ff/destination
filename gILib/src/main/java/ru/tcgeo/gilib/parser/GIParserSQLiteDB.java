@@ -31,6 +31,10 @@ public class GIParserSQLiteDB extends GIParser
 			{
 				m_root.m_max_z = Integer.valueOf(m_ParserCurrent.getAttributeValue(i));
 			}
+			if(m_ParserCurrent.getAttributeName(i).equalsIgnoreCase("ratio"))
+			{
+				m_root.mRatio = Integer.valueOf(m_ParserCurrent.getAttributeValue(i));
+			}
 		}
 	}
 	

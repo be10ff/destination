@@ -209,8 +209,8 @@
 			        android:ems="6"
 			        android:gravity="center_vertical|center_horizontal"
 			        android:inputType="text"
-			        android:textSize="16sp" >
-
+			        android:textSize="16sp"
+                    android:visibility="gone">
 			        <!--  android:layout_marginStart="8dp" -->
 					<!-- android:layout_marginEnd="8dp" -->
 					<!-- android:textAlignment="center"  -->
@@ -232,7 +232,8 @@
 			        android:layout_margin="8dp"
 			        android:contentDescription="@string/button_stop_search"
 			        android:onClick="on_stop_search"
-			        android:src="@android:drawable/ic_input_delete" />
+			        android:src="@android:drawable/ic_input_delete"
+                    android:visibility="gone"/>
 			    	                
             </LinearLayout>
 	    </HorizontalScrollView>

@@ -26,7 +26,11 @@ public class GISQLRenderer extends GIRenderer {
 		m_canvas = new Canvas(bitmap);
 		area = area.Reprojected(layer.projection());
 		int Width_px = bitmap.getWidth();
-		double kf = 360.0f/256.0f;
+
+//		double kf = 360.0f/256.0f;
+		//todo adjust zoom ratio for readable labels.
+		double kf = 360.0f/(256.0f*layer.m_layer_properties.m_sqldb.mRatio);
+
         double left = area.m_left;
 		double top= area.m_top;
         double right = area.m_right;
