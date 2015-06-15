@@ -38,7 +38,7 @@ public class GIProjectProperties
 	public double m_bottom;
 	public double m_left;
 	public double m_right;
-	public ArrayList<GIPropertiesPackage> m_Entries;
+//	public ArrayList<GIPropertiesPackage> m_Entries;
 	public ru.tcgeo.gilib.parser.GIPropertiesGroup m_Group;
 	public GIPropertiesEdit m_Edit;
 	
@@ -65,7 +65,7 @@ public class GIProjectProperties
 	{
 		this.m_path = path;
 		m_SaveAs = "";
-		m_Entries = new ArrayList<GIPropertiesPackage>();
+//		m_Entries = new ArrayList<GIPropertiesPackage>();
 		this.LoadPro(path);
 		m_scriptparser_info = new GIScriptParser(m_point_info);//, null, null);
 		m_scriptparser_search = new GIScriptParser(m_search_body);//, null, null);
@@ -75,7 +75,7 @@ public class GIProjectProperties
 	{
 		this.m_path = null;
 		m_SaveAs = "";
-		m_Entries = new ArrayList<GIPropertiesPackage>();
+//		m_Entries = new ArrayList<GIPropertiesPackage>();
 		this.LoadPro(stream);
 		m_scriptparser_info = new GIScriptParser(m_point_info);//, null, null);
 		m_scriptparser_search = new GIScriptParser(m_search_body);//, null, null);
@@ -85,7 +85,7 @@ public class GIProjectProperties
 	{
 		this.m_path = path;
 		m_SaveAs = "";
-		m_Entries = new ArrayList<GIPropertiesPackage>();
+//		m_Entries = new ArrayList<GIPropertiesPackage>();
 		this.LoadInfo(path);
 		m_scriptparser_info = new GIScriptParser(m_point_info); 
 		m_scriptparser_search = new GIScriptParser(m_search_body);
@@ -295,25 +295,25 @@ public class GIProjectProperties
 			serializer.attribute("", "file", m_search_file);
 			serializer.text(m_search_body);
 			serializer.endTag("", "Search");
-			if(m_Entries != null)
-			{
-				for(GIPropertiesPackage pack : m_Entries)
-				{
-					serializer.startTag("", "Package");
-					serializer.attribute("", "name", pack.m_name);
-					serializer.attribute("", "size", String.valueOf(pack.m_size));
-					serializer.attribute("", "CRC", pack.m_crc);
-					serializer.attribute("", "ID", String.valueOf(pack.m_id));
-					for(GIPropertiesFile file : pack.m_Entries)
-					{
-						serializer.startTag("", "File");
-						serializer.attribute("", "name", file.m_name);
-						serializer.attribute("", "CRC", file.m_crc);
-						serializer.endTag("", "File");
-					}
-					serializer.endTag("", "Package");
-				}
-			}
+//			if(m_Entries != null)
+//			{
+//				for(GIPropertiesPackage pack : m_Entries)
+//				{
+//					serializer.startTag("", "Package");
+//					serializer.attribute("", "name", pack.m_name);
+//					serializer.attribute("", "size", String.valueOf(pack.m_size));
+//					serializer.attribute("", "CRC", pack.m_crc);
+//					serializer.attribute("", "ID", String.valueOf(pack.m_id));
+//					for(GIPropertiesFile file : pack.m_Entries)
+//					{
+//						serializer.startTag("", "File");
+//						serializer.attribute("", "name", file.m_name);
+//						serializer.attribute("", "CRC", file.m_crc);
+//						serializer.endTag("", "File");
+//					}
+//					serializer.endTag("", "Package");
+//				}
+//			}
 
 			serializer.endTag("", "Project");
 			serializer.endDocument();
