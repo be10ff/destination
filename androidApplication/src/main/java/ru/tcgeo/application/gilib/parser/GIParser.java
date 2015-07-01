@@ -5,13 +5,6 @@ import java.io.IOException;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
-import ru.tcgeo.gilib.parser.*;
-import ru.tcgeo.gilib.parser.GIParserDescription;
-import ru.tcgeo.gilib.parser.GIParserEdit;
-import ru.tcgeo.gilib.parser.GIParserMarkers;
-import ru.tcgeo.gilib.parser.GIParserPointInfo;
-import ru.tcgeo.gilib.parser.GIParserSearch;
-import ru.tcgeo.gilib.parser.GIProjectProperties;
 
 
 public class GIParser 
@@ -20,7 +13,7 @@ public class GIParser
 	protected boolean SectionReading;
 	protected XmlPullParser m_ParserCurrent;
 	protected String section_name;
-	protected ru.tcgeo.gilib.parser.GIProjectProperties m_ps;
+	protected GIProjectProperties m_ps;
 
 	public GIParser (XmlPullParser parent)
 	{

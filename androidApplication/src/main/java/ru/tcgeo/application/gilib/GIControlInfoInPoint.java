@@ -12,26 +12,24 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import ru.tcgeo.gilib.*;
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GIMap;
+import ru.tcgeo.application.R;
 
 public class GIControlInfoInPoint extends LinearLayout implements GIControl, OnClickListener
 {
-	private ru.tcgeo.gilib.GIMap m_map;
+	private GIMap m_map;
 	private GILonLat m_PointOriginMap;
 	private View m_LayoutView;
 	public boolean hasClosed;
 	private Context m_context;
 	private String m_info_text;
 
-	private static ru.tcgeo.gilib.GIControlInfoInPoint instance;
+	private static GIControlInfoInPoint instance;
 
-	public static ru.tcgeo.gilib.GIControlInfoInPoint Instance(Context context, ru.tcgeo.gilib.GIMap map, GILonLat lonlat, String text, String caption)
+	public static GIControlInfoInPoint Instance(Context context, GIMap map, GILonLat lonlat, String text, String caption)
 	{
 		if(instance == null)
 		{
-			instance = new ru.tcgeo.gilib.GIControlInfoInPoint(context, map, lonlat, text, caption);
+			instance = new GIControlInfoInPoint(context, map, lonlat, text, caption);
 		}
 		else
 		{
@@ -45,7 +43,7 @@ public class GIControlInfoInPoint extends LinearLayout implements GIControl, OnC
 		return instance ;
 	}
 
-	private GIControlInfoInPoint (Context context, ru.tcgeo.gilib.GIMap map, GILonLat lonlat, String text, String caption)
+	private GIControlInfoInPoint (Context context, GIMap map, GILonLat lonlat, String text, String caption)
 	{
 		super(context);
 		setMap(map);
@@ -65,7 +63,7 @@ public class GIControlInfoInPoint extends LinearLayout implements GIControl, OnC
     	rl.addView(this);
 	}
 
-	public ru.tcgeo.gilib.GIMap Map ()
+	public GIMap Map()
 	{
 		return m_map;
 	}

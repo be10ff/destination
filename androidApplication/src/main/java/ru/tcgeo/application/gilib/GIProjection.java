@@ -1,7 +1,7 @@
 package ru.tcgeo.application.gilib;
 
-import ru.tcgeo.gilib.GILonLat;
-import ru.tcgeo.gilib.gps.GIYandexUtils;
+import ru.tcgeo.application.gilib.GILonLat;
+import ru.tcgeo.application.gilib.gps.GIYandexUtils;
 
 public class GIProjection
 {
@@ -21,9 +21,9 @@ public class GIProjection
     }
 
 
-	public static ru.tcgeo.gilib.GIProjection WGS84()
+	public static ru.tcgeo.application.gilib.GIProjection WGS84()
 	{
-		return new ru.tcgeo.gilib.GIProjection(
+		return new ru.tcgeo.application.gilib.GIProjection(
 				"GEOGCS[\"WGS 84\"," +
                          "DATUM[\"WGS_1984\"," +
                           		 "SPHEROID[\"WGS 84\"," +
@@ -42,10 +42,10 @@ public class GIProjection
 	}
 	
 
-	public static ru.tcgeo.gilib.GIProjection WorldMercator()
+	public static ru.tcgeo.application.gilib.GIProjection WorldMercator()
 	
 	{
-		return new ru.tcgeo.gilib.GIProjection(
+		return new ru.tcgeo.application.gilib.GIProjection(
 				"PROJCS[\"WGS 84 / World Mercator\"," +
 						 "GEOGCS[\"WGS 84\"," +
 						 		  "DATUM[\"WGS_1984\"," +
@@ -75,7 +75,7 @@ public class GIProjection
     					 "AXIS[\"Northing\",NORTH]]", 1);
 	}
 	
-	public static GILonLat ReprojectLonLat (GILonLat point, ru.tcgeo.gilib.GIProjection source, ru.tcgeo.gilib.GIProjection dest)
+	public static GILonLat ReprojectLonLat (GILonLat point, GIProjection source, GIProjection dest)
 	{
 //		if(source != dest)
 //		{

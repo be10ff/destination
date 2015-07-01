@@ -10,7 +10,7 @@ public abstract interface GIGeometryObject
 {
 	public static enum TYPE {polygon, line, edge, vertex};
 	abstract public RectF getBounds();
-	abstract public ru.tcgeo.gilib.planimetry.GIGeometryObject clone();
+	abstract public GIGeometryObject clone();
 	abstract public TYPE getType();
 	//there are Points just like a pair (int, int)
 	//x is code_L, min Morton's code of bound rect;

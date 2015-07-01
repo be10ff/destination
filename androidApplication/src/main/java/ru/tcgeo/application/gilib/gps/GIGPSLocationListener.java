@@ -1,15 +1,16 @@
 package ru.tcgeo.application.gilib.gps;
 
-import ru.tcgeo.gilib.GIEditLayersKeeper;
-import ru.tcgeo.gilib.GILonLat;
-import ru.tcgeo.gilib.GIMap;
-import ru.tcgeo.gilib.GIProjection;
 
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+
+import ru.tcgeo.application.gilib.GIEditLayersKeeper;
+import ru.tcgeo.application.gilib.GILonLat;
+import ru.tcgeo.application.gilib.GIMap;
+import ru.tcgeo.application.gilib.GIProjection;
 
 public class GIGPSLocationListener implements LocationListener 
 {

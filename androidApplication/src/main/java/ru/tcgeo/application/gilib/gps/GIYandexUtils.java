@@ -5,9 +5,9 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
 
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GILonLat;
-import ru.tcgeo.gilib.planimetry.Vertex;
+import ru.tcgeo.application.gilib.GIBounds;
+import ru.tcgeo.application.gilib.GILonLat;
+import ru.tcgeo.application.gilib.planimetry.Vertex;
 
 public class GIYandexUtils 
 {

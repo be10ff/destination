@@ -23,14 +23,14 @@ public class GILonLat {
 		  m_lat = lat;
 	  }
 	  
-	  public static ru.tcgeo.gilib.GILonLat fromLocation(Location location)
+	  public static GILonLat fromLocation(Location location)
 	  {	
-		  return new ru.tcgeo.gilib.GILonLat(location.getLongitude(), location.getLatitude());
+		  return new GILonLat(location.getLongitude(), location.getLatitude());
 
 	  }
 
-	public ru.tcgeo.gilib.GILonLat OffsetBy (double lon, double lat)
+	public GILonLat OffsetBy (double lon, double lat)
     {
-		return new ru.tcgeo.gilib.GILonLat(m_lon + lon, m_lat + lat);
+		return new GILonLat(m_lon + lon, m_lat + lat);
     }
 }

@@ -12,10 +12,6 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
-import ru.tcgeo.gilib.*;
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GILayer;
-import ru.tcgeo.gilib.GITrafficTileInfoYandex;
 
 public class GIYandexRenderer extends GIRenderer {
 
@@ -24,10 +20,10 @@ public class GIYandexRenderer extends GIRenderer {
 	int drawed;
 	int reused;
 	int deleted;
-	private ArrayList<ru.tcgeo.gilib.GITrafficTileInfoYandex> m_cache;
+	private ArrayList<GITrafficTileInfoYandex> m_cache;
 	public GIYandexRenderer()
 	{
-		m_cache = new ArrayList<ru.tcgeo.gilib.GITrafficTileInfoYandex>();
+		m_cache = new ArrayList<GITrafficTileInfoYandex>();
 		downloaded = 0;
 		drawed = 0;
 		reused = 0;
@@ -85,7 +81,7 @@ public class GIYandexRenderer extends GIRenderer {
         			Bitmap bit_tile = null;
         			Long TimeStamp = System.currentTimeMillis() / 1000L;
 
-        			for(ru.tcgeo.gilib.GITrafficTileInfoYandex cached : m_cache)
+        			for(GITrafficTileInfoYandex cached : m_cache)
         			{
         				if(cached.m_zoom == tile.m_zoom && cached.m_xtile == tile.m_xtile && cached.m_ytile == tile.m_ytile && cached.m_TimeStamp < TimeStamp + 300)
         				{
@@ -112,7 +108,7 @@ public class GIYandexRenderer extends GIRenderer {
 			        	continue;
 			        }
 			        //
-			        m_cache.add(new ru.tcgeo.gilib.GITrafficTileInfoYandex(z, x, y, bit_tile));
+			        m_cache.add(new GITrafficTileInfoYandex(z, x, y, bit_tile));
 			        //
 					Rect src = new Rect(0, 0, bit_tile.getWidth(), bit_tile.getWidth());
 					float left_scr = (float)((tile.m_bounds.TopLeft().lon() - left) * koeffX);

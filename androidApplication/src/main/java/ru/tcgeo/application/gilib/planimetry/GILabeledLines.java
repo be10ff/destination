@@ -7,12 +7,6 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.RectF;
 
-import ru.tcgeo.gilib.planimetry.Edge;
-import ru.tcgeo.gilib.planimetry.GIGeometryLine;
-import ru.tcgeo.gilib.planimetry.GIGeometryPolygon;
-import ru.tcgeo.gilib.planimetry.GILabeledLayer;
-import ru.tcgeo.gilib.planimetry.GIQuadtree;
-import ru.tcgeo.gilib.planimetry.GIShape;
 
 /**
 * класс слоя надписей вдоль (не)замкнутых линий*/

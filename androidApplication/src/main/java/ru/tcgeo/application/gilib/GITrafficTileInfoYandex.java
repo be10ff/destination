@@ -2,8 +2,6 @@ package ru.tcgeo.application.gilib;
 
 import android.graphics.Bitmap;
 
-import ru.tcgeo.gilib.GITileInfoYandex;
-
 public class GITrafficTileInfoYandex  extends GITileInfoYandex
 {
 	public long m_TimeStamp;

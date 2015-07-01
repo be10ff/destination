@@ -4,9 +4,6 @@ import java.util.ArrayList;
 
 import android.graphics.Rect;
 
-import ru.tcgeo.gilib.specs.GISpeedCamera;
-import ru.tcgeo.gilib.specs.GITreeTile;
-
 
 /**
  * Класс бинарного дерева для разбиения по тайлам OSM
@@ -22,20 +19,20 @@ public class GIQuadTreeDouble
 	public static int MORTON_LVL = 17;
 	
 	private ArrayList<GISpeedCamera> m_cameras;
-	public ArrayList<ru.tcgeo.gilib.specs.GIQuadTreeDouble> m_brunches;
+	public ArrayList<GIQuadTreeDouble> m_brunches;
 	GITreeTile m_tile;
 
 	public GIQuadTreeDouble()
 	{
     	m_tile = new GITreeTile(0, 0, 0);
-		m_brunches = new ArrayList<ru.tcgeo.gilib.specs.GIQuadTreeDouble>();
+		m_brunches = new ArrayList<GIQuadTreeDouble>();
 		m_cameras = new ArrayList<GISpeedCamera>();
 	}
 	
 	protected GIQuadTreeDouble(GITreeTile tile)
 	{
 		m_tile = tile;
-		m_brunches = new ArrayList<ru.tcgeo.gilib.specs.GIQuadTreeDouble>();
+		m_brunches = new ArrayList<GIQuadTreeDouble>();
 		m_cameras = new ArrayList<GISpeedCamera>();
 	}
 	
@@ -72,14 +69,14 @@ public class GIQuadTreeDouble
 		if(m_tile.m_zoom <= m_max_level)
 		{
 
-			ArrayList<ru.tcgeo.gilib.specs.GIQuadTreeDouble> brunches = new ArrayList<ru.tcgeo.gilib.specs.GIQuadTreeDouble>();
-			brunches.add(new ru.tcgeo.gilib.specs.GIQuadTreeDouble( new GITreeTile(m_tile.m_zoom + 1, m_tile.m_xtile * 2,  m_tile.m_ytile * 2)));
-			brunches.add(new ru.tcgeo.gilib.specs.GIQuadTreeDouble( new GITreeTile(m_tile.m_zoom + 1, m_tile.m_xtile * 2 + 1,  m_tile.m_ytile * 2)));
-			brunches.add(new ru.tcgeo.gilib.specs.GIQuadTreeDouble( new GITreeTile(m_tile.m_zoom + 1, m_tile.m_xtile * 2,  m_tile.m_ytile * 2 + 1)));
-			brunches.add(new ru.tcgeo.gilib.specs.GIQuadTreeDouble( new GITreeTile(m_tile.m_zoom + 1, m_tile.m_xtile * 2 + 1,  m_tile.m_ytile * 2 + 1)));
+			ArrayList<GIQuadTreeDouble> brunches = new ArrayList<GIQuadTreeDouble>();
+			brunches.add(new GIQuadTreeDouble( new GITreeTile(m_tile.m_zoom + 1, m_tile.m_xtile * 2,  m_tile.m_ytile * 2)));
+			brunches.add(new GIQuadTreeDouble( new GITreeTile(m_tile.m_zoom + 1, m_tile.m_xtile * 2 + 1,  m_tile.m_ytile * 2)));
+			brunches.add(new GIQuadTreeDouble( new GITreeTile(m_tile.m_zoom + 1, m_tile.m_xtile * 2,  m_tile.m_ytile * 2 + 1)));
+			brunches.add(new GIQuadTreeDouble( new GITreeTile(m_tile.m_zoom + 1, m_tile.m_xtile * 2 + 1,  m_tile.m_ytile * 2 + 1)));
 			for(int i = 0; i < 4; i++)
 			{
-				ru.tcgeo.gilib.specs.GIQuadTreeDouble branch = brunches.get(i);
+				GIQuadTreeDouble branch = brunches.get(i);
 				int shape_counter = 0;
 				while(shape_counter < m_cameras.size())
 				{
@@ -116,11 +113,7 @@ public class GIQuadTreeDouble
 		m_cameras = shapes;
 	}
 	
-/**
- * список всех влияющих объектов для заданного кода
- * @param code заданного кода
- * @return список всех влияющих объектов для заданного кода
- */
+
 	public ArrayList<GISpeedCamera> getDependies(GITreeTile tile)
 	{
 		ArrayList <GISpeedCamera> result = new ArrayList<GISpeedCamera>();
@@ -133,7 +126,7 @@ public class GIQuadTreeDouble
 			else
 			{
 				result.addAll(m_cameras);
-				for(ru.tcgeo.gilib.specs.GIQuadTreeDouble child : m_brunches)
+				for(GIQuadTreeDouble child : m_brunches)
 				{
 					result.addAll(child.getDependies(tile));
 				}
@@ -144,7 +137,7 @@ public class GIQuadTreeDouble
 	public ArrayList<GISpeedCamera> GetAll(ArrayList<GISpeedCamera> result)
 	{
 		result.addAll(m_cameras);
-		for(ru.tcgeo.gilib.specs.GIQuadTreeDouble child : m_brunches)
+		for(GIQuadTreeDouble child : m_brunches)
 		{
 			child.GetAll(result);
 		}

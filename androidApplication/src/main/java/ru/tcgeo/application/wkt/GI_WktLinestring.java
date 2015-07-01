@@ -8,13 +8,13 @@ import android.graphics.RectF;
 
 import java.util.ArrayList;
 
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GIEditLayersKeeper;
-import ru.tcgeo.gilib.GILonLat;
-import ru.tcgeo.gilib.GIProjection;
-import ru.tcgeo.gilib.GIVectorStyle;
-import ru.tcgeo.gilib.planimetry.Edge;
-import ru.tcgeo.gilib.planimetry.Vertex;
+import ru.tcgeo.application.gilib.GIBounds;
+import ru.tcgeo.application.gilib.GIEditLayersKeeper;
+import ru.tcgeo.application.gilib.GILonLat;
+import ru.tcgeo.application.gilib.GIProjection;
+import ru.tcgeo.application.gilib.GIVectorStyle;
+import ru.tcgeo.application.gilib.planimetry.Edge;
+import ru.tcgeo.application.gilib.planimetry.Vertex;
 
 
 public class GI_WktLinestring extends GI_WktGeometry {
@@ -116,7 +116,7 @@ public class GI_WktLinestring extends GI_WktGeometry {
 	}
 
 	@Override
-	public void Paint(Canvas canvas, GIVectorStyle s) 
+	public void Paint(Canvas canvas, GIVectorStyle s)
 	{
 		int[] offset = { 0, 0 };
 		GIEditLayersKeeper.Instance().getMap().getLocationOnScreen(offset);

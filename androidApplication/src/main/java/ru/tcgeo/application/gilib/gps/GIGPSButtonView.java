@@ -1,6 +1,5 @@
 package ru.tcgeo.application.gilib.gps;
 
-import ru.tcgeo.gilib.R;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -18,6 +17,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import ru.tcgeo.application.R;
 
 public class GIGPSButtonView extends RelativeLayout 
 {

@@ -3,16 +3,15 @@ package ru.tcgeo.application.gilib.specs;
 import android.graphics.PointF;
 import android.graphics.RectF;
 
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GILonLat;
-import ru.tcgeo.gilib.gps.GIYandexUtils;
-import ru.tcgeo.gilib.planimetry.Edge;
-import ru.tcgeo.gilib.planimetry.Vertex;
-import ru.tcgeo.gilib.specs.*;
-import ru.tcgeo.gilib.specs.GIQuadTreeDouble;
-import ru.tcgeo.wkt.GI_WktLinestring;
-import ru.tcgeo.wkt.GI_WktPoint;
-import ru.tcgeo.wkt.GI_WktPolygon;
+import ru.tcgeo.application.gilib.GIBounds;
+import ru.tcgeo.application.gilib.GILonLat;
+import ru.tcgeo.application.gilib.gps.GIYandexUtils;
+import ru.tcgeo.application.gilib.planimetry.Edge;
+import ru.tcgeo.application.gilib.planimetry.Vertex;
+import ru.tcgeo.application.wkt.GI_WktLinestring;
+import ru.tcgeo.application.wkt.GI_WktPoint;
+import ru.tcgeo.application.wkt.GI_WktPolygon;
+
 
 public class GISpeedCamera 
 {
@@ -208,8 +207,8 @@ public class GISpeedCamera
 		RectF bounds = m_geometry.getBounds();
 		m_tile_start = new GITreeTile(MORTON_LVL, bounds.left, bounds.bottom);
 		m_tile_end = new GITreeTile(MORTON_LVL, bounds.right, bounds.top);
-		m_morton_start = ru.tcgeo.gilib.specs.GIQuadTreeDouble.MortonCode2D(m_tile_start.m_xtile, m_tile_start.m_ytile);
-		m_morton_end = ru.tcgeo.gilib.specs.GIQuadTreeDouble.MortonCode2D(m_tile_end.m_xtile, m_tile_end.m_ytile);
+		m_morton_start = GIQuadTreeDouble.MortonCode2D(m_tile_start.m_xtile, m_tile_start.m_ytile);
+		m_morton_end = GIQuadTreeDouble.MortonCode2D(m_tile_end.m_xtile, m_tile_end.m_ytile);
 	}
 
 	public static long[] getMorton(GIBounds area)
@@ -218,13 +217,13 @@ public class GISpeedCamera
 		GITreeTile tile_start = new GITreeTile(MORTON_LVL, area.left(), area.top());
 		GITreeTile tile_end = new GITreeTile(MORTON_LVL, area.right(), area.bottom());
 
-		res[0] = ru.tcgeo.gilib.specs.GIQuadTreeDouble.MortonCode2D(tile_start.m_xtile, tile_start.m_ytile);
+		res[0] = GIQuadTreeDouble.MortonCode2D(tile_start.m_xtile, tile_start.m_ytile);
 		res[1] = GIQuadTreeDouble.MortonCode2D(tile_end.m_xtile, tile_end.m_ytile);
 		
 		return res;
 	}
 	
-	public boolean isIntersectByCamera(ru.tcgeo.gilib.specs.GISpeedCamera camera)
+	public boolean isIntersectByCamera(GISpeedCamera camera)
 	{
 //		ArrayList<Vertex> polygon = new ArrayList<Vertex>();
 //		Vertex v0 = new Vertex(10, 10);

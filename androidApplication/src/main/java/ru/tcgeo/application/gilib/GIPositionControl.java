@@ -13,11 +13,7 @@ import android.graphics.Rect;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import ru.tcgeo.gilib.*;
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GIEditLayersKeeper;
-import ru.tcgeo.gilib.GIMap;
-
+import ru.tcgeo.application.R;
 
 public class GIPositionControl extends View implements GIControl //View
 {
@@ -37,11 +33,11 @@ public class GIPositionControl extends View implements GIControl //View
 	//View m_LayoutView;
 	public GIPositionControl()
 	{
-		super(ru.tcgeo.gilib.GIEditLayersKeeper.Instance().getMap().getContext());
-		m_context = ru.tcgeo.gilib.GIEditLayersKeeper.Instance().getMap().getContext();
+		super(GIEditLayersKeeper.Instance().getMap().getContext());
+		m_context = GIEditLayersKeeper.Instance().getMap().getContext();
 		//LayoutInflater m_LayoutInflater = (LayoutInflater)m_context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		//m_LayoutView = m_LayoutInflater.inflate(R.layout.position_marker, null);
-		m_root = (RelativeLayout) ru.tcgeo.gilib.GIEditLayersKeeper.Instance().getMap().getParent();
+		m_root = (RelativeLayout) GIEditLayersKeeper.Instance().getMap().getParent();
 		m_root.addView(this);
     	bringToFront();
 		image = BitmapFactory.decodeResource(getResources(), R.drawable.position_arrow);

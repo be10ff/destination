@@ -3,11 +3,9 @@ package ru.tcgeo.application.gilib.parser;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
-import ru.tcgeo.gilib.parser.*;
-import ru.tcgeo.gilib.parser.GISource;
 
 public class GIParserSource extends GIParser {
-	ru.tcgeo.gilib.parser.GISource m_root;
+	GISource m_root;
 	//SourceProperties m_current;
 
 	public GIParserSource(XmlPullParser parent, GISource root)

@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
 
-import ru.tcgeo.gilib.planimetry.Edge;
 
 public class GITextPath extends ArrayList<Edge>
 {

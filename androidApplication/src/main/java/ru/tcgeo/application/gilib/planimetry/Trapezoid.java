@@ -3,10 +3,6 @@ package ru.tcgeo.application.gilib.planimetry;
 import android.graphics.PointF;
 import android.graphics.RectF;
 
-import ru.tcgeo.gilib.planimetry.*;
-import ru.tcgeo.gilib.planimetry.Edge;
-import ru.tcgeo.gilib.planimetry.Vertex;
-
 public class Trapezoid {
 
 	public Edge m_top_edge;
@@ -56,13 +52,13 @@ public class Trapezoid {
 	{
 		return getRightBound() - getLeftBound();
 	}
-	public static ru.tcgeo.gilib.planimetry.Trapezoid SplitTrapezoidAtHeights(ru.tcgeo.gilib.planimetry.Trapezoid segment, float top, float bottom)
+	public static Trapezoid SplitTrapezoidAtHeights(Trapezoid segment, float top, float bottom)
 	{
-		if(top < segment.getTop() - ru.tcgeo.gilib.planimetry.Vertex.delta|| top > segment.getBottom() + ru.tcgeo.gilib.planimetry.Vertex.delta)
+		if(top < segment.getTop() - Vertex.delta|| top > segment.getBottom() + Vertex.delta)
 		{
 			return null;
 		}
-		if(bottom < segment.getTop() - ru.tcgeo.gilib.planimetry.Vertex.delta|| bottom > segment.getBottom() + ru.tcgeo.gilib.planimetry.Vertex.delta)
+		if(bottom < segment.getTop() - Vertex.delta|| bottom > segment.getBottom() + Vertex.delta)
 		{
 			return null;
 		}
@@ -72,14 +68,14 @@ public class Trapezoid {
 		float h1 = _top - segment.getTop();
 		float h2 = _bottom - segment.getTop();
 		float _top_left = (h1/segment.getHeight())*(segment.m_bottom_edge.m_start.x - segment.m_top_edge.m_start.x) + segment.m_top_edge.m_start.x;
-		ru.tcgeo.gilib.planimetry.Vertex v_top_left = new ru.tcgeo.gilib.planimetry.Vertex(new PointF(_top_left, _top));
+		Vertex v_top_left = new Vertex(new PointF(_top_left, _top));
 		float _bottom_left = (h2/segment.getHeight())*(segment.m_bottom_edge.m_start.x - segment.m_top_edge.m_start.x) + segment.m_top_edge.m_start.x;
-		ru.tcgeo.gilib.planimetry.Vertex v_bottom_left = new ru.tcgeo.gilib.planimetry.Vertex(new PointF(_bottom_left, _bottom));
+		Vertex v_bottom_left = new Vertex(new PointF(_bottom_left, _bottom));
 		float _top_right = (h1/segment.getHeight())*(segment.m_bottom_edge.m_end.x - segment.m_top_edge.m_end.x) + segment.m_top_edge.m_end.x;
-		ru.tcgeo.gilib.planimetry.Vertex v_top_right = new ru.tcgeo.gilib.planimetry.Vertex(new PointF(_top_right, _top));
+		Vertex v_top_right = new Vertex(new PointF(_top_right, _top));
 		float _bottom_right = (h2/segment.getHeight())*(segment.m_bottom_edge.m_end.x - segment.m_top_edge.m_end.x) + segment.m_top_edge.m_end.x;
-		ru.tcgeo.gilib.planimetry.Vertex v_bottom_right = new Vertex(new PointF(_bottom_right, _bottom));
-		return new ru.tcgeo.gilib.planimetry.Trapezoid(new Edge(v_top_left, v_top_right), new Edge(v_bottom_left, v_bottom_right));
+		Vertex v_bottom_right = new Vertex(new PointF(_bottom_right, _bottom));
+		return new Trapezoid(new Edge(v_top_left, v_top_right), new Edge(v_bottom_left, v_bottom_right));
 	}
 	
 }

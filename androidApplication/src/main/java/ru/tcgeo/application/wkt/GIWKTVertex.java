@@ -2,7 +2,8 @@ package ru.tcgeo.application.wkt;
 
 import java.util.ArrayList;
 
-import ru.tcgeo.gilib.script.GIScriptQueue;
+import ru.tcgeo.application.gilib.script.GIScriptQueue;
+
 
 public class GIWKTVertex extends GIWKTDescription
 {

@@ -1,9 +1,5 @@
 package ru.tcgeo.application.gilib;
 
-import ru.tcgeo.gilib.*;
-import ru.tcgeo.gilib.GIEditLayersKeeper;
-import ru.tcgeo.gilib.GIEditLayersKeeper.GIEditingStatus;
-import ru.tcgeo.gilib.GIEditableLayer.GIEditableLayerStatus;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.ToggleButton;
+
+import ru.tcgeo.application.R;
 
 public class GIEditLayerDialog extends Fragment implements
 		OnClickListener 
@@ -38,7 +36,7 @@ public class GIEditLayerDialog extends Fragment implements
 		m_btnGeometry.setOnClickListener(this);
 		m_btnDelete.setOnClickListener(this);
 
-		if(ru.tcgeo.gilib.GIEditLayersKeeper.Instance().m_layer == ru.tcgeo.gilib.GIEditLayersKeeper.Instance().m_TrackLayer)
+		if(GIEditLayersKeeper.Instance().m_layer == GIEditLayersKeeper.Instance().m_TrackLayer)
 		{
 			m_btnGeometry.setVisibility(View.GONE);
 			m_btnNew.setVisibility(View.GONE);
@@ -64,13 +62,13 @@ public class GIEditLayerDialog extends Fragment implements
 	{
 		if(v.getId() == R.id.edit_layer_new)
 		{
-			if((ru.tcgeo.gilib.GIEditLayersKeeper.Instance().getState() != GIEditingStatus.WAITING_FOR_OBJECT_NEWLOCATION)&&(m_btnNew.isChecked()))
+			if((GIEditLayersKeeper.Instance().getState() != GIEditLayersKeeper.GIEditingStatus.WAITING_FOR_OBJECT_NEWLOCATION)&&(m_btnNew.isChecked()))
 			{
-				if(!ru.tcgeo.gilib.GIEditLayersKeeper.Instance().CreateNewObject())
+				if(!GIEditLayersKeeper.Instance().CreateNewObject())
 				{
 					return;
 				}
-				ru.tcgeo.gilib.GIEditLayersKeeper.Instance().setState(GIEditingStatus.WAITING_FOR_OBJECT_NEWLOCATION);
+				GIEditLayersKeeper.Instance().setState(GIEditLayersKeeper.GIEditingStatus.WAITING_FOR_OBJECT_NEWLOCATION);
 
 				m_btnAttributes.setEnabled(false);
 				m_btnGeometry.setEnabled(false);
@@ -78,21 +76,21 @@ public class GIEditLayerDialog extends Fragment implements
 				m_btnAttributes.setChecked(false);
 				m_btnGeometry.setChecked(false);
 				m_btnDelete.setChecked(false);
-				ru.tcgeo.gilib.GIEditLayersKeeper.Instance().UpdateMap();
+				GIEditLayersKeeper.Instance().UpdateMap();
 			}
 			else
 			{
-				ru.tcgeo.gilib.GIEditLayersKeeper.Instance().setState(GIEditingStatus.RUNNING);
-				ru.tcgeo.gilib.GIEditLayersKeeper.Instance().FillAttributes();
+				GIEditLayersKeeper.Instance().setState(GIEditLayersKeeper.GIEditingStatus.RUNNING);
+				GIEditLayersKeeper.Instance().FillAttributes();
 				m_btnNew.setEnabled(false);
 
 			}
 		}
 		if(v.getId() == R.id.edit_layer_attributes)
 		{
-			if(ru.tcgeo.gilib.GIEditLayersKeeper.Instance().getState() != GIEditingStatus.WAITIN_FOR_SELECT_OBJECT)
+			if(GIEditLayersKeeper.Instance().getState() != GIEditLayersKeeper.GIEditingStatus.WAITIN_FOR_SELECT_OBJECT)
 			{
-				ru.tcgeo.gilib.GIEditLayersKeeper.Instance().setState(GIEditingStatus.WAITIN_FOR_SELECT_OBJECT);
+				GIEditLayersKeeper.Instance().setState(GIEditLayersKeeper.GIEditingStatus.WAITIN_FOR_SELECT_OBJECT);
 				m_btnNew.setEnabled(false);
 				m_btnGeometry.setEnabled(false);
 				m_btnDelete.setEnabled(false);
@@ -102,7 +100,7 @@ public class GIEditLayerDialog extends Fragment implements
 			}
 			else
 			{
-				ru.tcgeo.gilib.GIEditLayersKeeper.Instance().setState(GIEditingStatus.RUNNING);
+				GIEditLayersKeeper.Instance().setState(GIEditLayersKeeper.GIEditingStatus.RUNNING);
 				m_btnNew.setEnabled(true);
 				m_btnGeometry.setEnabled(true);
 				m_btnDelete.setEnabled(true);
@@ -110,15 +108,14 @@ public class GIEditLayerDialog extends Fragment implements
 		}
 		if(v.getId() == R.id.edit_layer_geometry)
 		{
-			if(ru.tcgeo.gilib.GIEditLayersKeeper.Instance().m_layer == ru.tcgeo.gilib.GIEditLayersKeeper.Instance().m_TrackLayer)
+			if(GIEditLayersKeeper.Instance().m_layer == GIEditLayersKeeper.Instance().m_TrackLayer)
 			{
 				return;
 			}
-			if((ru.tcgeo.gilib.GIEditLayersKeeper.Instance().getState() == GIEditingStatus.EDITING_GEOMETRY)||(ru.tcgeo.gilib.GIEditLayersKeeper.Instance().getState() == GIEditingStatus.WAITING_FOR_SELECT_GEOMETRY_TO_EDITING)||(ru.tcgeo.gilib.GIEditLayersKeeper.Instance().getState() == GIEditingStatus.WAITING_FOR_NEW_POINT_LOCATION))
+			if((GIEditLayersKeeper.Instance().getState() == GIEditLayersKeeper.GIEditingStatus.EDITING_GEOMETRY)||(GIEditLayersKeeper.Instance().getState() == GIEditLayersKeeper.GIEditingStatus.WAITING_FOR_SELECT_GEOMETRY_TO_EDITING)||(GIEditLayersKeeper.Instance().getState() == GIEditLayersKeeper.GIEditingStatus.WAITING_FOR_NEW_POINT_LOCATION))
 			{
-				ru.tcgeo.gilib.GIEditLayersKeeper.Instance().setState(GIEditingStatus.RUNNING);
-				ru.tcgeo.gilib.GIEditLayersKeeper.Instance().StopEditingGeometry();
-				ru.tcgeo.gilib.GIEditLayersKeeper.Instance().m_layer.m_Status = GIEditableLayerStatus.UNSAVED;
+				GIEditLayersKeeper.Instance().setState(GIEditLayersKeeper.GIEditingStatus.RUNNING);
+				GIEditLayersKeeper.Instance().StopEditingGeometry();
 				m_btnNew.setEnabled(true);
 				m_btnAttributes.setEnabled(true);
 				m_btnDelete.setEnabled(true);
@@ -128,7 +125,7 @@ public class GIEditLayerDialog extends Fragment implements
 			}
 			else
 			{
-				ru.tcgeo.gilib.GIEditLayersKeeper.Instance().setState(GIEditingStatus.WAITING_FOR_SELECT_GEOMETRY_TO_EDITING);
+				GIEditLayersKeeper.Instance().setState(GIEditLayersKeeper.GIEditingStatus.WAITING_FOR_SELECT_GEOMETRY_TO_EDITING);
 
 				m_btnNew.setEnabled(false);
 				m_btnAttributes.setEnabled(false);
@@ -139,7 +136,7 @@ public class GIEditLayerDialog extends Fragment implements
 		}
 		if(v.getId() == R.id.edit_layer_delete)
 		{
-			GIEditLayersKeeper.Instance().setState(GIEditingStatus.WAITING_FOR_TO_DELETE);
+			GIEditLayersKeeper.Instance().setState(GIEditLayersKeeper.GIEditingStatus.WAITING_FOR_TO_DELETE);
 		}
 	}
 }

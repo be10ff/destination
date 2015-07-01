@@ -12,16 +12,17 @@ import android.graphics.Path;
 import android.graphics.Rect;
 import android.view.View;
 import android.widget.RelativeLayout;
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GIControl;
-import ru.tcgeo.gilib.GIEditLayersKeeper;
-import ru.tcgeo.gilib.GILonLat;
-import ru.tcgeo.gilib.GIMap;
-import ru.tcgeo.gilib.GIProjection;
-import ru.tcgeo.gilib.GIRuleToolControl;
-import ru.tcgeo.gilib.R;
-import ru.tcgeo.wkt.GI_WktGeometry;
-import ru.tcgeo.wkt.GI_WktPoint;
+
+import ru.tcgeo.application.R;
+import ru.tcgeo.application.gilib.GIBounds;
+import ru.tcgeo.application.gilib.GIControl;
+import ru.tcgeo.application.gilib.GIEditLayersKeeper;
+import ru.tcgeo.application.gilib.GILonLat;
+import ru.tcgeo.application.gilib.GIMap;
+import ru.tcgeo.application.gilib.GIProjection;
+import ru.tcgeo.application.gilib.GIRuleToolControl;
+import ru.tcgeo.application.wkt.GI_WktGeometry;
+import ru.tcgeo.application.wkt.GI_WktPoint;
 
 /**
  * направление на точку на карте
@@ -44,7 +45,7 @@ public class GIDirectionToPOIArrow  extends View implements GIControl
 	Rect bounds;
 	public final String tag = "DIRECTION_ARROW_TAG";
 	
-	public GIDirectionToPOIArrow(GI_WktGeometry poi) 
+	public GIDirectionToPOIArrow(GI_WktGeometry poi)
 	{
 		super(GIEditLayersKeeper.Instance().getMap().getContext());
 		m_POI = poi;

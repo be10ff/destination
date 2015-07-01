@@ -10,13 +10,12 @@ import android.graphics.PointF;
 
 import java.util.ArrayList;
 
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GIEditLayersKeeper;
-import ru.tcgeo.gilib.GILonLat;
-import ru.tcgeo.gilib.GIProjection;
-import ru.tcgeo.gilib.GIVectorStyle;
-import ru.tcgeo.gilib.planimetry.GIGeometryPolygon;
-
+import ru.tcgeo.application.gilib.GIBounds;
+import ru.tcgeo.application.gilib.GIEditLayersKeeper;
+import ru.tcgeo.application.gilib.GILonLat;
+import ru.tcgeo.application.gilib.GIProjection;
+import ru.tcgeo.application.gilib.GIVectorStyle;
+import ru.tcgeo.application.gilib.planimetry.GIGeometryPolygon;
 
 public class GI_WktPolygon extends GI_WktGeometry
 {
@@ -62,7 +61,7 @@ public class GI_WktPolygon extends GI_WktGeometry
 		return res;
 	}
 	@Override
-	public void Draw(Canvas canvas, GIBounds area, float scale, Paint paint) 
+	public void Draw(Canvas canvas, GIBounds area, float scale, Paint paint)
 	{
 		Path polygon = new Path();
 		polygon.setFillType(FillType.EVEN_ODD);
@@ -96,7 +95,7 @@ public class GI_WktPolygon extends GI_WktGeometry
 	}
 
 	@Override
-	public void Paint(Canvas canvas, GIVectorStyle s) 
+	public void Paint(Canvas canvas, GIVectorStyle s)
 	{
 		Path polygon = new Path();
 		int[] offset = { 0, 0 };

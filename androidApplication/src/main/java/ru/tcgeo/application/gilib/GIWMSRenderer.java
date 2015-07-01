@@ -23,11 +23,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GILayer;
-import ru.tcgeo.gilib.GIRenderer;
-import ru.tcgeo.gilib.GIStyle;
-import ru.tcgeo.gilib.GIWMSLayer;
 
 public class GIWMSRenderer extends GIRenderer {
 

@@ -18,17 +18,6 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import ru.tcgeo.gilib.GIBitmap;
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GIControl;
-import ru.tcgeo.gilib.GIDataRequestor;
-import ru.tcgeo.gilib.GIGroupLayer;
-import ru.tcgeo.gilib.GILayer;
-import ru.tcgeo.gilib.GILonLat;
-import ru.tcgeo.gilib.GIProjectedPoint;
-import ru.tcgeo.gilib.GIProjection;
-import ru.tcgeo.gilib.GIScaleRange;
-import ru.tcgeo.gilib.GITuple;
 
 public class GIMap extends SurfaceView //implements SurfaceHolder.Callback//implements Runnable SurfaceView
 {
@@ -41,7 +30,7 @@ public class GIMap extends SurfaceView //implements SurfaceHolder.Callback//impl
 	 public Rect m_view; 		// view size		
 	Rect m_view_rect;	// viewable part of bitmap
 	public final String LOG_TAG = "LOG_TAG";
-	public ru.tcgeo.gilib.parser.GIProjectProperties ps;
+	public ru.tcgeo.application.gilib.parser.GIProjectProperties ps;
 	
 	// view diagonal in inches
 	static public double inches_per_pixel = 0.0066;  
@@ -55,7 +44,7 @@ public class GIMap extends SurfaceView //implements SurfaceHolder.Callback//impl
 	SurfaceHolder m_holder;
 	
 	ThreadStack m_threadStack;
-	ru.tcgeo.gilib.GIMap target = this;
+	ru.tcgeo.application.gilib.GIMap target = this;
 	
 	//GIControl's works
 	
@@ -504,7 +493,7 @@ public class GIMap extends SurfaceView //implements SurfaceHolder.Callback//impl
 	}
 	public double getScaleFactor()
 	{
-			return ru.tcgeo.gilib.GIMap.getScale(m_bounds, m_view_rect);
+			return GIMap.getScale(m_bounds, m_view_rect);
 	}
 	
 	// Factor < 1 is Zoom in, > 1 is Zoom out.
@@ -586,7 +575,7 @@ public class GIMap extends SurfaceView //implements SurfaceHolder.Callback//impl
 			System.gc();
 			final Bitmap tmp_bitmap = Bitmap.createBitmap(m_view.width(), m_view.height(), Bitmap.Config.ARGB_8888);
 			tmp_bitmap.eraseColor(Color.WHITE);
-			double scale_ = ru.tcgeo.gilib.GIMap.getScale(m_bounds, m_view);
+			double scale_ = GIMap.getScale(m_bounds, m_view);
 			synchronized(m_layers)
 			{
 				m_layers.Redraw(actual_bounds, tmp_bitmap, 255, scale_);
@@ -618,7 +607,7 @@ public class GIMap extends SurfaceView //implements SurfaceHolder.Callback//impl
 			m_bounds.m_top + m_bounds.height(), m_bounds.m_right + m_bounds.width(), m_bounds.m_bottom - m_bounds.height());
 			System.gc();
 			final Bitmap tmp_bitmap = Bitmap.createBitmap(m_view.width(), m_view.height(), Bitmap.Config.ARGB_8888);
-			double scale_ = ru.tcgeo.gilib.GIMap.getScale(actual_bounds, m_view);
+			double scale_ = GIMap.getScale(actual_bounds, m_view);
 			synchronized(m_layers)
 			{
 				m_layers.Redraw(actual_bounds, tmp_bitmap, 255, scale_/3);
@@ -818,7 +807,7 @@ public class GIMap extends SurfaceView //implements SurfaceHolder.Callback//impl
 	{
 		synchronized(m_layers)
 		{
-		double scale_ = ru.tcgeo.gilib.GIMap.getScale(m_bounds, m_view);
+		double scale_ = GIMap.getScale(m_bounds, m_view);
 		
 		double pixelWidth = m_bounds.width() / m_view_rect.width(); 
 		double pixelHeight = m_bounds.height() / m_view_rect.height();

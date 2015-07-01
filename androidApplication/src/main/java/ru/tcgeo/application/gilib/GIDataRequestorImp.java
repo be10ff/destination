@@ -3,11 +3,6 @@ package ru.tcgeo.application.gilib;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import ru.tcgeo.gilib.*;
-import ru.tcgeo.gilib.GIControlInfoInPoint;
-import ru.tcgeo.gilib.GIMap;
-import ru.tcgeo.gilib.parser.GIProjectProperties;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,13 +13,16 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.TextView;
 
+import ru.tcgeo.application.R;
+import ru.tcgeo.application.gilib.parser.GIProjectProperties;
+
 public class GIDataRequestorImp implements GIDataRequestor {
 
 	private boolean m_debug;
 	private Context m_context;
 	GIProjectProperties m_project_settings;
 	//GIControlInfoInPoint m_info_control;
-	public ru.tcgeo.gilib.GIMap m_map;
+	public GIMap m_map;
 
 	public class Pair
 	{

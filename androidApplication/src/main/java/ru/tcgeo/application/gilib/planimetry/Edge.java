@@ -8,11 +8,6 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.RectF;
 
-import ru.tcgeo.gilib.planimetry.GIGeometryObject;
-import ru.tcgeo.gilib.planimetry.GIGeometryPolygon;
-import ru.tcgeo.gilib.planimetry.GIShape;
-import ru.tcgeo.gilib.planimetry.Vertex;
-
 public class Edge implements GIGeometryObject
 {
 	public Point m_morton_codes;
@@ -222,13 +217,13 @@ public class Edge implements GIGeometryObject
 	 *  отсечение отрезка ограничивающим rect
 	 *  по Коэну-Сазерленду
 	 */
-	public static ru.tcgeo.gilib.planimetry.Edge Clipping(ru.tcgeo.gilib.planimetry.Edge edge, RectF rect)
+	public static Edge Clipping(Edge edge, RectF rect)
 	{
 		Vertex start = new Vertex(edge.m_start);
 		Vertex end = new Vertex(edge.m_end);
 		while(!((start.getCode(rect) == 0) && (end.getCode(rect) == 0)))
 		{
-			ru.tcgeo.gilib.planimetry.Edge current = new ru.tcgeo.gilib.planimetry.Edge(start, end);
+			Edge current = new Edge(start, end);
 			if((start.getCode(rect) & end.getCode(rect)) != 0)
 			{
 				//invisible
@@ -246,7 +241,7 @@ public class Edge implements GIGeometryObject
 				current.Swap();
 			}
 
-			Vertex intersect = ru.tcgeo.gilib.planimetry.Edge.Intersection(current, rect);
+			Vertex intersect = Edge.Intersection(current, rect);
 			if(intersect == null)
 			{
 				return null;
@@ -262,7 +257,7 @@ public class Edge implements GIGeometryObject
 		}
 		start.SetOriginVisiblity(0);
 		end.SetOriginVisiblity(0);
-		ru.tcgeo.gilib.planimetry.Edge res = new ru.tcgeo.gilib.planimetry.Edge(start, end);
+		Edge res = new Edge(start, end);
 		if(!res.isInOrder(edge))
 		{
 			res.Swap();
@@ -270,14 +265,14 @@ public class Edge implements GIGeometryObject
 		return res;
 	}
 	// by dividing in the middle
-	public static Vertex Intersection_old(ru.tcgeo.gilib.planimetry.Edge edge, RectF rect)
+	public static Vertex Intersection_old(Edge edge, RectF rect)
 	{
 		Vertex start = new Vertex(edge.m_start);
 		Vertex end = new Vertex(edge.m_end);
-		ru.tcgeo.gilib.planimetry.Edge current;
+		Edge current;
 		do
 		{
-			current = new ru.tcgeo.gilib.planimetry.Edge(start, end);
+			current = new Edge(start, end);
 			Vertex med = current.center_point();
 	
 			if((start.getCode(rect) == 0) && (med.getCode(rect) == 0))
@@ -311,7 +306,7 @@ public class Edge implements GIGeometryObject
 	 *  точка пересечения edge с ребрами rect
 	 *  возвращается первая же. Коэн-Сазерленд.
 	 */
-	public static Vertex Intersection(ru.tcgeo.gilib.planimetry.Edge edge, RectF rect)
+	public static Vertex Intersection(Edge edge, RectF rect)
 	{
 		Vertex start = new Vertex(edge.m_start);
 		PointF result = null;
@@ -323,10 +318,10 @@ public class Edge implements GIGeometryObject
 		Vertex right_bottom = new Vertex(new PointF(rect.right, rect.bottom));
 		Vertex left_bottom = new Vertex(new PointF(rect.left, rect.bottom));
 		
-		ru.tcgeo.gilib.planimetry.Edge left = new ru.tcgeo.gilib.planimetry.Edge(left_bottom, left_top);
-		ru.tcgeo.gilib.planimetry.Edge top = new ru.tcgeo.gilib.planimetry.Edge(left_top, right_top);
-		ru.tcgeo.gilib.planimetry.Edge right = new ru.tcgeo.gilib.planimetry.Edge(right_top, right_bottom);
-		ru.tcgeo.gilib.planimetry.Edge bottom = new ru.tcgeo.gilib.planimetry.Edge(right_bottom, left_bottom);
+		Edge left = new Edge(left_bottom, left_top);
+		Edge top = new Edge(left_top, right_top);
+		Edge right = new Edge(right_top, right_bottom);
+		Edge bottom = new Edge(right_bottom, left_bottom);
 		
 		switch(code)
 		{
@@ -458,7 +453,7 @@ public class Edge implements GIGeometryObject
 	 * @param y координата
 	 * @return точка пересечения ; null если ее нет ; центр если отрезок лежит на горизонтали
 	 */
-	public static PointF EdgeIntersectionHorizontal(ru.tcgeo.gilib.planimetry.Edge edge, float y)
+	public static PointF EdgeIntersectionHorizontal(Edge edge, float y)
 	{
 		
 		//if((edge.m_start.m_point.y == y)&&(edge.m_end.m_point.y == y))
@@ -511,7 +506,7 @@ public class Edge implements GIGeometryObject
 	 * @param y горизонталь
 	 * @return true если концы отрезка лежат по разные стороны или на горизонтали
 	 */
-	public static boolean IsEdgeIntersectHorizontal(ru.tcgeo.gilib.planimetry.Edge edge, float y)
+	public static boolean IsEdgeIntersectHorizontal(Edge edge, float y)
 	{
 		return (edge.m_start.y <= y &&  edge.m_end.y >= y) || (edge.m_start.y >= y &&  edge.m_end.y <= y);
 	}
@@ -521,7 +516,7 @@ public class Edge implements GIGeometryObject
 	 * @param y горизонталь
 	 * @return true если концы отрезков лежат по разные стороны или на горизонтали включительно
 	 */
-	public static boolean IsCrossingHorizontal(ru.tcgeo.gilib.planimetry.Edge a, ru.tcgeo.gilib.planimetry.Edge b, float y)
+	public static boolean IsCrossingHorizontal(Edge a, Edge b, float y)
 	{
 		if((a.m_start.y >= y && a.m_end.y >= y && b.m_start.y >= y && b.m_end.y >= y)|| (a.m_start.y <= y && a.m_end.y <= y && b.m_start.y <= y&& b.m_end.y <= y))
 		{
@@ -535,7 +530,7 @@ public class Edge implements GIGeometryObject
 	 * @param y горизонталь
 	 * @return true если Y концов отстоит не больше чем на Vertex.delta от Y
 	 */
-	public static boolean IsCoincidesHorizontal(ru.tcgeo.gilib.planimetry.Edge a, float y)
+	public static boolean IsCoincidesHorizontal(Edge a, float y)
 	{
 		if( (Math.abs(a.m_start.y - y) < Vertex.delta) && (Math.abs(a.m_end.y - y) < Vertex.delta) )
 		{
@@ -549,7 +544,7 @@ public class Edge implements GIGeometryObject
 	 * @param edge интересующий отрезок
 	 * @return 
 	 */
-	public boolean CanBeJoin(ru.tcgeo.gilib.planimetry.Edge edge)
+	public boolean CanBeJoin(Edge edge)
 	{
 		if(!((Math.abs(edge.m_start.y - m_start.y) < Vertex.delta) && (Math.abs(edge.m_end.y - m_end.y) < Vertex.delta) && (Math.abs(edge.m_start.y - edge.m_end.y) < Vertex.delta)))
 		{
@@ -568,7 +563,7 @@ public class Edge implements GIGeometryObject
 	 * @param edge отрезок для объединения
 	 * @return объединенный
 	 */
-	public ru.tcgeo.gilib.planimetry.Edge Join(ru.tcgeo.gilib.planimetry.Edge edge)
+	public Edge Join(Edge edge)
 	{
 		float left = Math.min(m_start.x, edge.m_start.x);
 		left = Math.min(left, m_end.x);
@@ -578,9 +573,9 @@ public class Edge implements GIGeometryObject
 		right = Math.max( right, m_start.x);		
 		right = Math.max( right,  edge.m_start.x);		
 		float y = m_start.y;
-		return new ru.tcgeo.gilib.planimetry.Edge(new Vertex(new PointF(left, y)), new Vertex(new PointF(right, y)));
+		return new Edge(new Vertex(new PointF(left, y)), new Vertex(new PointF(right, y)));
 	}
-	public static ru.tcgeo.gilib.planimetry.Edge LeftOfTwo(ru.tcgeo.gilib.planimetry.Edge a, ru.tcgeo.gilib.planimetry.Edge b)
+	public static Edge LeftOfTwo(Edge a, Edge b)
 	{
 		if(a.CanBeJoin(b))
 		{
@@ -598,7 +593,7 @@ public class Edge implements GIGeometryObject
 			}
 		}
 	}
-	public static ru.tcgeo.gilib.planimetry.Edge RightOfTwo(ru.tcgeo.gilib.planimetry.Edge a, ru.tcgeo.gilib.planimetry.Edge b)
+	public static Edge RightOfTwo(Edge a, Edge b)
 	{
 		if(a.CanBeJoin(b))
 		{
@@ -616,7 +611,7 @@ public class Edge implements GIGeometryObject
 			}
 		}
 	}
-	public static ru.tcgeo.gilib.planimetry.Edge NearestToPointOfTwo(ru.tcgeo.gilib.planimetry.Edge a, ru.tcgeo.gilib.planimetry.Edge b, PointF point)
+	public static Edge NearestToPointOfTwo(Edge a, Edge b, PointF point)
 	{
 		/*if(a.CanBeJoin(b))
 		{
@@ -641,7 +636,7 @@ public class Edge implements GIGeometryObject
 	 * координата Х вектора отрезка
 	 * @return m_end.x - m_start.x
 	 */
-	public static float vectorX(ru.tcgeo.gilib.planimetry.Edge edge)
+	public static float vectorX(Edge edge)
 	{
 		return edge.m_end.x - edge.m_start.x;
 	}
@@ -649,7 +644,7 @@ public class Edge implements GIGeometryObject
 	 * координата Y вектора отрезка
 	 * @return m_end.y - m_start.y
 	 */
-	public static float vectorY(ru.tcgeo.gilib.planimetry.Edge edge)
+	public static float vectorY(Edge edge)
 	{
 		return edge.m_end.y -edge.m_start.y;
 	}
@@ -658,10 +653,10 @@ public class Edge implements GIGeometryObject
 	 * @param edge отрезок для сравнения
 	 * @return скалярное произведение < Vertex.delta
 	 */
-	public  boolean IsCoLinear(ru.tcgeo.gilib.planimetry.Edge edge)
+	public  boolean IsCoLinear(Edge edge)
 	{
 		//if(Math.abs(vectorX()*edge.vectorY() - vectorY()*edge.vectorX()) < Vertex.delta)
-		if(Math.abs(ru.tcgeo.gilib.planimetry.Edge.vectorMultiplication(this, edge)) < Vertex.delta)
+		if(Math.abs(Edge.vectorMultiplication(this, edge)) < Vertex.delta)
 		{
 			return true;
 		}
@@ -673,7 +668,7 @@ public class Edge implements GIGeometryObject
 	 * @param edge интересующий отрезок
 	 * @return по скалярным координатам. (в параметрических проще)
 	 */
-	public boolean IsIncluded(ru.tcgeo.gilib.planimetry.Edge edge)
+	public boolean IsIncluded(Edge edge)
 	{
 
 		if(IsCoLinear(edge))
@@ -794,7 +789,7 @@ public class Edge implements GIGeometryObject
 
 		return false;
 	}	
-	public boolean IsOnLine(ru.tcgeo.gilib.planimetry.Edge edge)
+	public boolean IsOnLine(Edge edge)
 	{
 
 		if(IsCoLinear(edge))
@@ -835,13 +830,13 @@ public class Edge implements GIGeometryObject
 		return false;
 	}
 	
-	public  ArrayList<ru.tcgeo.gilib.planimetry.Edge> Difference(ru.tcgeo.gilib.planimetry.Edge edge)
+	public  ArrayList<Edge> Difference(Edge edge)
 	{
 		if(!IsOnLine(edge))
 		{
 			return null;
 		}
-		ArrayList<ru.tcgeo.gilib.planimetry.Edge> result = new ArrayList<ru.tcgeo.gilib.planimetry.Edge>();
+		ArrayList<Edge> result = new ArrayList<Edge>();
 		if( !isInOrder(edge))
 		{
 			edge.Swap();
@@ -854,8 +849,8 @@ public class Edge implements GIGeometryObject
 			//1
 			if(end_in_edge)
 			{
-				ru.tcgeo.gilib.planimetry.Edge part_start = new ru.tcgeo.gilib.planimetry.Edge(m_start, edge.m_start);
-				ru.tcgeo.gilib.planimetry.Edge part_end = new ru.tcgeo.gilib.planimetry.Edge(edge.m_end, m_end);
+				Edge part_start = new Edge(m_start, edge.m_start);
+				Edge part_end = new Edge(edge.m_end, m_end);
 				result.add(part_start);
 				result.add(part_end);
 				return result;
@@ -863,14 +858,14 @@ public class Edge implements GIGeometryObject
 			//7
 			if(HasPointAsEnd(edge.m_end))
 			{
-				ru.tcgeo.gilib.planimetry.Edge one_summ = new ru.tcgeo.gilib.planimetry.Edge( m_start, edge.m_start);
+				Edge one_summ = new Edge( m_start, edge.m_start);
 				result.add(one_summ);
 				return result;
 			}
 			//3
 			//if(!IsIncluded(edge.m_end.m_point))
-			ru.tcgeo.gilib.planimetry.Edge part_start = new ru.tcgeo.gilib.planimetry.Edge(m_start, edge.m_start);
-			ru.tcgeo.gilib.planimetry.Edge part_end = new ru.tcgeo.gilib.planimetry.Edge(m_end, edge.m_end);
+			Edge part_start = new Edge(m_start, edge.m_start);
+			Edge part_end = new Edge(m_end, edge.m_end);
 			result.add(part_start);
 			result.add(part_end);
 			return result;
@@ -880,13 +875,13 @@ public class Edge implements GIGeometryObject
 			//6
 			if(HasPointAsEnd(edge.m_start))
 			{
-				ru.tcgeo.gilib.planimetry.Edge one_summ = new ru.tcgeo.gilib.planimetry.Edge(edge.m_end, m_end);
+				Edge one_summ = new Edge(edge.m_end, m_end);
 				result.add(one_summ);
 				return result;
 			}
 			//2
-			ru.tcgeo.gilib.planimetry.Edge part_start = new ru.tcgeo.gilib.planimetry.Edge(edge.m_start, m_start);
-			ru.tcgeo.gilib.planimetry.Edge part_end = new ru.tcgeo.gilib.planimetry.Edge(edge.m_end, m_end);
+			Edge part_start = new Edge(edge.m_start, m_start);
+			Edge part_end = new Edge(edge.m_end, m_end);
 			result.add(part_start);
 			result.add(part_end);
 			return result;
@@ -896,7 +891,7 @@ public class Edge implements GIGeometryObject
 			//5.1
 			if(edge.IsIncluded(this.m_end))
 			{
-				ru.tcgeo.gilib.planimetry.Edge one_summ = new ru.tcgeo.gilib.planimetry.Edge(m_end, edge.m_end);
+				Edge one_summ = new Edge(m_end, edge.m_end);
 				result.add(one_summ);
 				return result;
 			}
@@ -906,10 +901,10 @@ public class Edge implements GIGeometryObject
 				//10
 				if(HasPointAsEnd(edge.m_end))
 				{
-					return new ArrayList<ru.tcgeo.gilib.planimetry.Edge>();
+					return new ArrayList<Edge>();
 				}
 				//5
-				ru.tcgeo.gilib.planimetry.Edge one_summ = new ru.tcgeo.gilib.planimetry.Edge(m_start, edge.m_end);
+				Edge one_summ = new Edge(m_start, edge.m_end);
 				result.add(one_summ);
 				return result;
 			}
@@ -919,14 +914,14 @@ public class Edge implements GIGeometryObject
 			//4.1
 			if(edge.IsIncluded(this.m_start))
 			{
-				ru.tcgeo.gilib.planimetry.Edge one_summ = new ru.tcgeo.gilib.planimetry.Edge(m_start, edge.m_start);
+				Edge one_summ = new Edge(m_start, edge.m_start);
 				result.add(one_summ);
 				return result;
 			}
 			//4
 			else
 			{
-				ru.tcgeo.gilib.planimetry.Edge one_summ = new ru.tcgeo.gilib.planimetry.Edge( edge.m_start, m_end);
+				Edge one_summ = new Edge( edge.m_start, m_end);
 				result.add(one_summ);
 				return result;
 			}
@@ -934,17 +929,17 @@ public class Edge implements GIGeometryObject
 		//8
 		if(edge.IsIncluded(m_start) && edge.IsIncluded(m_end))
 		{
-			ru.tcgeo.gilib.planimetry.Edge part_start = new ru.tcgeo.gilib.planimetry.Edge(edge.m_start, m_start);
-			ru.tcgeo.gilib.planimetry.Edge part_end = new ru.tcgeo.gilib.planimetry.Edge(m_end, edge.m_end);
+			Edge part_start = new Edge(edge.m_start, m_start);
+			Edge part_end = new Edge(m_end, edge.m_end);
 			result.add(part_start);
 			result.add(part_end);
 			return result;
 		}
 		return null;
 	}
-	public  ArrayList<ru.tcgeo.gilib.planimetry.Edge> Substraction(ru.tcgeo.gilib.planimetry.Edge edge)
+	public  ArrayList<Edge> Substraction(Edge edge)
 	{
-		ArrayList<ru.tcgeo.gilib.planimetry.Edge> result = new ArrayList<ru.tcgeo.gilib.planimetry.Edge>();
+		ArrayList<Edge> result = new ArrayList<Edge>();
 		if(!IsOnLine(edge))
 		{
 			return null;
@@ -967,8 +962,8 @@ public class Edge implements GIGeometryObject
 			//    |----|
 			if(end_in_edge)
 			{
-				ru.tcgeo.gilib.planimetry.Edge part_start = new ru.tcgeo.gilib.planimetry.Edge(m_start, edge.m_start);
-				ru.tcgeo.gilib.planimetry.Edge part_end = new ru.tcgeo.gilib.planimetry.Edge(edge.m_end, m_end);
+				Edge part_start = new Edge(m_start, edge.m_start);
+				Edge part_end = new Edge(edge.m_end, m_end);
 				result.add(part_start);
 				result.add(part_end);
 				return result;
@@ -978,7 +973,7 @@ public class Edge implements GIGeometryObject
 			//       |----|
 			if(HasPointAsEnd(edge.m_end))
 			{
-				ru.tcgeo.gilib.planimetry.Edge one_summ = new ru.tcgeo.gilib.planimetry.Edge( m_start, edge.m_start);
+				Edge one_summ = new Edge( m_start, edge.m_start);
 				result.add(one_summ);
 				result.add(null);
 				return result;
@@ -987,7 +982,7 @@ public class Edge implements GIGeometryObject
 			// |----------|
 			//         |----|
 			//if(!IsIncluded(edge.m_end.m_point))
-			ru.tcgeo.gilib.planimetry.Edge part_start = new ru.tcgeo.gilib.planimetry.Edge(m_start, edge.m_start);
+			Edge part_start = new Edge(m_start, edge.m_start);
 			//Edge part_end = new Edge(m_end, edge.m_end);
 			result.add(part_start);
 			result.add(null);
@@ -1001,7 +996,7 @@ public class Edge implements GIGeometryObject
 			// |----|
 			if(HasPointAsEnd(edge.m_start))
 			{
-				ru.tcgeo.gilib.planimetry.Edge one_summ = new ru.tcgeo.gilib.planimetry.Edge(edge.m_end, m_end);
+				Edge one_summ = new Edge(edge.m_end, m_end);
 				result.add(null);
 				result.add(one_summ);
 				return result;
@@ -1010,7 +1005,7 @@ public class Edge implements GIGeometryObject
 			//    |----------|
 			// |----|
 			//Edge part_start = new Edge(edge.m_start, m_start);
-			ru.tcgeo.gilib.planimetry.Edge part_end = new ru.tcgeo.gilib.planimetry.Edge(edge.m_end, m_end);
+			Edge part_end = new Edge(edge.m_end, m_end);
 			//result.add(part_start);
 			result.add(null);
 			result.add(part_end);
@@ -1202,7 +1197,7 @@ public class Edge implements GIGeometryObject
 	 *  null если почти паралельны
 	 *  (Math.abs(Determinant) < 0.0001)
 	 */
-	public PointF IntersectionAsLines(ru.tcgeo.gilib.planimetry.Edge edge)
+	public PointF IntersectionAsLines(Edge edge)
 	{
 		PointF a1 = m_start;
 		PointF b1 = m_end;
@@ -1235,7 +1230,7 @@ public class Edge implements GIGeometryObject
 		
 		return res;
 	}
-	public PointF intersectionAsEdgesSmooth(ru.tcgeo.gilib.planimetry.Edge edge)
+	public PointF intersectionAsEdgesSmooth(Edge edge)
 	{
 		PointF res = intersectionAsEdges(edge);
 		if(res != null)
@@ -1267,7 +1262,7 @@ public class Edge implements GIGeometryObject
 	 * @return точка исключительного пересечения this  с edge.
 	 * null если такой нет (или она совпадает с концом одного из отрезков)
 	 */
-	public PointF intersectionAsEdgesStrong(ru.tcgeo.gilib.planimetry.Edge edge)
+	public PointF intersectionAsEdgesStrong(Edge edge)
 	{
 		PointF res = intersectionAsEdges(edge);
 		if(res != null)
@@ -1296,7 +1291,7 @@ public class Edge implements GIGeometryObject
 	 *  точка включающего пересечения this  с edge. 
 	 *  null если такой нет 
 	 */
-	private PointF intersectionAsEdges(ru.tcgeo.gilib.planimetry.Edge edge)
+	private PointF intersectionAsEdges(Edge edge)
 	{
 		//PointF a1 = m_start;
 		//PointF b1 = m_end;
@@ -1311,12 +1306,12 @@ public class Edge implements GIGeometryObject
 
 		return check;
 	}
-	public double AngleBetween(ru.tcgeo.gilib.planimetry.Edge edge)
+	public double AngleBetween(Edge edge)
 	{
 		float Ax = vectorX(this);
 		float Ay = vectorY(this);
-		float Bx = ru.tcgeo.gilib.planimetry.Edge.vectorX(edge);
-		float By = ru.tcgeo.gilib.planimetry.Edge.vectorY(edge);
+		float Bx = Edge.vectorX(edge);
+		float By = Edge.vectorY(edge);
 		float cosA = (Ax*Bx +Ay*By)/(Lenght()*edge.Lenght());
 		double angle = Math.acos(cosA);
 		return angle;
@@ -1351,9 +1346,9 @@ public class Edge implements GIGeometryObject
 	/**unchecked  
 	 * Два Edge отстоящие от this на delta  
      */
-	private ArrayList<ru.tcgeo.gilib.planimetry.Edge> Offset(float delta)
+	private ArrayList<Edge> Offset(float delta)
 	{
-		ArrayList<ru.tcgeo.gilib.planimetry.Edge> result = new ArrayList<ru.tcgeo.gilib.planimetry.Edge>();
+		ArrayList<Edge> result = new ArrayList<Edge>();
 		double alpha = Math.atan(Tan());
 		PointF s1 = new PointF(); 
 		PointF s2 = new PointF(); 
@@ -1372,9 +1367,9 @@ public class Edge implements GIGeometryObject
 		e2.x = (float) (m_end.x - delta*Math.sin(alpha));
 		e2.y = (float) (m_end.y - delta*Math.cos(alpha));
 		
-		ru.tcgeo.gilib.planimetry.Edge one = new ru.tcgeo.gilib.planimetry.Edge( new Vertex(s1), new Vertex (e1));
+		Edge one = new Edge( new Vertex(s1), new Vertex (e1));
 		result.add(one);
-		one = new ru.tcgeo.gilib.planimetry.Edge( new Vertex(s2), new Vertex (e2));
+		one = new Edge( new Vertex(s2), new Vertex (e2));
 		result.add(one);		
 		m_text_bounds = result;
 		return result;
@@ -1429,7 +1424,7 @@ public class Edge implements GIGeometryObject
 		return res;
 
 	}
-	public PointF WitchPointOfEdgeHasProjectedAsPointOnThisEdge(ru.tcgeo.gilib.planimetry.Edge edge, PointF point)
+	public PointF WitchPointOfEdgeHasProjectedAsPointOnThisEdge(Edge edge, PointF point)
 	{
 		//PointF intersection = IntersectionAsLines(edge);
 		
@@ -1490,7 +1485,7 @@ public class Edge implements GIGeometryObject
 		PointF result = new PointF(x, y);
 		return result;
 	}
-	public PointF PointOfBoundaryIntrsection(ru.tcgeo.gilib.planimetry.Edge edge, ru.tcgeo.gilib.planimetry.Edge bound, float height)
+	public PointF PointOfBoundaryIntrsection(Edge edge, Edge bound, float height)
 	{
 		//PointF OfAxes =  intersectionAsEdgesSmooth(edge);
 		
@@ -1504,14 +1499,14 @@ public class Edge implements GIGeometryObject
 		{
 			return null;
 		}
-		ru.tcgeo.gilib.planimetry.Edge vector = new ru.tcgeo.gilib.planimetry.Edge(new Vertex(OfAxes), new Vertex(OfAxeNBound));
+		Edge vector = new Edge(new Vertex(OfAxes), new Vertex(OfAxeNBound));
 		double angle = AngleBetween(edge); 
 		int sign = 1;
 		if(angle <= Math.PI/2)
 		{
 			sign = -1;
 		}
-		ru.tcgeo.gilib.planimetry.Edge res = vector.VectorXk((float)(1 - sign*height/(Math.tan(angle)*vector.Lenght())));
+		Edge res = vector.VectorXk((float)(1 - sign*height/(Math.tan(angle)*vector.Lenght())));
 		//OfAxeNBound.x = OfAxeNBound.x + vector.vectorX();
 		//OfAxeNBound.y = OfAxeNBound.y + vector.vectorY();
 		
@@ -1520,39 +1515,39 @@ public class Edge implements GIGeometryObject
 		
 		return result;
 	}
-	public ru.tcgeo.gilib.planimetry.Edge VectorFromStart(PointF start, ru.tcgeo.gilib.planimetry.Edge vector)
+	public Edge VectorFromStart(PointF start, Edge vector)
 	{
-		float x = start.x + ru.tcgeo.gilib.planimetry.Edge.vectorX(vector);
-		float y = start.y + ru.tcgeo.gilib.planimetry.Edge.vectorY(vector);
+		float x = start.x + Edge.vectorX(vector);
+		float y = start.y + Edge.vectorY(vector);
 		PointF end = new PointF(x, y);
-		ru.tcgeo.gilib.planimetry.Edge res = new ru.tcgeo.gilib.planimetry.Edge(new Vertex(start), new Vertex(end));
+		Edge res = new Edge(new Vertex(start), new Vertex(end));
 		return res;
 	}
-	public ru.tcgeo.gilib.planimetry.Edge VectorXk(float k)
+	public Edge VectorXk(float k)
 	{
 		float x = m_start.x + vectorX(this)*k;
 		float y = m_start.y + vectorY(this)*k;
 		PointF end = new PointF(x, y);
-		ru.tcgeo.gilib.planimetry.Edge res = new ru.tcgeo.gilib.planimetry.Edge(m_start, new Vertex(end));
+		Edge res = new Edge(m_start, new Vertex(end));
 		return res;
 	}
 	
 	/**векторная сумма  */
-	public ru.tcgeo.gilib.planimetry.Edge VerctorSumm(ru.tcgeo.gilib.planimetry.Edge edge)
+	public Edge VerctorSumm(Edge edge)
 	{
-		return new ru.tcgeo.gilib.planimetry.Edge(new PointF(0, 0), new PointF(vectorX(this) + ru.tcgeo.gilib.planimetry.Edge.vectorX(edge), vectorY(this) + ru.tcgeo.gilib.planimetry.Edge.vectorY(edge)));
+		return new Edge(new PointF(0, 0), new PointF(vectorX(this) + Edge.vectorX(edge), vectorY(this) + Edge.vectorY(edge)));
 	}
 	
 	/**векторная разность this - edge  */
-	public ru.tcgeo.gilib.planimetry.Edge VerctorDiff(ru.tcgeo.gilib.planimetry.Edge edge)
+	public Edge VerctorDiff(Edge edge)
 	{
-		return new ru.tcgeo.gilib.planimetry.Edge(new PointF(0, 0), new PointF(vectorX(this) - ru.tcgeo.gilib.planimetry.Edge.vectorX(edge), vectorY(this) - ru.tcgeo.gilib.planimetry.Edge.vectorY(edge)));
+		return new Edge(new PointF(0, 0), new PointF(vectorX(this) - Edge.vectorX(edge), vectorY(this) - Edge.vectorY(edge)));
 	}
 	
     /**unchecked  
      * Определяется пересечение прямоугольника с медианой совпадающей с отрезком и высотой 2*offset
      */
-	public boolean IsOffsetedIntersect(ru.tcgeo.gilib.planimetry.Edge edge, float offset)
+	public boolean IsOffsetedIntersect(Edge edge, float offset)
 	{
 		/*if(intersectionAsEdgesSmooth(edge) != null)
 		{
@@ -1645,9 +1640,9 @@ public class Edge implements GIGeometryObject
 	 * @param delta половина высоты прямоугольника, построенного на отрезке как медиане 
 	 * @return 
 	 */
-	public ru.tcgeo.gilib.planimetry.Edge IncludedEdgeByGeometry(ArrayList<Vertex> geometry, float delta)
+	public Edge IncludedEdgeByGeometry(ArrayList<Vertex> geometry, float delta)
 	{
-		ArrayList<ru.tcgeo.gilib.planimetry.Edge> boudaries = getTextBounds(delta);
+		ArrayList<Edge> boudaries = getTextBounds(delta);
 		//начальная и конечная точки
 		//PointF max = null;
 		//PointF min = null;
@@ -1657,7 +1652,7 @@ public class Edge implements GIGeometryObject
 		//ищем пересечения с основаниями ограничивающего прямоугольника
 		for(int i = 0; i < boudaries.size(); i++)
 		{
-			ru.tcgeo.gilib.planimetry.Edge current = boudaries.get(i);
+			Edge current = boudaries.get(i);
 			float[] coords =  current.ParametricCoordsOfSectionByPolygon(geometry);
 			if(coords != null)
 			{
@@ -1688,9 +1683,9 @@ public class Edge implements GIGeometryObject
 	 * @param delta половина высоты прямоугольника, построенного на отрезке как медиане 
 	 * @return 
 	 */
-	public ru.tcgeo.gilib.planimetry.Edge ExcludingEdgeByGeometry(ArrayList<Vertex> geometry, float delta)
+	public Edge ExcludingEdgeByGeometry(ArrayList<Vertex> geometry, float delta)
 	{
-		ArrayList<ru.tcgeo.gilib.planimetry.Edge> boudaries = getTextBounds(delta);
+		ArrayList<Edge> boudaries = getTextBounds(delta);
 		//начальная и конечная точки
 		//PointF max = null;
 		//PointF min = null;
@@ -1700,7 +1695,7 @@ public class Edge implements GIGeometryObject
 		//ищем пересечения с основаниями ограничивающего прямоугольника
 		for(int i = 0; i < boudaries.size(); i++)
 		{
-			ru.tcgeo.gilib.planimetry.Edge current = boudaries.get(i);
+			Edge current = boudaries.get(i);
 			float[] coords =  current.ParametricCoordsOfSectionByPolygon(geometry);
 			if(coords != null)
 			{
@@ -1730,7 +1725,7 @@ public class Edge implements GIGeometryObject
 	 */
 	public float[] ExcludingCoordsByGeometry(ArrayList<Vertex> geometry, float delta) 
 	{
-		ArrayList<ru.tcgeo.gilib.planimetry.Edge> boudaries = getTextBounds(delta);
+		ArrayList<Edge> boudaries = getTextBounds(delta);
 		//начальная и конечная точки
 		//PointF max = null;
 		//PointF min = null;
@@ -1740,7 +1735,7 @@ public class Edge implements GIGeometryObject
 		//ищем пересечения с основаниями ограничивающего прямоугольника
 		for(int i = 0; i < boudaries.size(); i++)
 		{
-			ru.tcgeo.gilib.planimetry.Edge current = boudaries.get(i);
+			Edge current = boudaries.get(i);
 			float[] coords =  current.ParametricCoordsOfSectionByPolygon(geometry);
 			if(coords != null)
 			{
@@ -1771,12 +1766,12 @@ public class Edge implements GIGeometryObject
 	 * @param delta половина высоты прямоугольника, построенного на отрезке как медиане 
 	 * @return 
 	 */
-	public ru.tcgeo.gilib.planimetry.Edge ExcludingEdgeByGeometry_old(GIGeometryPolygon geometry, float delta)
+	public Edge ExcludingEdgeByGeometry_old(GIGeometryPolygon geometry, float delta)
 	{
-		ArrayList<ru.tcgeo.gilib.planimetry.Edge> boudaries = getTextBounds(delta);
-		boudaries.add(new ru.tcgeo.gilib.planimetry.Edge(boudaries.get(0).m_start, boudaries.get(1).m_start ));
-		boudaries.add(new ru.tcgeo.gilib.planimetry.Edge(boudaries.get(0).m_end, boudaries.get(1).m_end ));
-		ArrayList<ru.tcgeo.gilib.planimetry.Edge> edges = geometry.MakeEdgesRing();
+		ArrayList<Edge> boudaries = getTextBounds(delta);
+		boudaries.add(new Edge(boudaries.get(0).m_start, boudaries.get(1).m_start ));
+		boudaries.add(new Edge(boudaries.get(0).m_end, boudaries.get(1).m_end ));
+		ArrayList<Edge> edges = geometry.MakeEdgesRing();
 		//GIGeometryPolygon current_polygon = GetOffsetGeomerty(delta);
 		//ищем попавшие в область вершины
 		PointF max = null;
@@ -1794,10 +1789,10 @@ public class Edge implements GIGeometryObject
 		//точки пересечения границ текстовой области с ребрами геометрии
 		for(int i = 0; i < boudaries.size(); i++)
 		{
-			ru.tcgeo.gilib.planimetry.Edge current = boudaries.get(i);
+			Edge current = boudaries.get(i);
 			for(int j = 0; j < edges.size(); j++)
 			{
-				ru.tcgeo.gilib.planimetry.Edge compare = edges.get(j);
+				Edge compare = edges.get(j);
  				PointF point = current.intersectionAsEdgesSmooth(compare);
 				if(point != null)
 				{
@@ -1819,17 +1814,17 @@ public class Edge implements GIGeometryObject
 		}
 		if((max != null) && (min != null))
 		{
-			ru.tcgeo.gilib.planimetry.Edge result = new ru.tcgeo.gilib.planimetry.Edge(new Vertex(min), new Vertex(max));
+			Edge result = new Edge(new Vertex(min), new Vertex(max));
 			return result;
 		}
 		return null;
 	}
-	public ru.tcgeo.gilib.planimetry.Edge ExcludingEdgeByGeometry_old_old(GIGeometryPolygon geometry, float delta)
+	public Edge ExcludingEdgeByGeometry_old_old(GIGeometryPolygon geometry, float delta)
 	{
-		ArrayList<ru.tcgeo.gilib.planimetry.Edge> boudaries = getTextBounds(delta);
-		boudaries.add(new ru.tcgeo.gilib.planimetry.Edge(boudaries.get(0).m_start, boudaries.get(1).m_start ));
-		boudaries.add(new ru.tcgeo.gilib.planimetry.Edge(boudaries.get(0).m_end, boudaries.get(1).m_end ));
-		ArrayList<ru.tcgeo.gilib.planimetry.Edge> edges = geometry.MakeEdgesRing();
+		ArrayList<Edge> boudaries = getTextBounds(delta);
+		boudaries.add(new Edge(boudaries.get(0).m_start, boudaries.get(1).m_start ));
+		boudaries.add(new Edge(boudaries.get(0).m_end, boudaries.get(1).m_end ));
+		ArrayList<Edge> edges = geometry.MakeEdgesRing();
 
 		PointF max = null;
 		PointF min = null;
@@ -1846,10 +1841,10 @@ public class Edge implements GIGeometryObject
 		//точки пересечения границ текстовой области с ребрами геометрии
 		for(int i = 0; i < boudaries.size(); i++)
 		{
-			ru.tcgeo.gilib.planimetry.Edge current = boudaries.get(i);
+			Edge current = boudaries.get(i);
 			for(int j = 0; j < edges.size(); j++)
 			{
-				ru.tcgeo.gilib.planimetry.Edge compare = edges.get(j);
+				Edge compare = edges.get(j);
  				PointF point = current.intersectionAsEdgesSmooth(compare);
 				if(point != null)
 				{
@@ -1871,7 +1866,7 @@ public class Edge implements GIGeometryObject
 		}
 		if((max != null) && (min != null))
 		{
-			ru.tcgeo.gilib.planimetry.Edge result = new ru.tcgeo.gilib.planimetry.Edge(new Vertex(min), new Vertex(max));
+			Edge result = new Edge(new Vertex(min), new Vertex(max));
 			return result;
 		}
 		return null;
@@ -1909,7 +1904,7 @@ public class Edge implements GIGeometryObject
      */
 	public GIGeometryPolygon GetOffsetGeomerty(float delta)
 	{
-		ArrayList<ru.tcgeo.gilib.planimetry.Edge> offset = getTextBounds(delta);
+		ArrayList<Edge> offset = getTextBounds(delta);
 		GIGeometryPolygon result = new GIGeometryPolygon();
 		result.add(offset.get(0).m_start);
 		result.add(offset.get(0).m_end);
@@ -1926,7 +1921,7 @@ public class Edge implements GIGeometryObject
 	public ArrayList<Vertex> GetOffsetVertexes(float delta)
 	{
 		//ArrayList<Edge> offset = Offset(delta);
-		ArrayList<ru.tcgeo.gilib.planimetry.Edge> offset = getTextBounds(delta);
+		ArrayList<Edge> offset = getTextBounds(delta);
 		ArrayList<Vertex> result = new ArrayList<Vertex>();
 		result.add(offset.get(0).m_start);
 		result.add(offset.get(0).m_end);
@@ -1942,9 +1937,9 @@ public class Edge implements GIGeometryObject
 	 * @return исходный отрезок если excluded_parts null или пустой, массив оставшихся отрезков в другом случае
 	 * 
 	 */
-	public ArrayList<ru.tcgeo.gilib.planimetry.Edge> ExcludeAll(ArrayList<ru.tcgeo.gilib.planimetry.Edge> excluded_parts)
+	public ArrayList<Edge> ExcludeAll(ArrayList<Edge> excluded_parts)
 	{
-		ArrayList<ru.tcgeo.gilib.planimetry.Edge> result = new ArrayList<ru.tcgeo.gilib.planimetry.Edge>();
+		ArrayList<Edge> result = new ArrayList<Edge>();
 		result.add(this);
 		if(excluded_parts == null)
 		{
@@ -1952,19 +1947,19 @@ public class Edge implements GIGeometryObject
 		}
 		for(int i = 0; i < excluded_parts.size(); i++)
 		{
-			ru.tcgeo.gilib.planimetry.Edge to_exclude = excluded_parts.get(i);
+			Edge to_exclude = excluded_parts.get(i);
 			boolean happends = false;
 			int edge_counter = 0;
 			while(edge_counter < result.size())
 			{
-				ru.tcgeo.gilib.planimetry.Edge current_edge = result.get(edge_counter);
-				ArrayList<ru.tcgeo.gilib.planimetry.Edge> substraction = current_edge.Substraction(to_exclude);
+				Edge current_edge = result.get(edge_counter);
+				ArrayList<Edge> substraction = current_edge.Substraction(to_exclude);
 				//TODO
 				if(substraction != null)
 				{
 	
-					ru.tcgeo.gilib.planimetry.Edge start_part = substraction.get(0);
-					ru.tcgeo.gilib.planimetry.Edge end_part = substraction.get(1);
+					Edge start_part = substraction.get(0);
+					Edge end_part = substraction.get(1);
 					//из одного edge получаем два
 					if(end_part != null)
 					{
@@ -2006,20 +2001,20 @@ public class Edge implements GIGeometryObject
 		for(int i = 0; i < polygon.size() - 1; i++)
 		{
 			//this - секомый отрезок
-			ru.tcgeo.gilib.planimetry.Edge P = this;
+			Edge P = this;
 			//R текущее ребро 
-			ru.tcgeo.gilib.planimetry.Edge Fi = new ru.tcgeo.gilib.planimetry.Edge(polygon.get(i), polygon.get(i+1));
+			Edge Fi = new Edge(polygon.get(i), polygon.get(i+1));
 			//нормаль к ребру
 			//Edge Ni = Fi.VectorNormal();
-			ru.tcgeo.gilib.planimetry.Edge Ni = ru.tcgeo.gilib.planimetry.Edge.VectorNormal(Fi);
+			Edge Ni = Edge.VectorNormal(Fi);
 			//скалярное произведение . определяет взаимную ориентацию отрезка и ребра
 			//float pi = P.scalarMultiplication(Ni);
-			float pi = ru.tcgeo.gilib.planimetry.Edge.scalarMultiplication(P, Ni);
+			float pi = Edge.scalarMultiplication(P, Ni);
 			//вектор Qt = V(t) - F начинающийся в начальной точке ребра окна и заканчивающийся в некоторой точке V(t) удлиненной линии.
 			//Edge Qt = P.VerctorDiff(Fi);
-			ru.tcgeo.gilib.planimetry.Edge Qt = new ru.tcgeo.gilib.planimetry.Edge(polygon.get(i), P.m_start);
+			Edge Qt = new Edge(polygon.get(i), P.m_start);
 			//скалярное произведение  Qt*Ni
-			float qi = ru.tcgeo.gilib.planimetry.Edge.scalarMultiplication(Qt, Ni);
+			float qi = Edge.scalarMultiplication(Qt, Ni);
 			
 			//вырожден в точку либо паралелен стороне
 			if(pi == 0)
@@ -2078,7 +2073,7 @@ public class Edge implements GIGeometryObject
 	/**
 	 * пересечение двух отрезков
 	 */
-	public static boolean ParametricIntersection(ru.tcgeo.gilib.planimetry.Edge one, ru.tcgeo.gilib.planimetry.Edge other)
+	public static boolean ParametricIntersection(Edge one, Edge other)
 	{
 		
 		
@@ -2115,9 +2110,9 @@ public class Edge implements GIGeometryObject
 		return true;
 	}
 	
-	public static double Angle(ru.tcgeo.gilib.planimetry.Edge one, ru.tcgeo.gilib.planimetry.Edge two)
+	public static double Angle(Edge one, Edge two)
 	{
-		return Math.atan2(ru.tcgeo.gilib.planimetry.Edge.vectorMultiplication(one, two), ru.tcgeo.gilib.planimetry.Edge.scalarMultiplication(one, two));
+		return Math.atan2(Edge.vectorMultiplication(one, two), Edge.scalarMultiplication(one, two));
 	}
 	/**
 	 * ParametricCoordsOfSectionByPolygon похоже не работает
@@ -2134,18 +2129,18 @@ public class Edge implements GIGeometryObject
 		for(int i = 0; i < polygon.size() - 1; i++)
 		{
 			//this - секомый отрезок
-			ru.tcgeo.gilib.planimetry.Edge P = this;
+			Edge P = this;
 			//R текущее ребро 
-			ru.tcgeo.gilib.planimetry.Edge Fi = new ru.tcgeo.gilib.planimetry.Edge(polygon.get(i), polygon.get(i+1));
+			Edge Fi = new Edge(polygon.get(i), polygon.get(i+1));
 			//нормаль к ребру
 			//Edge Ni = Fi.VectorNormal();
-			ru.tcgeo.gilib.planimetry.Edge Ni =  new ru.tcgeo.gilib.planimetry.Edge(0, 0, (Fi.m_end.y - Fi.m_start.y), (Fi.m_start.x - Fi.m_end.x));
+			Edge Ni =  new Edge(0, 0, (Fi.m_end.y - Fi.m_start.y), (Fi.m_start.x - Fi.m_end.x));
 			//скалярное произведение . определяет взаимную ориентацию отрезка и ребра
 			//double pi = Edge.scalarMultiplication(P, Ni);
 			double pi = (P.m_end.x - P.m_start.x)*(Ni.m_end.x - Ni.m_start.x) + (P.m_end.y - P.m_start.y)*(Ni.m_end.y - Ni.m_start.y);
 			//вектор Qt = V(t) - F начинающийся в начальной точке ребра окна и заканчивающийся в некоторой точке V(t) удлиненной линии.
 			//Edge Qt = P.VerctorDiff(Fi);
-			ru.tcgeo.gilib.planimetry.Edge Qt = new ru.tcgeo.gilib.planimetry.Edge(polygon.get(i), P.m_start);
+			Edge Qt = new Edge(polygon.get(i), P.m_start);
 			//скалярное произведение  Qt*Ni
 			//double qi = Edge.scalarMultiplication(Qt, Ni);
 			double qi = (Qt.m_end.x - Qt.m_start.x)*(Ni.m_end.x - Ni.m_start.x) + (Qt.m_end.y - Qt.m_start.y)*(Ni.m_end.y - Ni.m_start.y);
@@ -2207,7 +2202,7 @@ public class Edge implements GIGeometryObject
 	 * @return отрезок лежащий внутри полигона при полигоне упорядоченном "по часовой стрелке"
 	 * 
 	 */
-	public ru.tcgeo.gilib.planimetry.Edge SectionByPolygon(ArrayList<Vertex> polygon )
+	public Edge SectionByPolygon(ArrayList<Vertex> polygon )
 	{
 		float[] coords = ParametricCoordsOfSectionByPolygon(polygon);
 		if(coords != null)
@@ -2222,7 +2217,7 @@ public class Edge implements GIGeometryObject
 	 * @param end - координата конца отрезка (1 - совпадает с концом исходного)
 	 * @return Edge
 	 */
-	public ru.tcgeo.gilib.planimetry.Edge ParametricalPartOfEdge(float start, float end)
+	public Edge ParametricalPartOfEdge(float start, float end)
 	{
 		//this
 		//X(t) = X0 + t*(X1 - X0) 
@@ -2236,21 +2231,21 @@ public class Edge implements GIGeometryObject
 		float res_y_min = Y0 + start*(Y1 - Y0);
 		float res_x_max = X0 + end*(X1 - X0);
 		float res_y_max = Y0 + end*(Y1 - Y0);
-		return new ru.tcgeo.gilib.planimetry.Edge(res_x_min, res_y_min, res_x_max, res_y_max);
+		return new Edge(res_x_min, res_y_min, res_x_max, res_y_max);
 	}
 	
     /**
      * вектор нормали с началом в (0, 0)
      */
-	public static ru.tcgeo.gilib.planimetry.Edge VectorNormal(ru.tcgeo.gilib.planimetry.Edge edge)
+	public static Edge VectorNormal(Edge edge)
 	{
-		return new ru.tcgeo.gilib.planimetry.Edge(0, 0, (edge.m_start.y - edge.m_end.y), (edge.m_end.x - edge.m_start.x));
+		return new Edge(0, 0, (edge.m_start.y - edge.m_end.y), (edge.m_end.x - edge.m_start.x));
 	}
 	
 	/**
 	 * скалярное произведение
 	 */
-	public static float scalarMultiplication(ru.tcgeo.gilib.planimetry.Edge one, ru.tcgeo.gilib.planimetry.Edge two)
+	public static float scalarMultiplication(Edge one, Edge two)
 	{
 
 		return (one.m_end.x - one.m_start.x)*(two.m_end.x - two.m_start.x) + (one.m_end.y - one.m_start.y)*(two.m_end.y - two.m_start.y);
@@ -2260,7 +2255,7 @@ public class Edge implements GIGeometryObject
 	 * модуль скалярного произведения для векторов на плоскости
 	 * 
 	 */
-	public static float vectorMultiplication(ru.tcgeo.gilib.planimetry.Edge one, ru.tcgeo.gilib.planimetry.Edge two)
+	public static float vectorMultiplication(Edge one, Edge two)
 	{
 		//return vectorX()*edge.vectorY() - vectorY()*edge.vectorX();
 		return (one.m_end.x - one.m_start.x)*(two.m_end.y - two.m_start.y) - (two.m_end.x - two.m_start.x)*(one.m_end.y - one.m_start.y);

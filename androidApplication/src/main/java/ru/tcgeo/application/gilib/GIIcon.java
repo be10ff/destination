@@ -1,9 +1,8 @@
 package ru.tcgeo.application.gilib;
 
-import ru.tcgeo.gilib.parser.GISource;
+import ru.tcgeo.application.gilib.parser.GISource;
 
-
-public class GIIcon 
+public class GIIcon
 {
 	public GISource m_source;
 	/*IconProperties()

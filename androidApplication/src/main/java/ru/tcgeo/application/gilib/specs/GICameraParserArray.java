@@ -5,8 +5,6 @@ import java.io.IOException;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
-import ru.tcgeo.gilib.specs.*;
-import ru.tcgeo.gilib.specs.GICameraParserArrayItem;
 
 
 public class GICameraParserArray /*extends GIParser */
@@ -43,7 +41,7 @@ public class GICameraParserArray /*extends GIParser */
 	{
 		if(m_ParserCurrent.getName().equalsIgnoreCase("dict"))
 		{
-			ru.tcgeo.gilib.specs.GICameraParserArrayItem parser = new GICameraParserArrayItem(m_ParserCurrent, m_List);
+			GICameraParserArrayItem parser = new GICameraParserArrayItem(m_ParserCurrent, m_List);
 			m_ParserCurrent = parser.ReadSection();
 		}
 	}	

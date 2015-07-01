@@ -11,12 +11,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 
-import ru.tcgeo.gilib.*;
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GIDataRequestorImp;
-import ru.tcgeo.gilib.GIEditLayersKeeper;
-import ru.tcgeo.gilib.GIMap;
-import ru.tcgeo.gilib.GIRuleToolControl;
 
 public class GITouchControl extends View implements GIControl, OnLongClickListener, OnClickListener
 {
@@ -37,7 +31,7 @@ public class GITouchControl extends View implements GIControl, OnLongClickListen
 	}
 	
 	private ScaleGestureDetector m_ScaleDetector;
-	private ru.tcgeo.gilib.GIMap m_map;
+	private GIMap m_map;
 
 	private static final int INVALID_ID = -1;
 	private int active_id = INVALID_ID;
@@ -117,12 +111,12 @@ public class GITouchControl extends View implements GIControl, OnLongClickListen
 		}
 	}
 
-	public void InitMap(ru.tcgeo.gilib.GIMap map)
+	public void InitMap(GIMap map)
 	{
 	    m_map = map;
 	}
 
-	public ru.tcgeo.gilib.GIMap Map ()
+	public GIMap Map()
 	{
 		return m_map;
 	}

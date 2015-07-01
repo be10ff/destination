@@ -1,19 +1,16 @@
 package ru.tcgeo.application.gilib;
 
-import ru.tcgeo.gilib.*;
-import ru.tcgeo.gilib.GILayer.GILayerType;
-import ru.tcgeo.gilib.GITileInfoOSM;
 
 
 public abstract class GIITile 
 {
-	public static ru.tcgeo.gilib.GITileInfoOSM CreateTile(int z, double lon, double lat, GILayerType type)
+	public static GITileInfoOSM CreateTile(int z, double lon, double lat, GILayer.GILayerType type)
 	{
 		switch (type)
 		{
 			case SQL_LAYER:
 			{
-				return new ru.tcgeo.gilib.GITileInfoOSM(z, lon, lat);
+				return new GITileInfoOSM(z, lon, lat);
 			}
 			case SQL_YANDEX_LAYER:
 			{
@@ -21,17 +18,17 @@ public abstract class GIITile
 			}
 			default:
 			{
-				return new ru.tcgeo.gilib.GITileInfoOSM(z, lon, lat);
+				return new GITileInfoOSM(z, lon, lat);
 			}
 		}
 	}
-	public static ru.tcgeo.gilib.GITileInfoOSM CreateTile(int z, int tile_x, int tile_y, GILayerType type)
+	public static GITileInfoOSM CreateTile(int z, int tile_x, int tile_y, GILayer.GILayerType type)
 	{
 		switch (type)
 		{
 			case SQL_LAYER:
 			{
-				return new ru.tcgeo.gilib.GITileInfoOSM(z, tile_x, tile_y);
+				return new GITileInfoOSM(z, tile_x, tile_y);
 			}
 			case SQL_YANDEX_LAYER:
 			{

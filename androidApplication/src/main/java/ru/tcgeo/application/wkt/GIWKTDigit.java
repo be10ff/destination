@@ -1,12 +1,13 @@
 package ru.tcgeo.application.wkt;
 
-import ru.tcgeo.gilib.script.GIScriptQueue;
+
+import ru.tcgeo.application.gilib.script.GIScriptQueue;
 
 public class GIWKTDigit extends GIWKTDescription {
 
 	double m_value;
 	
-	public GIWKTDigit(GIScriptQueue text) 
+	public GIWKTDigit(GIScriptQueue text)
 	{
 		m_value = 0;
 		String literal = "";

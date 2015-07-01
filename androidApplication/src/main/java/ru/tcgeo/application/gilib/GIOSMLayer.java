@@ -2,10 +2,7 @@ package ru.tcgeo.application.gilib;
 
 import android.graphics.Bitmap;
 
-import ru.tcgeo.gilib.*;
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GIOSMRenderer;
-import ru.tcgeo.gilib.GIProjection;
+
 
 public class GIOSMLayer extends GILayer {
 
@@ -14,7 +11,7 @@ public class GIOSMLayer extends GILayer {
 	{
 		m_site = "http://a.tile.openstreetmap.org/";
 		type_ = GILayerType.ON_LINE;
-		m_renderer = new ru.tcgeo.gilib.GIOSMRenderer();
+		m_renderer = new GIOSMRenderer();
 		m_projection = GIProjection.WGS84();
 	}
 	public GIOSMLayer(String path)

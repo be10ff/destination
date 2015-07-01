@@ -8,13 +8,12 @@ import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GIControl;
-import ru.tcgeo.gilib.GIEditLayersKeeper;
-import ru.tcgeo.gilib.GIEditableLayer;
-import ru.tcgeo.gilib.GIGeometryPointControl;
-import ru.tcgeo.gilib.GIMap;
-import ru.tcgeo.wkt.GI_WktGeometry.GIWKTGeometryStatus;
+import ru.tcgeo.application.gilib.GIBounds;
+import ru.tcgeo.application.gilib.GIControl;
+import ru.tcgeo.application.gilib.GIEditLayersKeeper;
+import ru.tcgeo.application.gilib.GIEditableLayer;
+import ru.tcgeo.application.gilib.GIGeometryPointControl;
+import ru.tcgeo.application.gilib.GIMap;
 
 public class GIGeometryControl extends View implements GIControl
 {
@@ -44,7 +43,7 @@ public class GIGeometryControl extends View implements GIControl
 	{
 		GIGeometryPointControl m_last = new GIGeometryPointControl(m_context, m_map);
 		m_last.setWKTPoint(point);
-		if((m_geometry.m_status == GIWKTGeometryStatus.GEOMETRY_EDITING) || (m_geometry.m_status == GIWKTGeometryStatus.NEW))
+		if((m_geometry.m_status == GI_WktGeometry.GIWKTGeometryStatus.GEOMETRY_EDITING) || (m_geometry.m_status == GI_WktGeometry.GIWKTGeometryStatus.NEW))
 		{
 			m_last.setActiveStatus(true);
 		}

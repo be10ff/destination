@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import android.graphics.Paint;
 import android.graphics.RectF;
 
-import ru.tcgeo.gilib.planimetry.GILabeledLayer;
-import ru.tcgeo.gilib.planimetry.GIShape;
 
 /**
  * класс слоя надписей внутри замкнутых полигонов*/

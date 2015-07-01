@@ -9,10 +9,6 @@ import android.graphics.PointF;
 import android.graphics.RectF;
 import android.graphics.Paint.Style;
 
-import ru.tcgeo.gilib.planimetry.*;
-import ru.tcgeo.gilib.planimetry.Edge;
-import ru.tcgeo.gilib.planimetry.GIGeometryObject;
-
 
 /**
  * Дерево квадрантов на Z-кривой Мортона 
@@ -23,12 +19,12 @@ public class GIQuadtree
 {
 	public static int m_max_level;
 
-	private ArrayList<ru.tcgeo.gilib.planimetry.GIGeometryObject> m_shapes;
+	private ArrayList<GIGeometryObject> m_shapes;
 	public int m_lvl;
 	public int m_code_L;
 	public int m_code_H;
 	public static RectF m_area;
-	public ArrayList<ru.tcgeo.gilib.planimetry.GIQuadtree> m_brunches;
+	public ArrayList<GIQuadtree> m_brunches;
 	public static int m_dim;
 
 //	public class Point
@@ -58,8 +54,8 @@ public class GIQuadtree
 		m_code_L = MortonCode2D(0, 0);
 		//TODO
 		m_code_H = MortonCode2D(m_dim - 1, m_dim - 1);
-		m_brunches = new ArrayList<ru.tcgeo.gilib.planimetry.GIQuadtree>();
-		m_shapes = new ArrayList<ru.tcgeo.gilib.planimetry.GIGeometryObject>();
+		m_brunches = new ArrayList<GIQuadtree>();
+		m_shapes = new ArrayList<GIGeometryObject>();
 	}
 
 	public GIQuadtree(RectF area, int lvl)
@@ -70,8 +66,8 @@ public class GIQuadtree
 		m_dim =  (int) Math.pow(2, m_max_level);
 		m_code_L = MortonCode2D(0, 0);
 		m_code_H = MortonCode2D(m_dim - 1, m_dim - 1);
-		m_brunches = new ArrayList<ru.tcgeo.gilib.planimetry.GIQuadtree>();
-		m_shapes = new ArrayList<ru.tcgeo.gilib.planimetry.GIGeometryObject>();
+		m_brunches = new ArrayList<GIQuadtree>();
+		m_shapes = new ArrayList<GIGeometryObject>();
 	}
 
 	protected GIQuadtree(int lvl, int code_l, int code_h)
@@ -79,8 +75,8 @@ public class GIQuadtree
 		m_lvl = lvl;
 		m_code_L = code_l;
 		m_code_H = code_h;
-		m_brunches = new ArrayList<ru.tcgeo.gilib.planimetry.GIQuadtree>();
-		m_shapes = new ArrayList<ru.tcgeo.gilib.planimetry.GIGeometryObject>();
+		m_brunches = new ArrayList<GIQuadtree>();
+		m_shapes = new ArrayList<GIGeometryObject>();
 	}
 
 	/**
@@ -133,7 +129,7 @@ public class GIQuadtree
 		//return SeparateBy1(point.x)|(SeparateBy1(point.y) << 1);
 		return MortonCode2D(point.x, point.y);
 	}
-	public Point MortonCode2D(ru.tcgeo.gilib.planimetry.GIGeometryObject obj)
+	public Point MortonCode2D(GIGeometryObject obj)
 	{
 		RectF bounds = obj.getBounds();
 
@@ -193,12 +189,7 @@ public class GIQuadtree
 		return result;
 	}
 
-	/**
-	 * для постороения квадродерева
-	 * @param area прямоугольник ответственности ветви дерева
-	 * @param object ограничивающий объект прямоугольник
-	 * @return true если (left, top) и (right, bottom) прямоугольника object лежат на Z-кривой между m_code_L и m_code_H квадранта
-	 */
+
 	private boolean IsInclude(RectF object)
 	{
 		int code_L = MortonCode2D((int)object.left, (int)object.top);
@@ -206,13 +197,7 @@ public class GIQuadtree
 		return ((code_L >= m_code_L)&&(code_H <= m_code_H));
 	}
 
-	/**
-	 * для постороения квадродерева
-	 * для заранее посчитанных кодов Мортона
-	 * @param area прямоугольник ответственности ветви дерева
-	 * @param object ограничивающий объект прямоугольник
-	 * @return true если оба кода лежат на Z-кривой между m_code_L и m_code_H квадранта
-	 */
+
 	private boolean IsInclude(int code_L, int code_H)
 	{
 		return ((code_L >= m_code_L)&&(code_H <= m_code_H));
@@ -232,24 +217,24 @@ public class GIQuadtree
 		if(m_lvl <= m_max_level)
 		{
 			int step = (m_code_H + 1 - m_code_L)/4;
-			ArrayList<ru.tcgeo.gilib.planimetry.GIQuadtree> brunches = new ArrayList<ru.tcgeo.gilib.planimetry.GIQuadtree>();
+			ArrayList<GIQuadtree> brunches = new ArrayList<GIQuadtree>();
 			//m_brunches = new ArrayList<GIQuadtree>();
 			//RectF bounds = new RectF((int)m_area.left, (int)m_area.top, (int)(m_area.left + m_area.width()/2), (int)(m_area.top + m_area.height()/2));
 			//brunches.add(new GIQuadtree( m_lvl + 1, bounds));
-			brunches.add(new ru.tcgeo.gilib.planimetry.GIQuadtree( m_lvl + 1, m_code_L, m_code_L + step -1));
+			brunches.add(new GIQuadtree( m_lvl + 1, m_code_L, m_code_L + step -1));
 			//Point control_l = MortonDecode2(brunches.get(0).m_code_L);
 			//Point control_h = MortonDecode2(brunches.get(0).m_code_H);
 			//bounds = new RectF((int)(m_area.left + m_area.width()/2), (int)m_area.top, (int)m_area.right, (int)(m_area.top + m_area.height()/2));
 			//brunches.add(new GIQuadtree(m_lvl + 1, bounds));
-			brunches.add(new ru.tcgeo.gilib.planimetry.GIQuadtree(m_lvl + 1,  m_code_L + step, m_code_L + step*2 -1));
+			brunches.add(new GIQuadtree(m_lvl + 1,  m_code_L + step, m_code_L + step*2 -1));
 			//control_l = MortonDecode2(brunches.get(1).m_code_L);
 			//control_h = MortonDecode2(brunches.get(1).m_code_H);
 			//bounds = new RectF((int)m_area.left, (int)(m_area.top + m_area.height()/2), (int)(m_area.left + m_area.width()/2), (int)m_area.bottom);
-			brunches.add(new ru.tcgeo.gilib.planimetry.GIQuadtree( m_lvl + 1, m_code_L + step*2, m_code_L + step*3 -1));
+			brunches.add(new GIQuadtree( m_lvl + 1, m_code_L + step*2, m_code_L + step*3 -1));
 			//control_l = MortonDecode2(brunches.get(2).m_code_L);
 			//control_h = MortonDecode2(brunches.get(2).m_code_H);
 			//bounds = new RectF((int)(m_area.left + m_area.width()/2), (int)(m_area.top + m_area.height()/2),(int) m_area.right ,(int) m_area.bottom);
-			brunches.add(new ru.tcgeo.gilib.planimetry.GIQuadtree(m_lvl + 1, m_code_L + step*3, m_code_H));
+			brunches.add(new GIQuadtree(m_lvl + 1, m_code_L + step*3, m_code_H));
 			//control_l = MortonDecode2(brunches.get(3).m_code_L);
 			//control_h = MortonDecode2(brunches.get(3).m_code_H);
 
@@ -257,11 +242,11 @@ public class GIQuadtree
 
 			for(int i = 0; i < 4; i++)
 			{
-				ru.tcgeo.gilib.planimetry.GIQuadtree branch = brunches.get(i);
+				GIQuadtree branch = brunches.get(i);
 				int shape_counter = 0;
 				while(shape_counter < m_shapes.size())
 				{
-					ru.tcgeo.gilib.planimetry.GIGeometryObject shape = m_shapes.get(shape_counter);
+					GIGeometryObject shape = m_shapes.get(shape_counter);
 					if(branch.IsInclude(shape.getMortonCodes().x, shape.getMortonCodes().y))
 					{
 						branch.m_shapes.add(shape);
@@ -384,9 +369,9 @@ public class GIQuadtree
  * @param code заданного кода
  * @return список всех влияющих объектов для заданного кода
  */
-	public ArrayList<ru.tcgeo.gilib.planimetry.GIGeometryObject> getDependies(Point code)
+	public ArrayList<GIGeometryObject> getDependies(Point code)
 	{
-		ArrayList <ru.tcgeo.gilib.planimetry.GIGeometryObject> result = new ArrayList<GIGeometryObject>();
+		ArrayList <GIGeometryObject> result = new ArrayList<GIGeometryObject>();
 		//TODO: no
 		//объект не попадает в квадрант
 		if((code.x >= m_code_H)||(code.y <= m_code_L))
@@ -416,7 +401,7 @@ public class GIQuadtree
 			//и передаем потомкам
 			for(int i = 0; i < m_brunches.size(); i++)
 			{
-				ru.tcgeo.gilib.planimetry.GIQuadtree brunch = m_brunches.get(i);
+				GIQuadtree brunch = m_brunches.get(i);
 				result.addAll(brunch.getDependies(code));
 			}
 			return result;
@@ -536,7 +521,7 @@ public class GIQuadtree
 			//и передаем потомкам
 			for(int i = 0; i < m_brunches.size(); i++)
 			{
-				ru.tcgeo.gilib.planimetry.GIQuadtree brunch = m_brunches.get(i);
+				GIQuadtree brunch = m_brunches.get(i);
 				result.addAll(brunch.getDependedEdges(code, id));
 			}
 			return result;
@@ -606,7 +591,7 @@ public class GIQuadtree
     		canvas.drawRect(left, top, right, bottom, paint);
 			for(int i = 0; i < m_brunches.size(); i++)
 			{
-				ru.tcgeo.gilib.planimetry.GIQuadtree brunch = m_brunches.get(i);
+				GIQuadtree brunch = m_brunches.get(i);
 				brunch.DrawRects(canvas);
 			}
         }
@@ -614,7 +599,7 @@ public class GIQuadtree
         {
 			for(int i = 0; i < m_brunches.size(); i++)
 			{
-				ru.tcgeo.gilib.planimetry.GIQuadtree brunch = m_brunches.get(i);
+				GIQuadtree brunch = m_brunches.get(i);
 				brunch.DrawRects(canvas);
 			}
         }

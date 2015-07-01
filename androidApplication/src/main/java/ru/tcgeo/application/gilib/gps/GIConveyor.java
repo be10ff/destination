@@ -27,7 +27,7 @@ public class GIConveyor
 	}
 	public GIConveyor() 
 	{
-		m_values = new ArrayList<ru.tcgeo.gilib.gps.GIConveyor.Value>();
+		m_values = new ArrayList<GIConveyor.Value>();
 	}
 	
 	public void addValue(double value)

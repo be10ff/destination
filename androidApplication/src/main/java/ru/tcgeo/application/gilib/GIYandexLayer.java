@@ -2,10 +2,6 @@ package ru.tcgeo.application.gilib;
 
 import android.graphics.Bitmap;
 
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GILayer;
-import ru.tcgeo.gilib.GIProjection;
-import ru.tcgeo.gilib.GIYandexRenderer;
 
 public class GIYandexLayer extends GILayer {
 

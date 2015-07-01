@@ -2,8 +2,6 @@ package ru.tcgeo.application.gilib;
 
 import java.util.ArrayList;
 
-import ru.tcgeo.gilib.AddressSearchAdapterItem;
-
 public class GISQLRequest {
 	public String m_text;
 	public String m_mode;

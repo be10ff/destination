@@ -13,9 +13,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 
-import ru.tcgeo.gilib.GIEditableLayer;
-import ru.tcgeo.gilib.GIEncoding;
-import ru.tcgeo.gilib.GIVectorStyle;
+import ru.tcgeo.application.gilib.GIEditableLayer;
+import ru.tcgeo.application.gilib.GIEncoding;
+import ru.tcgeo.application.gilib.GIVectorStyle;
 
 public class GIGPSPointsLayer  extends GIEditableLayer
 {
@@ -25,13 +25,13 @@ public class GIGPSPointsLayer  extends GIEditableLayer
 		super(path);
 		type_ = GILayerType.XML;
 	}
-	public GIGPSPointsLayer(String path, GIVectorStyle style) 
+	public GIGPSPointsLayer(String path, GIVectorStyle style)
 	{
 		super(path, style);
 		type_ = GILayerType.XML;
 	}
 
-	public GIGPSPointsLayer(String path, GIVectorStyle style, GIEncoding encoding) 
+	public GIGPSPointsLayer(String path, GIVectorStyle style, GIEncoding encoding)
 	{
 		super(path, style, encoding);
 		type_ = GILayerType.XML;

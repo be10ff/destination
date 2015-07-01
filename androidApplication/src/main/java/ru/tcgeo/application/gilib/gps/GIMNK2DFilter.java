@@ -33,7 +33,7 @@ public class GIMNK2DFilter
 	public GIMNK2DFilter(int deep) 
 	{
 		m_deep = deep;
-		m_values = new ArrayList<ru.tcgeo.gilib.gps.GIMNK2DFilter.ParametricPoint>();
+		m_values = new ArrayList<GIMNK2DFilter.ParametricPoint>();
 	}
 	public void addValue(double x, double y, double t)
 	{

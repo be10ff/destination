@@ -3,44 +3,44 @@ package ru.tcgeo.application;
 import java.io.File;
 import java.util.ArrayList;
 
-import ru.tcgeo.gilib.AddressSearchAdapterItem;
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GIColor;
-import ru.tcgeo.gilib.GIControlFloating;
-import ru.tcgeo.gilib.GIEditLayersKeeper;
-import ru.tcgeo.gilib.GIEditableLayer;
-import ru.tcgeo.gilib.GIEditableLayer.GIEditableLayerType;
-import ru.tcgeo.gilib.GIEditableSQLiteLayer;
-import ru.tcgeo.gilib.GIGroupLayer;
-import ru.tcgeo.gilib.GILayer;
-import ru.tcgeo.gilib.GILayer.GILayerType;
-import ru.tcgeo.gilib.GILonLat;
-import ru.tcgeo.gilib.GIMap;
-import ru.tcgeo.gilib.GIPList;
-import ru.tcgeo.gilib.GIProjection;
-import ru.tcgeo.gilib.GIRuleToolControl;
-import ru.tcgeo.gilib.GISQLLayer;
-import ru.tcgeo.gilib.GISQLLayer.GISQLiteZoomingType;
-import ru.tcgeo.gilib.GISQLRequest;
-import ru.tcgeo.gilib.GIScaleRange;
-import ru.tcgeo.gilib.GISquareToolControl;
-import ru.tcgeo.gilib.GITouchControl;
-import ru.tcgeo.gilib.GITuple;
-import ru.tcgeo.gilib.GIVectorStyle;
-import ru.tcgeo.gilib.gps.GIDirectionToPOIArrow;
-import ru.tcgeo.gilib.gps.GIGPSButtonView;
-import ru.tcgeo.gilib.gps.GIGPSLocationListener;
-import ru.tcgeo.gilib.gps.GILocatorView;
-import ru.tcgeo.gilib.parser.GIProjectProperties;
-import ru.tcgeo.gilib.parser.GIPropertiesGroup;
-import ru.tcgeo.gilib.parser.GIPropertiesLayer;
-import ru.tcgeo.gilib.parser.GIPropertiesLayerRef;
-import ru.tcgeo.gilib.parser.GIRange;
-import ru.tcgeo.gilib.parser.GISQLDB;
-import ru.tcgeo.gilib.parser.GISource;
+import ru.tcgeo.application.gilib.AddressSearchAdapterItem;
+import ru.tcgeo.application.gilib.GIBounds;
+import ru.tcgeo.application.gilib.GIColor;
+import ru.tcgeo.application.gilib.GIControlFloating;
+import ru.tcgeo.application.gilib.GIEditLayersKeeper;
+import ru.tcgeo.application.gilib.GIEditableLayer;
+import ru.tcgeo.application.gilib.GIEditableLayer.GIEditableLayerType;
+import ru.tcgeo.application.gilib.GIEditableSQLiteLayer;
+import ru.tcgeo.application.gilib.GIGroupLayer;
+import ru.tcgeo.application.gilib.GILayer;
+import ru.tcgeo.application.gilib.GILayer.GILayerType;
+import ru.tcgeo.application.gilib.GILonLat;
+import ru.tcgeo.application.gilib.GIMap;
+import ru.tcgeo.application.gilib.GIPList;
+import ru.tcgeo.application.gilib.GIProjection;
+import ru.tcgeo.application.gilib.GIRuleToolControl;
+import ru.tcgeo.application.gilib.GISQLLayer;
+import ru.tcgeo.application.gilib.GISQLLayer.GISQLiteZoomingType;
+import ru.tcgeo.application.gilib.GISQLRequest;
+import ru.tcgeo.application.gilib.GIScaleRange;
+import ru.tcgeo.application.gilib.GISquareToolControl;
+import ru.tcgeo.application.gilib.GITouchControl;
+import ru.tcgeo.application.gilib.GITuple;
+import ru.tcgeo.application.gilib.GIVectorStyle;
+import ru.tcgeo.application.gilib.gps.GIDirectionToPOIArrow;
+import ru.tcgeo.application.gilib.gps.GIGPSButtonView;
+import ru.tcgeo.application.gilib.gps.GIGPSLocationListener;
+import ru.tcgeo.application.gilib.gps.GILocatorView;
+import ru.tcgeo.application.gilib.parser.GIProjectProperties;
+import ru.tcgeo.application.gilib.parser.GIPropertiesGroup;
+import ru.tcgeo.application.gilib.parser.GIPropertiesLayer;
+import ru.tcgeo.application.gilib.parser.GIPropertiesLayerRef;
+import ru.tcgeo.application.gilib.parser.GIRange;
+import ru.tcgeo.application.gilib.parser.GISQLDB;
+import ru.tcgeo.application.gilib.parser.GISource;
 //import ru.tcgeo.gilib.script.GIScriptExpression;
-import ru.tcgeo.wkt.GI_WktGeometry;
-import ru.tcgeo.wkt.GI_WktPoint;
+import ru.tcgeo.application.wkt.GI_WktGeometry;
+import ru.tcgeo.application.wkt.GI_WktPoint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -998,9 +998,9 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 
 	// private void loadGroup(ru.tcgeo.gilib.parser.GIPropertiesGroup
 	// current_layer2)
-	private void loadGroup(	ru.tcgeo.gilib.parser.GIPropertiesGroup current_layer2) 
+	private void loadGroup(GIPropertiesGroup current_layer2)
 	{
-		for (ru.tcgeo.gilib.parser.GIPropertiesLayer current_layer : current_layer2.m_Entries) 
+		for (GIPropertiesLayer current_layer : current_layer2.m_Entries)
 		{
 			if (current_layer.m_type == GILayerType.VECTOR_LAYER) 
 			{

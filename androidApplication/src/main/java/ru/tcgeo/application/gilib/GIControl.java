@@ -2,13 +2,10 @@ package ru.tcgeo.application.gilib;
 
 import android.graphics.Rect;
 
-import ru.tcgeo.gilib.*;
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GIMap;
 
 public interface GIControl
 {
-	ru.tcgeo.gilib.GIMap Map();
+	GIMap Map();
 	/**
 	 *  устанавливает связь с картой
 	 * @param map

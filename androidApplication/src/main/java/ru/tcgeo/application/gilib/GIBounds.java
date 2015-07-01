@@ -1,7 +1,5 @@
 package ru.tcgeo.application.gilib;
 
-import ru.tcgeo.gilib.GILonLat;
-import ru.tcgeo.gilib.GIProjection;
 
 public class GIBounds
 {
@@ -99,7 +97,7 @@ public class GIBounds
 		return new GILonLat(m_right, m_bottom);
 	}
 
-	public Boolean ContainsBounds (ru.tcgeo.gilib.GIBounds other)
+	public Boolean ContainsBounds (ru.tcgeo.application.gilib.GIBounds other)
 	{
 		if(m_left <= other.m_left && m_right >= other.m_right && m_top >= other.m_top && m_bottom <= other.m_bottom)
 		{
@@ -119,7 +117,7 @@ public class GIBounds
 		return false;
 	}
 
-	public Boolean Intersects (ru.tcgeo.gilib.GIBounds with)
+	public Boolean Intersects (ru.tcgeo.application.gilib.GIBounds with)
 	{
 		if(m_left > with.m_right || m_right < with.m_left || m_top < with.m_bottom || m_bottom > with.m_top)
 		{
@@ -129,7 +127,7 @@ public class GIBounds
 		// TODO
 	}
 
-	public ru.tcgeo.gilib.GIBounds Intersect (ru.tcgeo.gilib.GIBounds with)
+	public ru.tcgeo.application.gilib.GIBounds Intersect (ru.tcgeo.application.gilib.GIBounds with)
 	{
 		if(Intersects(with))
 		{
@@ -137,17 +135,17 @@ public class GIBounds
 			double right = Math.min(m_right, with.m_right);
 			double top = Math.max(m_top, with.m_top);
 			double bottom = Math.min(m_bottom, with.m_bottom);
-			return new ru.tcgeo.gilib.GIBounds(m_projection, left, top, right, bottom);
+			return new ru.tcgeo.application.gilib.GIBounds(m_projection, left, top, right, bottom);
 		}
 		return null;
 		// TODO
 	}
 
-	public ru.tcgeo.gilib.GIBounds Reprojected (GIProjection destProjection)
+	public ru.tcgeo.application.gilib.GIBounds Reprojected (GIProjection destProjection)
 	{
 		GILonLat TopLeft_new = 		GIProjection.ReprojectLonLat(this.TopLeft(), this.projection(), destProjection);
 		GILonLat BottomRight_new = 	GIProjection.ReprojectLonLat(this.BottomRight(), this.projection(), destProjection);
-		return new ru.tcgeo.gilib.GIBounds(destProjection, TopLeft_new.lon(), TopLeft_new.lat(),
+		return new ru.tcgeo.application.gilib.GIBounds(destProjection, TopLeft_new.lon(), TopLeft_new.lat(),
 											BottomRight_new.lon(), BottomRight_new.lat());
 	}
 	

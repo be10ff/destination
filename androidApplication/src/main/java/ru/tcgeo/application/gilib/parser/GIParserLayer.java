@@ -3,23 +3,17 @@ package ru.tcgeo.application.gilib.parser;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
-import ru.tcgeo.gilib.GIEncoding;
-import ru.tcgeo.gilib.GIIcon;
-import ru.tcgeo.gilib.GILayer.GILayerType;
-import ru.tcgeo.gilib.parser.*;
-import ru.tcgeo.gilib.parser.GIParserEncoding;
-import ru.tcgeo.gilib.parser.GIParserStyle;
-import ru.tcgeo.gilib.parser.GIPropertiesLayer;
-import ru.tcgeo.gilib.parser.GIRange;
-import ru.tcgeo.gilib.parser.GISQLDB;
-import ru.tcgeo.gilib.parser.GISource;
+import ru.tcgeo.application.gilib.GIEncoding;
+import ru.tcgeo.application.gilib.GIIcon;
+import ru.tcgeo.application.gilib.GILayer;
+
 
 public class GIParserLayer extends GIParser
 {
-	ru.tcgeo.gilib.parser.GIPropertiesLayer m_root;
-	ru.tcgeo.gilib.parser.GIPropertiesLayer m_current;
+	GIPropertiesLayer m_root;
+	GIPropertiesLayer m_current;
 
-	public GIParserLayer(XmlPullParser parent, ru.tcgeo.gilib.parser.GIPropertiesLayer root)
+	public GIParserLayer(XmlPullParser parent, GIPropertiesLayer root)
 	{
 		super(parent);
 		section_name = "Layer";
@@ -41,39 +35,39 @@ public class GIParserLayer extends GIParser
 				m_current.m_strType = m_ParserCurrent.getAttributeValue(i);
 				if(m_current.m_strType.equalsIgnoreCase("vector"))
 				{
-					m_current.m_type = GILayerType.VECTOR_LAYER;
+					m_current.m_type = GILayer.GILayerType.VECTOR_LAYER;
 				}
 				if(m_current.m_strType.equalsIgnoreCase("raster"))
 				{
-					m_current.m_type = GILayerType.RASTER_LAYER;
+					m_current.m_type = GILayer.GILayerType.RASTER_LAYER;
 				}
 				if(m_current.m_strType.equalsIgnoreCase("TILEINDEX"))
 				{
-					m_current.m_type = GILayerType.TILE_LAYER;
+					m_current.m_type = GILayer.GILayerType.TILE_LAYER;
 				}
 				if(m_current.m_strType.equalsIgnoreCase("ON_LINE"))
 				{
-					m_current.m_type = GILayerType.ON_LINE;
+					m_current.m_type = GILayer.GILayerType.ON_LINE;
 				}
 				if(m_current.m_strType.equalsIgnoreCase("SQL_LAYER"))
 				{
-					m_current.m_type = GILayerType.SQL_LAYER;
+					m_current.m_type = GILayer.GILayerType.SQL_LAYER;
 				}
 				if(m_current.m_strType.equalsIgnoreCase("SQL_YANDEX_LAYER"))
 				{
-					m_current.m_type = GILayerType.SQL_YANDEX_LAYER;
+					m_current.m_type = GILayer.GILayerType.SQL_YANDEX_LAYER;
 				}
 				if(m_current.m_strType.equalsIgnoreCase("DBASE"))
 				{
-					m_current.m_type = GILayerType.DBASE;
+					m_current.m_type = GILayer.GILayerType.DBASE;
 				}
 				if(m_current.m_strType.equalsIgnoreCase("XML"))
 				{
-					m_current.m_type = GILayerType.XML;
+					m_current.m_type = GILayer.GILayerType.XML;
 				}
 				if(m_current.m_strType.equalsIgnoreCase("PLIST"))
 				{
-					m_current.m_type = GILayerType.PLIST;
+					m_current.m_type = GILayer.GILayerType.PLIST;
 				}
 			}
 			if(m_ParserCurrent.getAttributeName(i).equalsIgnoreCase("enabled"))

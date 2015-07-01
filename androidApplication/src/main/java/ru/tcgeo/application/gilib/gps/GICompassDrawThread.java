@@ -1,9 +1,5 @@
 package ru.tcgeo.application.gilib.gps;
 
-import ru.tcgeo.gilib.GIEditLayersKeeper;
-import ru.tcgeo.gilib.R;
-import ru.tcgeo.gilib.gps.*;
-import ru.tcgeo.gilib.gps.GISensors;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +7,9 @@ import android.graphics.Canvas;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.view.SurfaceHolder;
+
+import ru.tcgeo.application.R;
+import ru.tcgeo.application.gilib.GIEditLayersKeeper;
 
 public class GICompassDrawThread extends Thread 
 {

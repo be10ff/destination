@@ -3,9 +3,7 @@ package ru.tcgeo.application.gilib.parser;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
-import ru.tcgeo.gilib.GIIcon;
-import ru.tcgeo.gilib.parser.*;
-import ru.tcgeo.gilib.parser.GISource;
+import ru.tcgeo.application.gilib.GIIcon;
 
 public class GIParserIcon extends GIParser
 {

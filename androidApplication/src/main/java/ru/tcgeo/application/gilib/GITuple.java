@@ -1,8 +1,5 @@
 package ru.tcgeo.application.gilib;
 
-import ru.tcgeo.gilib.GILayer;
-import ru.tcgeo.gilib.GIScaleRange;
-
 public class GITuple
 {
 	GITuple (GILayer layer_, boolean visible_, GIScaleRange scale_range_)

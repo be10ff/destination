@@ -1,11 +1,5 @@
 package ru.tcgeo.application.gilib;
 
-
-import ru.tcgeo.gilib.GIEditLayersKeeper;
-import ru.tcgeo.gilib.GILayer.GILayerType;
-import ru.tcgeo.wkt.GIDBaseField;
-import ru.tcgeo.wkt.GI_WktGeometry;
-import ru.tcgeo.wkt.GI_WktGeometry.GIWKTGeometryStatus;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -20,6 +14,10 @@ import android.widget.FrameLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import ru.tcgeo.application.R;
+import ru.tcgeo.application.wkt.GIDBaseField;
+import ru.tcgeo.application.wkt.GI_WktGeometry;
 
 public class GIEditAttributesFragment extends Fragment implements
 		OnClickListener{
@@ -37,21 +35,21 @@ public class GIEditAttributesFragment extends Fragment implements
 	}
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInctanceState)
 	{
-		View v = inflater.inflate(ru.tcgeo.gilib.R.layout.edit_attributes_fragmint, null);
-		m_btnYes = (Button)v.findViewById(ru.tcgeo.gilib.R.id.Save);
-		m_btnNo = (Button)v.findViewById(ru.tcgeo.gilib.R.id.Discard);
+		View v = inflater.inflate(R.layout.edit_attributes_fragmint, null);
+		m_btnYes = (Button)v.findViewById(R.id.Save);
+		m_btnNo = (Button)v.findViewById(R.id.Discard);
 
 		m_btnYes.setOnClickListener(this);
 		m_btnNo.setOnClickListener(this);
-		m_attributes_list = (ListView)v.findViewById(ru.tcgeo.gilib.R.id.attributes_list_view);
-		adapter = new LayersAttributeAdapter(this.getActivity(), ru.tcgeo.gilib.R.layout.edit_attriute_item, ru.tcgeo.gilib.R.id.field_name);
+		m_attributes_list = (ListView)v.findViewById(R.id.attributes_list_view);
+		adapter = new LayersAttributeAdapter(this.getActivity(), R.layout.edit_attriute_item, R.id.field_name);
 		AddAttributes(GIEditLayersKeeper.Instance().m_geometry, adapter);
 		/**/
-		if(GIEditLayersKeeper.Instance().m_layer.type_ == GILayerType.XML)
+		if(GIEditLayersKeeper.Instance().m_layer.type_ == GILayer.GILayerType.XML)
 		{
-			View header = inflater.inflate(ru.tcgeo.gilib.R.layout.edit_attributes_header, null);
-			new_attribute_name = (EditText) header.findViewById(ru.tcgeo.gilib.R.id.new_attribute_field_name);
-			new_attribute_value = (EditText) header.findViewById(ru.tcgeo.gilib.R.id.new_attribute_field_value);
+			View header = inflater.inflate(R.layout.edit_attributes_header, null);
+			new_attribute_name = (EditText) header.findViewById(R.id.new_attribute_field_name);
+			new_attribute_value = (EditText) header.findViewById(R.id.new_attribute_field_value);
 			m_attributes_list.addFooterView(header);
 
 			if(!GIEditLayersKeeper.Instance().m_geometry.m_attributes.containsKey("Name"))
@@ -75,17 +73,17 @@ public class GIEditAttributesFragment extends Fragment implements
 	}
 	public void onClick(View v)
 	{
-		if(v.getId() == ru.tcgeo.gilib.R.id.Save)
+		if(v.getId() == R.id.Save)
 		{
 			for(int i = 0; i < m_attributes_list.getCount(); i++)
 			{
-				TextView name_text = (TextView)m_attributes_list.getChildAt(i).findViewById(ru.tcgeo.gilib.R.id.field_name);
-				EditText value_text = (EditText)m_attributes_list.getChildAt(i).findViewById(ru.tcgeo.gilib.R.id.field_value);
+				TextView name_text = (TextView)m_attributes_list.getChildAt(i).findViewById(R.id.field_name);
+				EditText value_text = (EditText)m_attributes_list.getChildAt(i).findViewById(R.id.field_value);
 				if(value_text != null && name_text != null)
 				{
 					GIEditLayersKeeper.Instance().m_geometry.m_attributes.get(String.valueOf(name_text.getText())).m_value = String.valueOf(value_text.getText());
 				}
-				if(GIEditLayersKeeper.Instance().m_layer.type_ == GILayerType.XML)
+				if(GIEditLayersKeeper.Instance().m_layer.type_ == GILayer.GILayerType.XML)
 				{
 					if(new_attribute_value.getText().length() > 0)
 					{
@@ -97,12 +95,12 @@ public class GIEditAttributesFragment extends Fragment implements
 					}
 				}
 			}
-			GIEditLayersKeeper.Instance().m_geometry.m_status = GIWKTGeometryStatus.MODIFIED;
+			GIEditLayersKeeper.Instance().m_geometry.m_status = GI_WktGeometry.GIWKTGeometryStatus.MODIFIED;
 			GIEditLayersKeeper.Instance().m_layer.Save();
 			getActivity().getFragmentManager().beginTransaction().remove(this).commit();
 
 		}
-		if(v.getId() == ru.tcgeo.gilib.R.id.Discard)
+		if(v.getId() == R.id.Discard)
 		{
 			getActivity().getFragmentManager().beginTransaction().remove(this).commit();
 		}
@@ -142,9 +140,9 @@ public class GIEditAttributesFragment extends Fragment implements
         public View getView (int position, View convertView, final ViewGroup parent)
         {
 			final LayersAttributeItem item = getItem(position);
-			View v = LayoutInflater.from(getContext()).inflate(ru.tcgeo.gilib.R.layout.edit_attriute_item, null);
-			TextView text_field_name = (TextView)v.findViewById(ru.tcgeo.gilib.R.id.field_name);
-			TextView text_field_value = (TextView)v.findViewById(ru.tcgeo.gilib.R.id.field_value);
+			View v = LayoutInflater.from(getContext()).inflate(R.layout.edit_attriute_item, null);
+			TextView text_field_name = (TextView)v.findViewById(R.id.field_name);
+			TextView text_field_value = (TextView)v.findViewById(R.id.field_value);
 			
 			text_field_name.setText(item.m_field_name);
 			text_field_value.setText(item.m_field_value);

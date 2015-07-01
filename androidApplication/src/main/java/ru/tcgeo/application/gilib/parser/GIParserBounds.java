@@ -3,10 +3,8 @@ package ru.tcgeo.application.gilib.parser;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
-import ru.tcgeo.gilib.GIProjection;
-import ru.tcgeo.gilib.parser.*;
-import ru.tcgeo.gilib.parser.GIParser;
-import ru.tcgeo.gilib.parser.GIProjectProperties;
+import ru.tcgeo.application.gilib.GIProjection;
+
 
 public class GIParserBounds extends GIParser
 {
@@ -26,7 +24,7 @@ public class GIParserBounds extends GIParser
 				m_ps.m_str_projection = m_ParserCurrent.getAttributeValue(i);
 				if(m_ps.m_str_projection.equalsIgnoreCase("WGS84"))
 				{
-					m_ps.m_projection = GIProjection.WGS84(); 
+					m_ps.m_projection = GIProjection.WGS84();
 				}
 				if(m_ps.m_str_projection.equalsIgnoreCase("World Mercator"))
 				{

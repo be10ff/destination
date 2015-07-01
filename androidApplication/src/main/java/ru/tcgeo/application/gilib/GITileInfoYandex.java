@@ -1,8 +1,6 @@
 package ru.tcgeo.application.gilib;
 
-import ru.tcgeo.gilib.*;
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GIProjection;
+
 
 public class GITileInfoYandex
 {
@@ -10,7 +8,7 @@ public class GITileInfoYandex
 	public int m_zoom;
 	public int m_xtile;
 	public int m_ytile;
-	public ru.tcgeo.gilib.GIBounds m_bounds;
+	public GIBounds m_bounds;
 
 	/*public GITileInfoYandex(int z, double lon, double lat, boolean old)
 	{
@@ -45,7 +43,7 @@ public class GITileInfoYandex
 		getBounds();
 	}
 
-	public ru.tcgeo.gilib.GIBounds getBounds()
+	public GIBounds getBounds()
 	{
 		double top = tile2lat(m_ytile, m_zoom);
 		double bottom = tile2lat(m_ytile + 1, m_zoom);

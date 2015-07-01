@@ -8,9 +8,6 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
-import ru.tcgeo.gilib.specs.*;
-import ru.tcgeo.gilib.specs.GICameraParserArray;
-import ru.tcgeo.gilib.specs.GISpeedCamera;
 
 public class GICameraPList {
 	
@@ -23,7 +20,7 @@ public class GICameraPList {
 //		public double m_lat;
 //		public double m_diag;
 //	}
-	public ArrayList<ru.tcgeo.gilib.specs.GISpeedCamera> m_list;
+	public ArrayList<GISpeedCamera> m_list;
 
 	public GICameraPList()
 	{

@@ -6,8 +6,8 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.util.HashMap;
 
-import ru.tcgeo.gilib.GIEditableLayer;
-import ru.tcgeo.gilib.gps.GIXMLTrack;
+import ru.tcgeo.application.gilib.GIEditableLayer;
+import ru.tcgeo.application.gilib.gps.GIXMLTrack;
 
 
 public class GIGPSParser {

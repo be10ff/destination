@@ -9,7 +9,8 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
-import ru.tcgeo.gilib.parser.GIParserArray;
+import ru.tcgeo.application.gilib.parser.GIParserArray;
+
 
 public class GIPList {
 	
@@ -27,7 +28,7 @@ public class GIPList {
 	public GIPList()
 	{
 		
-		m_list = new ArrayList<ru.tcgeo.gilib.GIPList.GIMarker>();
+		m_list = new ArrayList<GIMarker>();
 	}
 	public void Load(String path)
 	{

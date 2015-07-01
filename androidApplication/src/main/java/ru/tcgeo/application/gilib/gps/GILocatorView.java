@@ -2,13 +2,14 @@ package ru.tcgeo.application.gilib.gps;
 /**
  * Локатор - указывает направление на точку на местности
  */
-import ru.tcgeo.gilib.gps.GILocatorDrawThread;
-import ru.tcgeo.wkt.GI_WktGeometry;
+
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import ru.tcgeo.application.wkt.GI_WktGeometry;
 
 public class GILocatorView extends SurfaceView implements SurfaceHolder.Callback
 {

@@ -17,11 +17,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import android.graphics.Bitmap;
 
-import ru.tcgeo.gilib.*;
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GILayer;
-import ru.tcgeo.gilib.GIProjection;
-import ru.tcgeo.gilib.GIWMSRenderer;
 
 public class GIWMSLayer extends GILayer {
 

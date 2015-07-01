@@ -11,10 +11,6 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
-import ru.tcgeo.gilib.*;
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GITileInfoOSM;
-
 public class GIOSMRenderer extends GIRenderer {
 
 	Canvas m_canvas;
@@ -42,8 +38,8 @@ public class GIOSMRenderer extends GIRenderer {
         double dz = Math.log(Width_px*kf/width)/Math.log(2);
         int z = (int) Math.round(dz);
 
-        ru.tcgeo.gilib.GITileInfoOSM left_top_tile = new ru.tcgeo.gilib.GITileInfoOSM(z, left, top);
-        ru.tcgeo.gilib.GITileInfoOSM right_bottom_tile = new ru.tcgeo.gilib.GITileInfoOSM(z, right, bottom);
+        GITileInfoOSM left_top_tile = new GITileInfoOSM(z, left, top);
+        GITileInfoOSM right_bottom_tile = new GITileInfoOSM(z, right, bottom);
 
     	float koeffX = (float) (bitmap.getWidth() / (right - left));
     	float koeffY = (float) (bitmap.getHeight() / (top - bottom));
@@ -54,7 +50,7 @@ public class GIOSMRenderer extends GIRenderer {
         	{
         		for(int y = left_top_tile.m_ytile; y <= right_bottom_tile.m_ytile; y++)
         		{
-        			ru.tcgeo.gilib.GITileInfoOSM tile = new GITileInfoOSM(z, x, y);
+        			GITileInfoOSM tile = new GITileInfoOSM(z, x, y);
         			String urlStr = tile.getURL();
         			URL url = new URL(urlStr);
         	        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();

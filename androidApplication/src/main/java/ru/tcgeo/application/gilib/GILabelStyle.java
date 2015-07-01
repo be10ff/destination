@@ -1,8 +1,6 @@
 package ru.tcgeo.application.gilib;
 
 
-import ru.tcgeo.gilib.GIColor;
-
 public class GILabelStyle
 {
 	public boolean m_shadow;

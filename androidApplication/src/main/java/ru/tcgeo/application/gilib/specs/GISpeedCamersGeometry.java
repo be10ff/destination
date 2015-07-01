@@ -6,11 +6,12 @@ import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.RectF;
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.gps.GIYandexUtils;
-import ru.tcgeo.gilib.planimetry.GIGeometryPolygon;
 
-public class GISpeedCamersGeometry extends GIGeometryPolygon 
+import ru.tcgeo.application.gilib.GIBounds;
+import ru.tcgeo.application.gilib.gps.GIYandexUtils;
+import ru.tcgeo.application.gilib.planimetry.GIGeometryPolygon;
+
+public class GISpeedCamersGeometry extends GIGeometryPolygon
 {
 	Paint m_paint;
 	GISpeedCamersGeometry()

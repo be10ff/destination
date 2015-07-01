@@ -3,19 +3,6 @@ package ru.tcgeo.application.gilib;
 import java.io.File;
 import java.util.ArrayList;
 
-import ru.tcgeo.gilib.*;
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GIEditLayersKeeper;
-import ru.tcgeo.gilib.GIEditableLayer.GIEditableLayerStatus;
-import ru.tcgeo.gilib.GILayer.GILayerType;
-import ru.tcgeo.gilib.GIProjection;
-import ru.tcgeo.gilib.GIVectorStyle;
-import ru.tcgeo.gilib.specs.GIQuadTreeDouble;
-import ru.tcgeo.gilib.specs.GISpeedCamera;
-import ru.tcgeo.gilib.specs.GISpeedCar;
-import ru.tcgeo.gilib.specs.GITreeTile;
-import ru.tcgeo.wkt.GI_WktGeometry;
-import ru.tcgeo.wkt.GI_WktPolygon;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -25,6 +12,13 @@ import android.location.Location;
 import android.os.Environment;
 import android.util.Log;
 
+import ru.tcgeo.application.gilib.specs.GIQuadTreeDouble;
+import ru.tcgeo.application.gilib.specs.GISpeedCamera;
+import ru.tcgeo.application.gilib.specs.GISpeedCar;
+import ru.tcgeo.application.gilib.specs.GITreeTile;
+import ru.tcgeo.application.wkt.GI_WktGeometry;
+import ru.tcgeo.application.wkt.GI_WktPolygon;
+
 public class GISPECSLayer extends GIEditableLayer
 {
 	GIQuadTreeDouble m_tree;
@@ -33,7 +27,7 @@ public class GISPECSLayer extends GIEditableLayer
 		super(path);
 		type_ = GILayerType.PLIST;
 	}
-	public GISPECSLayer(String path, ru.tcgeo.gilib.GIVectorStyle style)
+	public GISPECSLayer(String path, GIVectorStyle style)
 	{
 		super(path, style);
 		type_ = GILayerType.PLIST;

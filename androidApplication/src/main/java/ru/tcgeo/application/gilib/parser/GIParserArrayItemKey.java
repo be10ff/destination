@@ -4,8 +4,6 @@ package ru.tcgeo.application.gilib.parser;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
-import ru.tcgeo.gilib.parser.GIParser;
-
 
 public class GIParserArrayItemKey extends GIParser {
 	StringBuffer m_item;

@@ -11,11 +11,6 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.RectF;
 
-import ru.tcgeo.gilib.planimetry.*;
-import ru.tcgeo.gilib.planimetry.Edge;
-import ru.tcgeo.gilib.planimetry.GIGeometryObject;
-import ru.tcgeo.gilib.planimetry.GIGeometryPolygon;
-import ru.tcgeo.gilib.planimetry.Vertex;
 
 /**
  * абстрактный класс фигуры на плоскости
@@ -47,7 +42,7 @@ public abstract class GIShape implements GIGeometryObject
 	//abstract public TYPE getType();
 	abstract public void DrawRects(Canvas canvas, Paint paint);
 
-	abstract public ru.tcgeo.gilib.planimetry.GIShape clone();
+	abstract public GIShape clone();
 	public void add(PointF point)
 	{
 		m_points.add(new Vertex(point));

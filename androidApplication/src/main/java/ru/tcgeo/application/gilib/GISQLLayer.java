@@ -9,9 +9,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.util.Log;
 
-import ru.tcgeo.gilib.*;
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GITileInfoOSM;
 
 public class GISQLLayer extends GILayer {
 
@@ -45,7 +42,7 @@ public class GISQLLayer extends GILayer {
 		getMinMaxLevels();
 	}
 	@Override
-	public void Redraw(ru.tcgeo.gilib.GIBounds area, Bitmap bitmap, Integer opacity,
+	public void Redraw(GIBounds area, Bitmap bitmap, Integer opacity,
 			double scale)
 	{
 		synchronized(this)
@@ -212,7 +209,7 @@ public class GISQLLayer extends GILayer {
 	 * @param actual "актуальный" уровень
 	 * @return tiles массив тайлов покрытия
 	 */
-	public ArrayList<GITileInfoOSM> GetTilesIteration (SQLiteDatabase db, ArrayList<GITileInfoOSM> tiles, GITileInfoOSM root, ru.tcgeo.gilib.GIBounds area, ru.tcgeo.gilib.GIBounds bounds, int z, int to, int actual)
+	public ArrayList<GITileInfoOSM> GetTilesIteration (SQLiteDatabase db, ArrayList<GITileInfoOSM> tiles, GITileInfoOSM root, GIBounds area, GIBounds bounds, int z, int to, int actual)
 	{
     	GITileInfoOSM left_top_tile = GIITile.CreateTile(z, bounds.m_left, bounds.m_top, type_);
         GITileInfoOSM right_bottom_tile = GIITile.CreateTile(z, bounds.m_right, bounds.m_bottom, type_);
@@ -230,7 +227,7 @@ public class GISQLLayer extends GILayer {
     				tiles.add(tile);
     				if(z < actual)
     				{
-    					ru.tcgeo.gilib.GIBounds bo = tile.getBounds().Intersect(area);
+    					GIBounds bo = tile.getBounds().Intersect(area);
     					if(bo != null)
     					{
     						tiles = GetTilesIteration(db, tiles, tile, area, bo, z+1, to, actual);
@@ -242,7 +239,7 @@ public class GISQLLayer extends GILayer {
     				present = false;
     				if(z+1 < to)
     				{
-    					ru.tcgeo.gilib.GIBounds bo = tile.getBounds().Intersect(area);
+    					GIBounds bo = tile.getBounds().Intersect(area);
     					if(bo != null)
     					{
     						tiles = GetTilesIteration(db, tiles, tile, area, bo, z+1, to, actual);
@@ -258,7 +255,7 @@ public class GISQLLayer extends GILayer {
 		return tiles;
 
 	}
-	public ArrayList<GITileInfoOSM> GetTiles(ru.tcgeo.gilib.GIBounds area, int actual)
+	public ArrayList<GITileInfoOSM> GetTiles(GIBounds area, int actual)
 	{
 		ArrayList<GITileInfoOSM> tiles = new ArrayList<GITileInfoOSM>();
 //    	GITileInfoOSM left_top_tile = new GITileInfoOSM(actual, area.m_left, area.m_top);

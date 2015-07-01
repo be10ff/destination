@@ -1,17 +1,9 @@
 package ru.tcgeo.application.gilib;
 
-import ru.tcgeo.gilib.*;
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GIEditableSQLiteLayer;
-import ru.tcgeo.gilib.GIOSMLayer;
-import ru.tcgeo.gilib.GIProjection;
-import ru.tcgeo.gilib.GISPECSLayer;
-import ru.tcgeo.gilib.GISQLLayer;
-import ru.tcgeo.gilib.GIVectorStyle;
-import ru.tcgeo.gilib.GIYandexLayer;
-import ru.tcgeo.gilib.parser.GIPropertiesLayer;
-import ru.tcgeo.wkt.GIGPSPointsLayer;
 import android.graphics.Bitmap;
+
+import ru.tcgeo.application.gilib.parser.GIPropertiesLayer;
+import ru.tcgeo.application.wkt.GIGPSPointsLayer;
 
 public abstract class GILayer
 {
@@ -33,14 +25,14 @@ public abstract class GILayer
 
 
 
-	public static ru.tcgeo.gilib.GILayer CreateLayer (String path, GILayerType type)
+	public static GILayer CreateLayer (String path, GILayerType type)
 	{
 		switch (type)
 		{
 			case ON_LINE:
 			{
 				if(path.equalsIgnoreCase("OSM"))
-					return new ru.tcgeo.gilib.GIOSMLayer(path);
+					return new GIOSMLayer(path);
 				if(path.equalsIgnoreCase("Google"))
 					return new GIGoogleLayer(path);
 				if(path.equalsIgnoreCase("GeoPortal"))
@@ -79,7 +71,7 @@ public abstract class GILayer
 		}
 	}
 
-	public static ru.tcgeo.gilib.GILayer CreateLayer (String path, GILayerType type,
+	public static GILayer CreateLayer (String path, GILayerType type,
 			GIStyle style)
 	{
 		switch (type)
@@ -87,7 +79,7 @@ public abstract class GILayer
 			case ON_LINE:
 			{
 				if(path.equalsIgnoreCase("OSM"))
-					return new ru.tcgeo.gilib.GIOSMLayer(path);
+					return new GIOSMLayer(path);
 				if(path.equalsIgnoreCase("Google"))
 					return new GIGoogleLayer(path);
 				if(path.equalsIgnoreCase("GeoPortal"))
@@ -127,7 +119,7 @@ public abstract class GILayer
 		}
 	}
 
-	public static ru.tcgeo.gilib.GILayer CreateLayer (String path, GILayerType type,
+	public static GILayer CreateLayer (String path, GILayerType type,
 	        GIStyle style, GIEncoding encoding)
 	{
 		switch (type)

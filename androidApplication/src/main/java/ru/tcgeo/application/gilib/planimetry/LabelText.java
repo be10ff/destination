@@ -10,9 +10,6 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Paint.Style;
 
-import ru.tcgeo.gilib.planimetry.*;
-import ru.tcgeo.gilib.planimetry.Edge;
-import ru.tcgeo.gilib.planimetry.Vertex;
 
 public class LabelText {
 
@@ -106,8 +103,8 @@ public class LabelText {
         	Trapezoid tr = m_row_segments.get(k);
         	/*canvas.drawLine(tr.m_top_edge.m_start.x, tr.m_top_edge.m_start.y, tr.m_bottom_edge.m_end.x, tr.m_bottom_edge.m_end.y, paint);
         	canvas.drawLine(tr.m_top_edge.m_end.x, tr.m_top_edge.m_end.y, tr.m_bottom_edge.m_start.x, tr.m_bottom_edge.m_start.y, paint);*/
-        	ru.tcgeo.gilib.planimetry.Edge left = new ru.tcgeo.gilib.planimetry.Edge(tr.m_top_edge.m_start, tr.m_bottom_edge.m_start);
-        	ru.tcgeo.gilib.planimetry.Edge right = new Edge(tr.m_top_edge.m_end, tr.m_bottom_edge.m_end);
+        	Edge left = new Edge(tr.m_top_edge.m_start, tr.m_bottom_edge.m_start);
+        	Edge right = new Edge(tr.m_top_edge.m_end, tr.m_bottom_edge.m_end);
         	PointF from = left.center_point();
         	PointF to = right.center_point();
 

@@ -1,15 +1,5 @@
 package ru.tcgeo.application.gilib.gps;
 
-import ru.tcgeo.gilib.GIEditLayersKeeper;
-import ru.tcgeo.gilib.GILonLat;
-import ru.tcgeo.gilib.GIMap;
-import ru.tcgeo.gilib.GIProjection;
-import ru.tcgeo.gilib.R;
-import ru.tcgeo.gilib.gps.*;
-import ru.tcgeo.gilib.gps.GISensors;
-import ru.tcgeo.wkt.GI_WktGeometry;
-import ru.tcgeo.wkt.GI_WktPoint;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -21,6 +11,14 @@ import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Paint.Style;
 import android.view.SurfaceHolder;
+
+import ru.tcgeo.application.R;
+import ru.tcgeo.application.gilib.GIEditLayersKeeper;
+import ru.tcgeo.application.gilib.GILonLat;
+import ru.tcgeo.application.gilib.GIMap;
+import ru.tcgeo.application.gilib.GIProjection;
+import ru.tcgeo.application.wkt.GI_WktGeometry;
+import ru.tcgeo.application.wkt.GI_WktPoint;
 
 public class GILocatorDrawThread extends Thread 
 {

@@ -3,21 +3,11 @@ package ru.tcgeo.application.gilib;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import ru.tcgeo.gilib.*;
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GIDataRequestor;
-import ru.tcgeo.gilib.GIEditableRenderer;
-import ru.tcgeo.gilib.GIEncoding;
-import ru.tcgeo.gilib.GIGeometry;
-import ru.tcgeo.gilib.GILayer;
-import ru.tcgeo.gilib.GIProjection;
-import ru.tcgeo.gilib.GIVectorStyle;
-import ru.tcgeo.wkt.GIDBaseField;
-import ru.tcgeo.wkt.GI_WktGeometry;
-import ru.tcgeo.wkt.GI_WktGeometry.GIWKTGeometryStatus;
 import android.graphics.Bitmap;
 import android.util.Log;
+
+import ru.tcgeo.application.wkt.GIDBaseField;
+import ru.tcgeo.application.wkt.GI_WktGeometry;
 
 public abstract class GIEditableLayer extends GILayer
 {
@@ -39,9 +29,9 @@ public abstract class GIEditableLayer extends GILayer
 	{
 		POINT, LINE, POLYGON, RING, TRACK;
 	}
-	public GIVectorStyle getPaint(GIWKTGeometryStatus status)
+	public GIVectorStyle getPaint(GI_WktGeometry.GIWKTGeometryStatus status)
 	{
-		if((status == GIWKTGeometryStatus.GEOMETRY_EDITING) || (status == GIWKTGeometryStatus.NEW))
+		if((status == GI_WktGeometry.GIWKTGeometryStatus.GEOMETRY_EDITING) || (status == GI_WktGeometry.GIWKTGeometryStatus.NEW))
 		{
 			return ((GIEditableRenderer)m_renderer).m_additional_styles.get(0);
 		}

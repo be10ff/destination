@@ -1,6 +1,6 @@
 package ru.tcgeo.application.gilib;
 
-import ru.tcgeo.gilib.parser.GIRange;
+import ru.tcgeo.application.gilib.parser.GIRange;
 
 public class GIScaleRange
 {

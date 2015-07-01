@@ -7,12 +7,11 @@ import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import ru.tcgeo.gilib.gps.*;
-import ru.tcgeo.gilib.gps.GICompassDrawThread;
+
 
 public class GICompassView extends SurfaceView implements SurfaceHolder.Callback
 {
-	private ru.tcgeo.gilib.gps.GICompassDrawThread drawThread;
+	private GICompassDrawThread drawThread;
 	public GICompassView(Context context)
 	{
 		super(context);

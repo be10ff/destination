@@ -1,12 +1,6 @@
 package ru.tcgeo.application.gilib;
 
 
-import ru.tcgeo.gilib.*;
-import ru.tcgeo.gilib.GIEditLayersKeeper;
-import ru.tcgeo.gilib.GIGeometryPointControl;
-import ru.tcgeo.gilib.gps.GIYandexUtils;
-import ru.tcgeo.utils.MaskedWatcher;
-import ru.tcgeo.wkt.GI_WktPoint;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -26,6 +20,11 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
 
+import ru.tcgeo.application.R;
+import ru.tcgeo.application.gilib.gps.GIYandexUtils;
+import ru.tcgeo.application.utils.MaskedWatcher;
+import ru.tcgeo.application.wkt.GI_WktPoint;
+
 public class GILonLatInputDialog extends DialogFragment 
 {
 	private EditText m_lon_dec;
@@ -35,7 +34,7 @@ public class GILonLatInputDialog extends DialogFragment
 	private EditText m_lon_grad_min;
 	private EditText m_lat_grad_min;
 	GI_WktPoint m_point;
-	ru.tcgeo.gilib.GIGeometryPointControl m_control;
+	GIGeometryPointControl m_control;
 //	public GILonLatInputDialog()
 //	{
 //	}

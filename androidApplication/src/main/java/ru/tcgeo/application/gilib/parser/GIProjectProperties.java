@@ -7,21 +7,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
-import java.util.ArrayList;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 import org.xmlpull.v1.XmlSerializer;
 
-import ru.tcgeo.gilib.GIProjection;
-import ru.tcgeo.gilib.parser.*;
-import ru.tcgeo.gilib.parser.GIPropertiesEdit;
-import ru.tcgeo.gilib.parser.GIPropertiesGroup;
-//import ru.tcgeo.gilib.script.GIScriptParser;
 import android.os.Environment;
 import android.util.Log;
 import android.util.Xml;
+
+import ru.tcgeo.application.gilib.GIProjection;
 
 public class GIProjectProperties 
 {

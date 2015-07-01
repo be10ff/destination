@@ -8,7 +8,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-import ru.tcgeo.gilib.gps.GIXMLTrack;
+import ru.tcgeo.application.gilib.gps.GIXMLTrack;
+
 
 public class GIGPSParserTrack extends GIGPSParser
 {

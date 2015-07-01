@@ -4,8 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GILonLat;
+import ru.tcgeo.application.gilib.GIBounds;
+import ru.tcgeo.application.gilib.GILonLat;
 
 public class GIBitmap 
 {

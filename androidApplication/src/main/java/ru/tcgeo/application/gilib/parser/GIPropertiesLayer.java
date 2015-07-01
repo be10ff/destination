@@ -5,12 +5,10 @@ import java.util.ArrayList;
 
 import org.xmlpull.v1.XmlSerializer;
 
-import ru.tcgeo.gilib.GIColor;
-import ru.tcgeo.gilib.GIEncoding;
-import ru.tcgeo.gilib.GIIcon;
-import ru.tcgeo.gilib.GILayer;
-import ru.tcgeo.gilib.parser.*;
-import ru.tcgeo.gilib.parser.GISQLDB;
+import ru.tcgeo.application.gilib.GIColor;
+import ru.tcgeo.application.gilib.GIEncoding;
+import ru.tcgeo.application.gilib.GIIcon;
+import ru.tcgeo.application.gilib.GILayer;
 
 public class GIPropertiesLayer implements ILayersRoot
 {
@@ -18,7 +16,7 @@ public class GIPropertiesLayer implements ILayersRoot
 	public GILayer.GILayerType m_type;
 	public String m_strType;
 	public boolean m_enabled;
-	public ArrayList<ru.tcgeo.gilib.parser.GIPropertiesLayer> m_Entries;
+	public ArrayList<GIPropertiesLayer> m_Entries;
 	public GIIcon m_icon;
 	public GISource m_source;
 	public GIEncoding m_encoding;
@@ -27,9 +25,9 @@ public class GIPropertiesLayer implements ILayersRoot
 	public GISQLDB m_sqldb;
 	public GIPropertiesLayer()
 	{
-		m_Entries = new ArrayList<ru.tcgeo.gilib.parser.GIPropertiesLayer>();
+		m_Entries = new ArrayList<GIPropertiesLayer>();
 	}
-	public void addEntry(ru.tcgeo.gilib.parser.GIPropertiesLayer layer)
+	public void addEntry(GIPropertiesLayer layer)
 	{
 		m_Entries.add(layer);
 	}
@@ -62,7 +60,7 @@ public class GIPropertiesLayer implements ILayersRoot
 		{
 		Res += m_range.ToString() + "\n";
 		}
-		for(ru.tcgeo.gilib.parser.GIPropertiesLayer lr : m_Entries)
+		for(GIPropertiesLayer lr : m_Entries)
 		{
 			Res += lr.ToString() + "\n";
 		}

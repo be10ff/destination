@@ -1,8 +1,6 @@
 package ru.tcgeo.application.gilib.specs;
 
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.specs.GeoBounds;
-
+import ru.tcgeo.application.gilib.GIBounds;
 
 public class GITreeTile
 {
@@ -58,11 +56,11 @@ public class GITreeTile
 	{
 		
 		int z = 0;
-		ru.tcgeo.gilib.specs.GITreeTile res = null;
+		GITreeTile res = null;
 		while(z < 20)
 		{
-			ru.tcgeo.gilib.specs.GITreeTile start = new ru.tcgeo.gilib.specs.GITreeTile(z, bounds.left(), bounds.top());
-			ru.tcgeo.gilib.specs.GITreeTile end = new ru.tcgeo.gilib.specs.GITreeTile(z, bounds.right(), bounds.bottom());
+			GITreeTile start = new GITreeTile(z, bounds.left(), bounds.top());
+			GITreeTile end = new GITreeTile(z, bounds.right(), bounds.bottom());
 			if(start.m_xtile == end.m_xtile && start.m_ytile == end.m_ytile)
 			{
 				res = start;

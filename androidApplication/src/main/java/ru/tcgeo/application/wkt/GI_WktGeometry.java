@@ -8,8 +8,8 @@ import org.xmlpull.v1.XmlSerializer;
 import java.io.IOException;
 import java.util.Map;
 
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GIVectorStyle;
+import ru.tcgeo.application.gilib.GIBounds;
+import ru.tcgeo.application.gilib.GIVectorStyle;
 
 
 public abstract class GI_WktGeometry

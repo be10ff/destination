@@ -1,10 +1,10 @@
 package ru.tcgeo.application.gilib.specs;
 
 import android.graphics.RectF;
-import ru.tcgeo.gilib.GILonLat;
 
+import ru.tcgeo.application.gilib.GILonLat;
 
-public class GeoBounds 
+public class GeoBounds
 {
 	protected double       m_top;
 	protected double       m_left;
@@ -87,7 +87,7 @@ public class GeoBounds
 	{
 		return new GILonLat(m_right, m_bottom);
 	}
-	public Boolean ContainsBounds (ru.tcgeo.gilib.specs.GeoBounds other)
+	public Boolean ContainsBounds (GeoBounds other)
 	{
 		if(m_left <= other.m_left && m_right >= other.m_right && m_top >= other.m_top && m_bottom <= other.m_bottom)
 		{
@@ -106,7 +106,7 @@ public class GeoBounds
 		return false;
 	}
 
-	public Boolean Intersects (ru.tcgeo.gilib.specs.GeoBounds with)
+	public Boolean Intersects (GeoBounds with)
 	{
 		if(m_left > with.m_right || m_right < with.m_left || m_top < with.m_bottom || m_bottom > with.m_top)
 		{
@@ -116,7 +116,7 @@ public class GeoBounds
 		// TODO
 	}
 
-	public ru.tcgeo.gilib.specs.GeoBounds Intersect (ru.tcgeo.gilib.specs.GeoBounds with)
+	public GeoBounds Intersect (GeoBounds with)
 	{
 		if(Intersects(with))
 		{
@@ -124,7 +124,7 @@ public class GeoBounds
 			double right = Math.min(m_right, with.m_right);
 			double top = Math.max(m_top, with.m_top);
 			double bottom = Math.min(m_bottom, with.m_bottom);
-			return new ru.tcgeo.gilib.specs.GeoBounds(left, top, right, bottom);
+			return new GeoBounds(left, top, right, bottom);
 		}
 		return null;
 		// TODO

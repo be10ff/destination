@@ -5,8 +5,6 @@ import java.util.ArrayList;
 
 import org.xmlpull.v1.XmlSerializer;
 
-import ru.tcgeo.gilib.parser.GIPropertiesLayerRef;
-
 public class GIPropertiesEdit 
 {
 	public ArrayList<GIPropertiesLayerRef> m_Entries;

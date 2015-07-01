@@ -9,12 +9,6 @@ import android.graphics.Path;
 import android.graphics.Point;
 import android.widget.RelativeLayout;
 
-import ru.tcgeo.gilib.*;
-import ru.tcgeo.gilib.GILonLat;
-import ru.tcgeo.gilib.GIMap;
-import ru.tcgeo.gilib.GIProjection;
-import ru.tcgeo.gilib.GIRuleToolControl;
-
 public class GISquareToolControl extends GIRuleToolControl {
 
 	Paint paint_fill;
@@ -35,12 +29,12 @@ public class GISquareToolControl extends GIRuleToolControl {
         paint_stroke.setStyle(Paint.Style.STROKE);
         paint_stroke.setStrokeWidth(2);
 	}
-	private static ru.tcgeo.gilib.GISquareToolControl instance;
-	public static ru.tcgeo.gilib.GISquareToolControl Instance(Context context, GIMap map)
+	private static GISquareToolControl instance;
+	public static GISquareToolControl Instance(Context context, GIMap map)
 	{
 		if(instance == null)
 		{
-			instance = new ru.tcgeo.gilib.GISquareToolControl(context, map);
+			instance = new GISquareToolControl(context, map);
 		}
 		return instance ;
 	}

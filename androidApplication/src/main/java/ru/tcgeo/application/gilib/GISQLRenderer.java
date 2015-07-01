@@ -3,14 +3,6 @@ package ru.tcgeo.application.gilib;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import ru.tcgeo.gilib.*;
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GILayer;
-import ru.tcgeo.gilib.GIRenderer;
-import ru.tcgeo.gilib.GISQLLayer;
-import ru.tcgeo.gilib.GISQLLayer.GISQLiteZoomingType;
-import ru.tcgeo.gilib.GIStyle;
-import ru.tcgeo.gilib.GITileInfoOSM;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -50,11 +42,11 @@ public class GISQLRenderer extends GIRenderer {
 
 
         z = ((GISQLLayer)layer).getLevel(z);
-        if(((GISQLLayer)layer).m_zooming_type == GISQLiteZoomingType.AUTO && (((GISQLLayer)layer).m_min > z || ((GISQLLayer)layer).m_max < z))
+        if(((GISQLLayer)layer).m_zooming_type == GISQLLayer.GISQLiteZoomingType.AUTO && (((GISQLLayer)layer).m_min > z || ((GISQLLayer)layer).m_max < z))
         {
         	return;
         }
-        if((((GISQLLayer)layer).m_zooming_type == GISQLiteZoomingType.SMART || ((GISQLLayer)layer).m_zooming_type == GISQLiteZoomingType.ADAPTIVE)&& (((GISQLLayer)layer).m_min_z > z || ((GISQLLayer)layer).m_max_z < z))
+        if((((GISQLLayer)layer).m_zooming_type == GISQLLayer.GISQLiteZoomingType.SMART || ((GISQLLayer)layer).m_zooming_type == GISQLLayer.GISQLiteZoomingType.ADAPTIVE)&& (((GISQLLayer)layer).m_min_z > z || ((GISQLLayer)layer).m_max_z < z))
         {
         	return;
         }
@@ -65,7 +57,7 @@ public class GISQLRenderer extends GIRenderer {
 
         	SQLiteDatabase db = SQLiteDatabase.openDatabase(((GISQLLayer)layer).m_path, null, SQLiteDatabase.OPEN_READONLY);
         	ArrayList<GITileInfoOSM> tiles = new ArrayList<GITileInfoOSM>();
-        	if(((GISQLLayer)layer).m_zooming_type == GISQLiteZoomingType.ADAPTIVE)
+        	if(((GISQLLayer)layer).m_zooming_type == GISQLLayer.GISQLiteZoomingType.ADAPTIVE)
         	{
         		tiles = ((GISQLLayer)layer).GetTiles(db, area, z);
         	}

@@ -3,11 +3,6 @@ package ru.tcgeo.application.gilib;
 
 import android.graphics.Bitmap;
 
-import ru.tcgeo.gilib.*;
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GIGoogleRenderer;
-import ru.tcgeo.gilib.GILayer;
-import ru.tcgeo.gilib.GIProjection;
 
 public class GIGoogleLayer extends GILayer {
 

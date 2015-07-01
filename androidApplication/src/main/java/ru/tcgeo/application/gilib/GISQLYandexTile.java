@@ -1,8 +1,5 @@
 package ru.tcgeo.application.gilib;
 
-import ru.tcgeo.gilib.*;
-import ru.tcgeo.gilib.GIProjection;
-import ru.tcgeo.gilib.GITileInfoOSM;
 
 public class GISQLYandexTile extends GITileInfoOSM
 {

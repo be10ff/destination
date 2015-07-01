@@ -3,12 +3,11 @@ package ru.tcgeo.application.gilib.parser;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
-import ru.tcgeo.gilib.parser.*;
-import ru.tcgeo.gilib.parser.GIRange;
+
 
 public class GIParserRange extends GIParser
 {
-	ru.tcgeo.gilib.parser.GIRange m_root;
+	GIRange m_root;
 
 	public GIParserRange(XmlPullParser parent, GIRange root)
 	{

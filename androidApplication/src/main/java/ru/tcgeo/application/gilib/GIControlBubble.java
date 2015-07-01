@@ -12,27 +12,26 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import ru.tcgeo.gilib.*;
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GIMap;
+import ru.tcgeo.application.R;
+
 
 public class GIControlBubble  extends LinearLayout implements GIControl, OnClickListener
 {
 
-	private ru.tcgeo.gilib.GIMap m_map;
+	private GIMap m_map;
 	private GILonLat m_PointOriginMap;
 	private View m_LayoutView;
 	public boolean hasClosed;
 	private Context m_context;
 
 	private String m_info_text;
-	private static ru.tcgeo.gilib.GIControlBubble instance;
+	private static GIControlBubble instance;
 	/**/
-	public static ru.tcgeo.gilib.GIControlBubble Instance(Context context, ru.tcgeo.gilib.GIMap map)
+	public static GIControlBubble Instance(Context context, GIMap map)
 	{
 		if(instance == null)
 		{
-			instance = new ru.tcgeo.gilib.GIControlBubble(context, map);
+			instance = new GIControlBubble(context, map);
 		}
 		instance.hasClosed = true;
 
@@ -53,7 +52,7 @@ public class GIControlBubble  extends LinearLayout implements GIControl, OnClick
 		}
 	}
 
-	private GIControlBubble (Context context, ru.tcgeo.gilib.GIMap map/*, GILonLat lonlat, String text*/)
+	private GIControlBubble (Context context, GIMap map/*, GILonLat lonlat, String text*/)
 	{
 		super(context);
 		setMap(map);
@@ -74,7 +73,7 @@ public class GIControlBubble  extends LinearLayout implements GIControl, OnClick
     	 //m_script_parser = new GIScriptParser(m_project_settings.m_search_body);
 	}
 
-	public ru.tcgeo.gilib.GIMap Map ()
+	public GIMap Map()
 	{
 		return m_map;
 	}

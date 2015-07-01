@@ -4,9 +4,6 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.RectF;
 
-import ru.tcgeo.gilib.planimetry.*;
-import ru.tcgeo.gilib.planimetry.GIGeometryObject;
-
 public class Vertex extends PointF implements GIGeometryObject
 {
 	public static final float delta = 0.1f;
@@ -15,9 +12,9 @@ public class Vertex extends PointF implements GIGeometryObject
 	private int code;
 	public String m_string;
 
-	public ru.tcgeo.gilib.planimetry.Vertex clone()
+	public Vertex clone()
 	{
-		ru.tcgeo.gilib.planimetry.Vertex res = new ru.tcgeo.gilib.planimetry.Vertex(this);
+		Vertex res = new Vertex(this);
 		return res;
 	}
 	public TYPE getType()
@@ -25,7 +22,7 @@ public class Vertex extends PointF implements GIGeometryObject
 		return TYPE.vertex;
 	}
 	
-	public Vertex(ru.tcgeo.gilib.planimetry.Vertex p)
+	public Vertex(Vertex p)
 	{
 		x = p.x;
 		y = p.y;
@@ -64,11 +61,11 @@ public class Vertex extends PointF implements GIGeometryObject
 		{
 			return true;
 		}
-		if (!(o instanceof ru.tcgeo.gilib.planimetry.Vertex))
+		if (!(o instanceof Vertex))
 		{
 			return false;
 		}
-		ru.tcgeo.gilib.planimetry.Vertex obj = (ru.tcgeo.gilib.planimetry.Vertex)o;
+		Vertex obj = (Vertex)o;
 		return (Math.abs(obj.x - this.x) < delta) && (Math.abs(obj.y - this.y) < delta);
 	}
 	public boolean GetOriginVisiblity()
@@ -93,7 +90,7 @@ public class Vertex extends PointF implements GIGeometryObject
 		return (Math.abs(o.x - this.x) < delta) && (Math.abs(o.y - this.y) < delta);		
 	}	
 	
-	public double distanceTo(ru.tcgeo.gilib.planimetry.Vertex point)
+	public double distanceTo(Vertex point)
 	{
 		return Math.sqrt(Math.pow((x - point.x), 2) + Math.pow((y - point.y), 2));
 	}
@@ -223,7 +220,7 @@ public class Vertex extends PointF implements GIGeometryObject
      * лежащий на ближайшей стороне rect если может быть спроецирован на нее
      * совпадающий с ближайщей вершиной если может быть на сторону
      */
-	public ru.tcgeo.gilib.planimetry.Vertex projectOnRect(ru.tcgeo.gilib.planimetry.Vertex vertex, RectF rect)
+	public Vertex projectOnRect(Vertex vertex, RectF rect)
 	{
 		code = getCode(rect);
 		switch(code)

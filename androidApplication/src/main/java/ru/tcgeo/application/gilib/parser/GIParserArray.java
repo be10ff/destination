@@ -3,10 +3,7 @@ package ru.tcgeo.application.gilib.parser;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
-import ru.tcgeo.gilib.GIPList;
-import ru.tcgeo.gilib.parser.*;
-import ru.tcgeo.gilib.parser.GIParser;
-import ru.tcgeo.gilib.parser.GIParserArrayItem;
+import ru.tcgeo.application.gilib.GIPList;
 
 public class GIParserArray extends GIParser
 {

@@ -1,15 +1,12 @@
 package ru.tcgeo.application.gilib.specs;
 
-import ru.tcgeo.gilib.gps.GIYandexUtils;
-import ru.tcgeo.gilib.planimetry.Edge;
-import ru.tcgeo.gilib.specs.GIQuadTreeDouble;
-import ru.tcgeo.gilib.specs.GISpeedCamera;
-import ru.tcgeo.gilib.specs.GISpeedCamersGeometry;
-import ru.tcgeo.gilib.specs.GITreeTile;
 
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.location.Location;
+
+import ru.tcgeo.application.gilib.gps.GIYandexUtils;
+import ru.tcgeo.application.gilib.planimetry.Edge;
 
 public class GISpeedCar extends GISpeedCamera
 {

@@ -1,8 +1,5 @@
 package ru.tcgeo.application.gilib;
 
-import ru.tcgeo.gilib.*;
-import ru.tcgeo.gilib.GIMap;
-import ru.tcgeo.wkt.GI_WktPoint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,9 +13,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import ru.tcgeo.application.R;
+import ru.tcgeo.application.wkt.GI_WktPoint;
+
 public class GIControlFloating extends LinearLayout implements GIControl
 {
-	private ru.tcgeo.gilib.GIMap m_map;
+	private GIMap m_map;
 	private RelativeLayout m_root;
 	boolean hasClosed;
 	private GILonLat m_PointOriginMap;
@@ -97,7 +97,7 @@ public class GIControlFloating extends LinearLayout implements GIControl
 		}
 	}
 
-	public ru.tcgeo.gilib.GIMap Map ()
+	public GIMap Map()
 	{
 		return m_map;
 	}

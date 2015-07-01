@@ -12,31 +12,30 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import ru.tcgeo.gilib.*;
-import ru.tcgeo.gilib.GIMap;
+import ru.tcgeo.application.R;
 
 public class GIRuleToolControl extends View implements OnClickListener, GIControl
 {
 
 	Context m_context;
-	ru.tcgeo.gilib.GIMap m_map;
+	GIMap m_map;
 	ArrayList<GILonLat> m_curve;
 	int[] map_location = { 0, 0 };
 	GIControlFloating m_last;
 	Paint m_paint;
 
-	private static ru.tcgeo.gilib.GIRuleToolControl instance;
-	public static ru.tcgeo.gilib.GIRuleToolControl Instance(Context context, ru.tcgeo.gilib.GIMap map)
+	private static GIRuleToolControl instance;
+	public static GIRuleToolControl Instance(Context context, GIMap map)
 	{
 		if(instance == null)
 		{
-			instance = new ru.tcgeo.gilib.GIRuleToolControl(context, map);
+			instance = new GIRuleToolControl(context, map);
 		}
 		return instance ;
 	}
 
 
-	protected GIRuleToolControl (Context context, ru.tcgeo.gilib.GIMap map)
+	protected GIRuleToolControl (Context context, GIMap map)
 	{
 		super(context);
 		m_context = context;
@@ -164,7 +163,7 @@ public class GIRuleToolControl extends View implements OnClickListener, GIContro
 
 	}
 
-	public ru.tcgeo.gilib.GIMap Map() {
+	public GIMap Map() {
 		return m_map;
 	}
 

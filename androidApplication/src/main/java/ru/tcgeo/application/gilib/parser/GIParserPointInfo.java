@@ -2,8 +2,6 @@ package ru.tcgeo.application.gilib.parser;
 
 import org.xmlpull.v1.XmlPullParser;
 
-import ru.tcgeo.gilib.parser.GIParser;
-import ru.tcgeo.gilib.parser.GIProjectProperties;
 
 public class GIParserPointInfo extends GIParser {
 	GIParserPointInfo(XmlPullParser parent, GIProjectProperties ps)

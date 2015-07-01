@@ -1,9 +1,5 @@
 package ru.tcgeo.application.gilib.gps;
 
-import ru.tcgeo.gilib.GIEditLayersKeeper;
-import ru.tcgeo.gilib.gps.*;
-import ru.tcgeo.gilib.gps.GIGravity;
-import ru.tcgeo.gilib.gps.GIMNK2DFilter.ParametricPoint;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -16,15 +12,17 @@ import android.os.Bundle;
 import android.view.Surface;
 import android.view.WindowManager;
 
+import ru.tcgeo.application.gilib.GIEditLayersKeeper;
+
 
 public class GISensors 
 {
-	private static ru.tcgeo.gilib.gps.GISensors instance;
-	public static ru.tcgeo.gilib.gps.GISensors Instance()
+	private static GISensors instance;
+	public static GISensors Instance()
 	{
 		if(instance == null)
 		{
-			instance = new ru.tcgeo.gilib.gps.GISensors();
+			instance = new GISensors();
 		}
 		return instance;
 	}
@@ -39,7 +37,7 @@ public class GISensors
 		m_sensor_manager.registerListener(listener, m_sensor_gravity, SensorManager.SENSOR_DELAY_NORMAL);
 		m_sensor_manager.registerListener(listener, m_sensor_accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 		m_sensor_manager.registerListener(listener, m_sensor_magnetic, SensorManager.SENSOR_DELAY_NORMAL);
-		m_gravity = new ru.tcgeo.gilib.gps.GIGravity();
+		m_gravity = new GIGravity();
 		valuesGravity = new float[3];
 		valuesAccelerometer = new float[3];
 		valuesMagnet = new float[3];
@@ -69,7 +67,7 @@ public class GISensors
 	float[] valuesResult;
 	float[] inR;
 	float[] outR;
-	ru.tcgeo.gilib.gps.GIGravity m_gravity;
+	GIGravity m_gravity;
 	int m_rotation;
 	GIConveyor m_azimuth;
 	GIConveyor m_pitch;
@@ -115,17 +113,17 @@ public class GISensors
 						}
 						case Surface.ROTATION_90:
 						{
-							m_gravity = new ru.tcgeo.gilib.gps.GIGravity(event.values[1], -event.values[0], event.values[2]);
+							m_gravity = new GIGravity(event.values[1], -event.values[0], event.values[2]);
 							break;
 						}
 						case Surface.ROTATION_180:
 						{
-							m_gravity = new ru.tcgeo.gilib.gps.GIGravity(event.values[0], event.values[1], event.values[2]);
+							m_gravity = new GIGravity(event.values[0], event.values[1], event.values[2]);
 							break;
 						}
 						case Surface.ROTATION_270:
 						{
-							m_gravity = new ru.tcgeo.gilib.gps.GIGravity(-event.values[1], event.values[0], event.values[2]);
+							m_gravity = new GIGravity(-event.values[1], event.values[0], event.values[2]);
 							break;
 						}
 					}
@@ -213,11 +211,11 @@ public class GISensors
 		res[2] = (float) m_roll.getValue();
 		return res;
 	}
-	public ParametricPoint getSpeedAsDelta()
+	public GIMNK2DFilter.ParametricPoint getSpeedAsDelta()
 	{
 		return m_buffer.get_asDelta();
 	}
-	public ParametricPoint[] getSpeedAsLine()
+	public GIMNK2DFilter.ParametricPoint[] getSpeedAsLine()
 	{
 		return m_buffer.getMNT_asLine();
 	}

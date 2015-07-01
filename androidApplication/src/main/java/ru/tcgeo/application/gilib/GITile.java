@@ -1,11 +1,10 @@
 package ru.tcgeo.application.gilib;
 
+import android.graphics.PointF;
+
 import java.util.ArrayList;
 
-import ru.tcgeo.gilib.*;
-import ru.tcgeo.gilib.GIScaleRange;
-import ru.tcgeo.gilib.planimetry.Vertex;
-import android.graphics.PointF;
+import ru.tcgeo.application.gilib.planimetry.Vertex;
 
 
 public class GITile  
@@ -14,7 +13,7 @@ public class GITile
 	public String m_filename;
 	float m_lower;
 	float m_upper;
-	public ru.tcgeo.gilib.GIScaleRange m_range;
+	public GIScaleRange m_range;
 
 	public GITile(String filename, float lower, float upper)
 	{

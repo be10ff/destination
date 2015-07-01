@@ -2,11 +2,7 @@ package ru.tcgeo.application.gilib.specs;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
-import ru.tcgeo.gilib.parser.GIParserArrayItemKey;
-import ru.tcgeo.gilib.parser.GIParserArrayItemValue;
-import ru.tcgeo.gilib.specs.GICameraPList;
-import ru.tcgeo.gilib.specs.GICameraParserArray;
-import ru.tcgeo.gilib.specs.GISpeedCamera;
+
 
 public class GICameraParserArrayItem extends ru.tcgeo.application.gilib.specs.GICameraParserArray {
 	ru.tcgeo.application.gilib.specs.GISpeedCamera m_item;

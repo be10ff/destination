@@ -1,10 +1,7 @@
 package ru.tcgeo.application.gilib;
 
-import ru.tcgeo.gilib.*;
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GIEditLayersKeeper;
-import ru.tcgeo.gilib.GIMap;
-import ru.tcgeo.wkt.GI_WktPoint;
+import ru.tcgeo.application.R;
+import ru.tcgeo.application.wkt.GI_WktPoint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,7 +17,7 @@ import android.widget.ToggleButton;
 
 public class GIGeometryPointControl extends LinearLayout implements GIControl, OnClickListener, OnLongClickListener {
 
-	private ru.tcgeo.gilib.GIMap m_map;
+	private GIMap m_map;
 	private RelativeLayout m_root;
 	boolean hasClosed;
 	private GILonLat m_PointOriginMap;
@@ -49,7 +46,7 @@ public class GIGeometryPointControl extends LinearLayout implements GIControl, O
 	}
 
 
-	public GIGeometryPointControl (Context context, ru.tcgeo.gilib.GIMap map)
+	public GIGeometryPointControl (Context context, GIMap map)
 	{
 		super(context);
 		//setMap(map);
@@ -117,7 +114,7 @@ public class GIGeometryPointControl extends LinearLayout implements GIControl, O
 		}
 	}
 
-	public ru.tcgeo.gilib.GIMap Map ()
+	public GIMap Map()
 	{
 		return m_map;
 	}

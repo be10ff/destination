@@ -4,9 +4,6 @@ import java.io.IOException;
 
 import org.xmlpull.v1.XmlSerializer;
 
-import ru.tcgeo.gilib.parser.GIPropertiesLayer;
-import ru.tcgeo.gilib.parser.ILayersRoot;
-
 
 public class GIPropertiesGroup extends ru.tcgeo.application.gilib.parser.GIPropertiesLayer implements ru.tcgeo.application.gilib.parser.ILayersRoot
 {

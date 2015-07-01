@@ -3,15 +3,13 @@ package ru.tcgeo.application.gilib.parser;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
-import ru.tcgeo.gilib.GIIcon;
-import ru.tcgeo.gilib.GILayer.GILayerType;
-import ru.tcgeo.gilib.parser.*;
-import ru.tcgeo.gilib.parser.GIPropertiesGroup;
-import ru.tcgeo.gilib.parser.GIPropertiesLayer;
+import ru.tcgeo.application.gilib.GIIcon;
+import ru.tcgeo.application.gilib.GILayer;
+
 
 public class GIParserGroup extends GIParser {
 
-	ru.tcgeo.gilib.parser.GIPropertiesLayer m_root;
+	GIPropertiesLayer m_root;
 	GIPropertiesGroup m_current;
 	public GIParserGroup(XmlPullParser parent, GIPropertiesLayer root, GIProjectProperties ps)
 	{
@@ -25,7 +23,7 @@ public class GIParserGroup extends GIParser {
 	@Override
 	protected void ReadSectionsValues()
 	{
-		m_current.m_type = GILayerType.LAYER_GROUP;
+		m_current.m_type = GILayer.GILayerType.LAYER_GROUP;
 		for(int  i = 0; i < m_ParserCurrent.getAttributeCount(); i++)
 		{
 			if(m_ParserCurrent.getAttributeName(i).equalsIgnoreCase("name"))
@@ -53,7 +51,7 @@ public class GIParserGroup extends GIParser {
 		String CurrentSectionName = m_ParserCurrent.getName();
 		if(CurrentSectionName.equalsIgnoreCase("group"))
 		{
-			ru.tcgeo.gilib.parser.GIParserGroup parser = new ru.tcgeo.gilib.parser.GIParserGroup(m_ParserCurrent, m_current, m_ps);
+			GIParserGroup parser = new GIParserGroup(m_ParserCurrent, m_current, m_ps);
 			m_ParserCurrent = parser.ReadSection();
 		}
 		if(CurrentSectionName.equalsIgnoreCase("Layer"))

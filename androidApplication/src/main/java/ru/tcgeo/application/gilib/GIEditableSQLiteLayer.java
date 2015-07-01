@@ -7,20 +7,16 @@ package ru.tcgeo.application.gilib;
 import java.io.File;
 import java.util.HashMap;
 
-import ru.tcgeo.gilib.GIEditableLayer;
-import ru.tcgeo.gilib.GIEncoding;
-import ru.tcgeo.gilib.GIVectorStyle;
-import ru.tcgeo.wkt.GIDBaseField;
-import ru.tcgeo.wkt.GIWKTParser;
-import ru.tcgeo.wkt.GI_WktGeometry;
-import ru.tcgeo.wkt.GI_WktGeometry.GIWKTGeometryStatus;
-import ru.tcgeo.wkt.GI_WktGeometry.GIWKTGeometryType;
-import ru.tcgeo.wkt.GI_WktUserTrack;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 import android.util.Log;
+
+import ru.tcgeo.application.wkt.GIDBaseField;
+import ru.tcgeo.application.wkt.GIWKTParser;
+import ru.tcgeo.application.wkt.GI_WktGeometry;
+import ru.tcgeo.application.wkt.GI_WktUserTrack;
 
 public class GIEditableSQLiteLayer extends GIEditableLayer
 {
@@ -173,7 +169,7 @@ public class GIEditableSQLiteLayer extends GIEditableLayer
 			
 			for(GI_WktGeometry geom : m_shapes)
 			{
-				if(geom.m_status == GIWKTGeometryStatus.NEW)
+				if(geom.m_status == GI_WktGeometry.GIWKTGeometryStatus.NEW)
 				{
 					ContentValues values = new ContentValues();
 					values.put("Geometry", geom.toWKT());
@@ -186,9 +182,9 @@ public class GIEditableSQLiteLayer extends GIEditableLayer
 		    			values.put(key,  geom.m_attributes.get(key).m_value.toString());
 		    		}
 					geom.m_ID = db.insert("Layer", null, values);
-					geom.m_status = GIWKTGeometryStatus.GEOMETRY_EDITING;
+					geom.m_status = GI_WktGeometry.GIWKTGeometryStatus.GEOMETRY_EDITING;
 				}
-				if(geom.m_status == GIWKTGeometryStatus.MODIFIED)
+				if(geom.m_status == GI_WktGeometry.GIWKTGeometryStatus.MODIFIED)
 				{
 					ContentValues values = new ContentValues();
 					values.put("Geometry", geom.toWKT());
@@ -201,7 +197,7 @@ public class GIEditableSQLiteLayer extends GIEditableLayer
 		    			values.put(key,  geom.m_attributes.get(key).m_value.toString());
 		    		}
 		    		db.update("Layer", values, "id = ?", new String[] {String.valueOf(geom.m_ID)});
-					geom.m_status = GIWKTGeometryStatus.SAVED;
+					geom.m_status = GI_WktGeometry.GIWKTGeometryStatus.SAVED;
 				}
 			}
 			db.close();
@@ -272,10 +268,10 @@ public class GIEditableSQLiteLayer extends GIEditableLayer
 		    		{
 		    			geom.m_attributes.get(key).m_value = (Object) c.getString(c.getColumnIndex(key));
 		    		}
-		    		if(geom.m_type == GIWKTGeometryType.TRACK)
+		    		if(geom.m_type == GI_WktGeometry.GIWKTGeometryType.TRACK)
 		    		{
 		    			GI_WktUserTrack track = (GI_WktUserTrack)geom;
-		    			ru.tcgeo.gilib.GIEditableSQLiteLayer layer = new ru.tcgeo.gilib.GIEditableSQLiteLayer(Environment.getExternalStorageDirectory().getAbsolutePath() + File.pathSeparator + track.m_file, m_style, m_encoding); //"/sdcard/"
+		    			GIEditableSQLiteLayer layer = new GIEditableSQLiteLayer(Environment.getExternalStorageDirectory().getAbsolutePath() + File.pathSeparator + track.m_file, m_style, m_encoding); //"/sdcard/"
 		    			track.m_layer = layer;
 		    		}
 	    			m_shapes.add(geom);

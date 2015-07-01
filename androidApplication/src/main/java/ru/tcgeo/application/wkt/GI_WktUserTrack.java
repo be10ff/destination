@@ -13,16 +13,15 @@ import android.os.Environment;
 import java.io.File;
 import java.util.ArrayList;
 
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GIEditLayersKeeper;
-import ru.tcgeo.gilib.GIEditableSQLiteLayer;
-import ru.tcgeo.gilib.GIEncoding;
-import ru.tcgeo.gilib.GILonLat;
-import ru.tcgeo.gilib.GIProjection;
-import ru.tcgeo.gilib.GIVectorStyle;
-import ru.tcgeo.gilib.planimetry.Edge;
-import ru.tcgeo.gilib.planimetry.Vertex;
-
+import ru.tcgeo.application.gilib.GIBounds;
+import ru.tcgeo.application.gilib.GIEditLayersKeeper;
+import ru.tcgeo.application.gilib.GIEditableSQLiteLayer;
+import ru.tcgeo.application.gilib.GIEncoding;
+import ru.tcgeo.application.gilib.GILonLat;
+import ru.tcgeo.application.gilib.GIProjection;
+import ru.tcgeo.application.gilib.GIVectorStyle;
+import ru.tcgeo.application.gilib.planimetry.Edge;
+import ru.tcgeo.application.gilib.planimetry.Vertex;
 
 //never used
 public class GI_WktUserTrack extends GI_WktGeometry {

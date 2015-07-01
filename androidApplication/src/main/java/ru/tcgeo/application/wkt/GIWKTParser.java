@@ -2,11 +2,10 @@ package ru.tcgeo.application.wkt;
 
 import java.util.ArrayList;
 
-import ru.tcgeo.gilib.GILonLat;
-import ru.tcgeo.gilib.GIProjection;
-import ru.tcgeo.gilib.script.GIScriptQueue;
-import ru.tcgeo.wkt.GI_WktGeometry.GIWKTGeometryStatus;
-import ru.tcgeo.wkt.GI_WktGeometry.GIWKTGeometryType;
+import ru.tcgeo.application.gilib.GILonLat;
+import ru.tcgeo.application.gilib.GIProjection;
+import ru.tcgeo.application.gilib.script.GIScriptQueue;
+
 
 public class GIWKTParser 
 {
@@ -23,7 +22,7 @@ public class GIWKTParser
 			if(m_geometry_description.m_str_type.m_type.equalsIgnoreCase("POINT"))
 			{
 				GI_WktPoint point = new GI_WktPoint();
-				point.m_status = GIWKTGeometryStatus.SAVED;
+				point.m_status = GI_WktGeometry.GIWKTGeometryStatus.SAVED;
 				GIWKTBlock block = (GIWKTBlock)m_geometry_description.m_block;
 				ArrayList<GIWKTDescription> array = block.m_points;
 				GIWKTVertex vertex = (GIWKTVertex)array.get(0);
@@ -39,7 +38,7 @@ public class GIWKTParser
 			else if(m_geometry_description.m_str_type.m_type.equalsIgnoreCase("LINESTRING"))
 			{
 				GI_WktLinestring line = new GI_WktLinestring();
-				line.m_status = GIWKTGeometryStatus.SAVED;
+				line.m_status = GI_WktGeometry.GIWKTGeometryStatus.SAVED;
 				GIWKTBlock block = (GIWKTBlock)m_geometry_description.m_block;
 				ArrayList<GIWKTDescription> array = block.m_points;
 				for(int i = 0; i < array.size(); i++)
@@ -60,14 +59,14 @@ public class GIWKTParser
 			else if(m_geometry_description.m_str_type.m_type.equalsIgnoreCase("POLYGON"))
 			{
 				GI_WktPolygon polygon = new GI_WktPolygon();
-				polygon.m_status = GIWKTGeometryStatus.SAVED;
+				polygon.m_status = GI_WktGeometry.GIWKTGeometryStatus.SAVED;
 				GIWKTBlock main = (GIWKTBlock)m_geometry_description.m_block;
 				ArrayList<GIWKTDescription> blocks = main.m_points;
 				for(int i = 0; i < blocks.size(); i++)
 				{
 					GIWKTBlock block = (GIWKTBlock)blocks.get(i);
 					GI_WktLinestring ring = new GI_WktLinestring();
-					ring.m_type = GIWKTGeometryType.RING;
+					ring.m_type = GI_WktGeometry.GIWKTGeometryType.RING;
 					for(int j = 0; j < block.m_points.size(); j++)
 					{
 						GIWKTVertex vertex = (GIWKTVertex)block.m_points.get(j);
@@ -89,7 +88,7 @@ public class GIWKTParser
 			else
 			{
 				GI_WktUserTrack track = new GI_WktUserTrack();
-				track.m_status = GIWKTGeometryStatus.SAVED;
+				track.m_status = GI_WktGeometry.GIWKTGeometryStatus.SAVED;
 				track.m_file = m_geometry_description.m_file; //  "/sdcard/" +
 				return track;
 			}
@@ -97,7 +96,7 @@ public class GIWKTParser
 		else
 		{
 			GI_WktUserTrack track = new GI_WktUserTrack();
-			track.m_status = GIWKTGeometryStatus.SAVED;
+			track.m_status = GI_WktGeometry.GIWKTGeometryStatus.SAVED;
 			track.m_file =m_geometry_description.m_file; //  "/sdcard/" +
 			return track;
 		}
@@ -113,7 +112,7 @@ public class GIWKTParser
 			if(m_geometry_description.m_str_type.m_type.equalsIgnoreCase("POINT"))
 			{
 				GI_WktPoint point = (GI_WktPoint)geometry;
-				geometry.m_status = GIWKTGeometryStatus.SAVED;
+				geometry.m_status = GI_WktGeometry.GIWKTGeometryStatus.SAVED;
 				GIWKTBlock block = (GIWKTBlock)m_geometry_description.m_block;
 				ArrayList<GIWKTDescription> array = block.m_points;
 				GIWKTVertex vertex = (GIWKTVertex)array.get(0);
@@ -128,7 +127,7 @@ public class GIWKTParser
 			else if(m_geometry_description.m_str_type.m_type.equalsIgnoreCase("LINESTRING"))
 			{
 				GI_WktLinestring line = (GI_WktLinestring)geometry;
-				line.m_status = GIWKTGeometryStatus.SAVED;
+				line.m_status = GI_WktGeometry.GIWKTGeometryStatus.SAVED;
 				GIWKTBlock block = (GIWKTBlock)m_geometry_description.m_block;
 				ArrayList<GIWKTDescription> array = block.m_points;
 				for(int i = 0; i < array.size(); i++)
@@ -149,14 +148,14 @@ public class GIWKTParser
 			else if(m_geometry_description.m_str_type.m_type.equalsIgnoreCase("POLYGON"))
 			{
 				GI_WktPolygon polygon = (GI_WktPolygon)geometry;
-				polygon.m_status = GIWKTGeometryStatus.SAVED;
+				polygon.m_status = GI_WktGeometry.GIWKTGeometryStatus.SAVED;
 				GIWKTBlock main = (GIWKTBlock)m_geometry_description.m_block;
 				ArrayList<GIWKTDescription> blocks = main.m_points;
 				for(int i = 0; i < blocks.size(); i++)
 				{
 					GIWKTBlock block = (GIWKTBlock)blocks.get(i);
 					GI_WktLinestring ring = new GI_WktLinestring();
-					ring.m_type = GIWKTGeometryType.RING;
+					ring.m_type = GI_WktGeometry.GIWKTGeometryType.RING;
 					for(int j = 0; j < block.m_points.size(); j++)
 					{
 						GIWKTVertex vertex = (GIWKTVertex)block.m_points.get(j);

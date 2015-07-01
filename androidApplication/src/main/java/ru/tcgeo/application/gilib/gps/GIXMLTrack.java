@@ -7,17 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GIEditLayersKeeper;
-import ru.tcgeo.gilib.GIEncoding;
-import ru.tcgeo.gilib.GILonLat;
-import ru.tcgeo.gilib.GIMap;
-import ru.tcgeo.gilib.GIProjection;
-import ru.tcgeo.gilib.GIVectorStyle;
-import ru.tcgeo.gilib.planimetry.Edge;
-import ru.tcgeo.gilib.planimetry.Vertex;
-import ru.tcgeo.wkt.GI_WktGeometry;
-import ru.tcgeo.wkt.GI_WktPoint;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Path;
@@ -25,6 +14,18 @@ import android.graphics.PointF;
 import android.graphics.RectF;
 import android.os.Environment;
 import android.util.Log;
+
+import ru.tcgeo.application.gilib.GIBounds;
+import ru.tcgeo.application.gilib.GIEditLayersKeeper;
+import ru.tcgeo.application.gilib.GIEncoding;
+import ru.tcgeo.application.gilib.GILonLat;
+import ru.tcgeo.application.gilib.GIMap;
+import ru.tcgeo.application.gilib.GIProjection;
+import ru.tcgeo.application.gilib.GIVectorStyle;
+import ru.tcgeo.application.gilib.planimetry.Edge;
+import ru.tcgeo.application.gilib.planimetry.Vertex;
+import ru.tcgeo.application.wkt.GI_WktGeometry;
+import ru.tcgeo.application.wkt.GI_WktPoint;
 
 public class GIXMLTrack extends GI_WktGeometry {
 
@@ -53,7 +54,7 @@ public class GIXMLTrack extends GI_WktGeometry {
 	}
 
 	@Override
-	public void Draw(Canvas canvas, GIBounds area, float scale, android.graphics.Paint paint) 
+	public void Draw(Canvas canvas, GIBounds area, float scale, android.graphics.Paint paint)
 	{
 		//todo
 		if( GIEditLayersKeeper.Instance().m_CurrentTrack == this)
@@ -213,7 +214,7 @@ public class GIXMLTrack extends GI_WktGeometry {
 		boolean res = true;
 		if(m_points.size() > 1)
 		{
-			double distance = GIMap.GetDistance(((GI_WktPoint)m_points.get(m_points.size() - 1)).LonLat(), point.LonLat());
+			double distance = GIMap.GetDistance(((GI_WktPoint) m_points.get(m_points.size() - 1)).LonLat(), point.LonLat());
 			res = distance > accurancy;
 		}
 		//TODO uncomment

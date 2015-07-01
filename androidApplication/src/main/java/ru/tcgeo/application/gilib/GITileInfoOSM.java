@@ -1,7 +1,5 @@
 package ru.tcgeo.application.gilib;
 
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GIProjection;
 
 public class GITileInfoOSM
 {

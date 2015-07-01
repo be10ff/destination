@@ -11,10 +11,6 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Paint.Style;
 
-import ru.tcgeo.gilib.planimetry.*;
-import ru.tcgeo.gilib.planimetry.Edge;
-import ru.tcgeo.gilib.planimetry.Vertex;
-
 /**
  * класс полигонального объекта для заполнения текстом
  *
@@ -24,7 +20,7 @@ public class GIGeometryPolygon extends GIShape
 	public static enum KIND {convex_cc, convex_uncc, unconvex_cc, unconvex_uncc};
 	private KIND[] kindes = {KIND.convex_cc, KIND.convex_uncc, KIND.unconvex_cc, KIND.unconvex_uncc};
 	public int iKind;
-	private ArrayList<ru.tcgeo.gilib.planimetry.Edge> m_levels;
+	private ArrayList<Edge> m_levels;
 	private ArrayList<RectF> m_rects;
 
 	/**
@@ -64,9 +60,9 @@ public class GIGeometryPolygon extends GIShape
 	{
 		return TYPE.polygon;
 	}
-	public ru.tcgeo.gilib.planimetry.GIGeometryPolygon clone()
+	public GIGeometryPolygon clone()
 	{
-		ru.tcgeo.gilib.planimetry.GIGeometryPolygon result = new ru.tcgeo.gilib.planimetry.GIGeometryPolygon(m_labeltext);
+		GIGeometryPolygon result = new GIGeometryPolygon(m_labeltext);
 		for(int i = 0; i < m_points.size(); i++)
 		{
 			result.add(m_points.get(i).clone());
@@ -77,15 +73,15 @@ public class GIGeometryPolygon extends GIShape
 	 * добавляем полигон как inner ring к объекту
 	 * @param ring - inner ring
 	 */
-	public void addRing(ru.tcgeo.gilib.planimetry.GIGeometryPolygon ring)
+	public void addRing(GIGeometryPolygon ring)
 	{
 		if(ring == null)
 		{
-			ring = new ru.tcgeo.gilib.planimetry.GIGeometryPolygon();
+			ring = new GIGeometryPolygon();
 		}
 		if(m_rings == null)
 		{
-			m_rings = new ArrayList<ru.tcgeo.gilib.planimetry.GIGeometryPolygon>();
+			m_rings = new ArrayList<GIGeometryPolygon>();
 		}
 		m_rings.add(ring);
 	}
@@ -106,7 +102,7 @@ public class GIGeometryPolygon extends GIShape
         for(int k = 0; k < m_levels.size(); k++)
         {
         	Path line_path = new Path();
-        	ru.tcgeo.gilib.planimetry.Edge line = m_levels.get(k);
+        	Edge line = m_levels.get(k);
         	line_path.moveTo(line.m_start.x  , line.m_start.y );
         	line_path.lineTo(line.m_end.x , line.m_end.y);
         	canvas.drawPath(line_path, paint);
@@ -144,9 +140,9 @@ public class GIGeometryPolygon extends GIShape
  * построение массива отрезков полигона по массиву точек
  */
 	@Override
-	public ArrayList<ru.tcgeo.gilib.planimetry.Edge> MakeEdgesRing()
+	public ArrayList<Edge> MakeEdgesRing()
 	{
-		m_edges = new ArrayList<ru.tcgeo.gilib.planimetry.Edge>();
+		m_edges = new ArrayList<Edge>();
 		for(int i = 0; i < m_points.size()-1; i++)
 		{
 			Vertex current = new Vertex(m_points.get(i));
@@ -163,7 +159,7 @@ public class GIGeometryPolygon extends GIShape
 				}
 
 			}
-			ru.tcgeo.gilib.planimetry.Edge edge = new ru.tcgeo.gilib.planimetry.Edge(current, next);
+			Edge edge = new Edge(current, next);
 			m_edges.add(edge);
 		}
 
@@ -223,7 +219,7 @@ public class GIGeometryPolygon extends GIShape
 				continue;
 			}
 
-			ru.tcgeo.gilib.planimetry.Edge clipped = ru.tcgeo.gilib.planimetry.Edge.Clipping(new ru.tcgeo.gilib.planimetry.Edge(current, next), rect);
+			Edge clipped = Edge.Clipping(new Edge(current, next), rect);
 			//cutline
 			if(current.getCode(rect) != 0)
 			{
@@ -292,7 +288,7 @@ public class GIGeometryPolygon extends GIShape
 		{
 			for(int i = 0; i < m_rings.size(); i++)
 			{
-				ru.tcgeo.gilib.planimetry.GIGeometryPolygon ring = m_rings.get(i);
+				GIGeometryPolygon ring = m_rings.get(i);
 				//ring.IntersectByRect(rect);
 				//TODO excluding fully invisible inner rings. works. commented for debugging LabelGeometry.Difference
 				if(!ring.IntersectByRect(rect))
@@ -319,7 +315,7 @@ public class GIGeometryPolygon extends GIShape
 
 		while(index <  m_edges.size() - 1)
 		{
-			ru.tcgeo.gilib.planimetry.Edge current = m_edges.get(index);
+			Edge current = m_edges.get(index);
 			int next_idx = index + 1;
 			boolean happends = false;
 
@@ -328,13 +324,13 @@ public class GIGeometryPolygon extends GIShape
 			current_is_interesting = true;
 			while((next_idx <  m_edges.size())&&current_is_interesting)
 			{
-				ru.tcgeo.gilib.planimetry.Edge compare = m_edges.get(next_idx);
+				Edge compare = m_edges.get(next_idx);
 				boolean pair_is_interesting = ((current.m_start._m_original & current.m_end._m_original & compare.m_start._m_original & compare.m_end._m_original) != 0);
 				//TODO there is max method
 				pair_is_interesting = true;
 				if(pair_is_interesting)
 				{
-					ArrayList<ru.tcgeo.gilib.planimetry.Edge> divided = current.Difference(compare);
+					ArrayList<Edge> divided = current.Difference(compare);
 					if(divided != null)
 					{
 						m_edges.addAll(divided);
@@ -366,14 +362,14 @@ public class GIGeometryPolygon extends GIShape
 	 */
 	public ArrayList<RectF> getTextRectArray()
 	{
-		ArrayList<ru.tcgeo.gilib.planimetry.Edge> edges = getTextLineArray();
+		ArrayList<Edge> edges = getTextLineArray();
 		ArrayList<RectF> result = new ArrayList<RectF>();
 		for(int i = 0; i < edges.size() - 1; i++)
 		{
-			ru.tcgeo.gilib.planimetry.Edge top_edge = edges.get(i);
-			ru.tcgeo.gilib.planimetry.Edge bottom_edge = edges.get(i+1);
-			ru.tcgeo.gilib.planimetry.Edge left_edge = new ru.tcgeo.gilib.planimetry.Edge(top_edge.m_start, bottom_edge.m_start);
-			ru.tcgeo.gilib.planimetry.Edge right_edge = new ru.tcgeo.gilib.planimetry.Edge(top_edge.m_end, bottom_edge.m_end);
+			Edge top_edge = edges.get(i);
+			Edge bottom_edge = edges.get(i+1);
+			Edge left_edge = new Edge(top_edge.m_start, bottom_edge.m_start);
+			Edge right_edge = new Edge(top_edge.m_end, bottom_edge.m_end);
 
 			float left = left_edge.center_point().x;
 			float right = right_edge.center_point().x;
@@ -387,7 +383,7 @@ public class GIGeometryPolygon extends GIShape
 	}
 	public ArrayList<Trapezoid> getTextTrapezoidArray()
 	{
-		ArrayList<ru.tcgeo.gilib.planimetry.Edge> edges = getTextLineArray();
+		ArrayList<Edge> edges = getTextLineArray();
 		if(edges == null)
 		{
 			return null;
@@ -396,16 +392,16 @@ public class GIGeometryPolygon extends GIShape
 		int counter = 0;
 		int internal_counter = 0;
 
-		ArrayList<ArrayList<ru.tcgeo.gilib.planimetry.Edge>> levels = new ArrayList<ArrayList<ru.tcgeo.gilib.planimetry.Edge>>();
+		ArrayList<ArrayList<Edge>> levels = new ArrayList<ArrayList<Edge>>();
 		while(counter < edges.size())
 		{
-			ru.tcgeo.gilib.planimetry.Edge top_edge = edges.get(counter);
-			ArrayList<ru.tcgeo.gilib.planimetry.Edge> one_lvl_edges = new ArrayList<ru.tcgeo.gilib.planimetry.Edge>();
+			Edge top_edge = edges.get(counter);
+			ArrayList<Edge> one_lvl_edges = new ArrayList<Edge>();
 			one_lvl_edges.add(top_edge);
 			internal_counter = counter + 1;
 			while((internal_counter < edges.size())&&(Math.abs(top_edge.m_start.y - edges.get(internal_counter).m_start.y) < Vertex.delta))
 			{
-				ru.tcgeo.gilib.planimetry.Edge next_top = edges.get(internal_counter);
+				Edge next_top = edges.get(internal_counter);
 				one_lvl_edges.add(next_top);
 				internal_counter++;
 			}
@@ -414,15 +410,15 @@ public class GIGeometryPolygon extends GIShape
 		}
 		for(int i = 0; i < levels.size() - 1; i++)
 		{
-			ArrayList<ru.tcgeo.gilib.planimetry.Edge> top_edges = levels.get(i);
-			ArrayList<ru.tcgeo.gilib.planimetry.Edge> bottom_edges = levels.get(i+1);
+			ArrayList<Edge> top_edges = levels.get(i);
+			ArrayList<Edge> bottom_edges = levels.get(i+1);
 			boolean CanJoinTop = true;
 			boolean CanJoinBottom = true;
 			int j = 1;
-			ru.tcgeo.gilib.planimetry.Edge top = top_edges.get(0);
+			Edge top = top_edges.get(0);
 			while(CanJoinTop && j  < top_edges.size())
 			{
-				ru.tcgeo.gilib.planimetry.Edge next = top_edges.get(j);
+				Edge next = top_edges.get(j);
 				if(!top.CanBeJoin(next))
 				{
 					CanJoinTop = false;
@@ -434,10 +430,10 @@ public class GIGeometryPolygon extends GIShape
 				j++;
 			}
 			j = 1;
-			ru.tcgeo.gilib.planimetry.Edge bottom = bottom_edges.get(0);
+			Edge bottom = bottom_edges.get(0);
 			while(CanJoinBottom && j  < bottom_edges.size())
 			{
-				ru.tcgeo.gilib.planimetry.Edge next = bottom_edges.get(j);
+				Edge next = bottom_edges.get(j);
 				if(!bottom.CanBeJoin(next))
 				{
 					CanJoinBottom = false;
@@ -482,7 +478,7 @@ public class GIGeometryPolygon extends GIShape
 
 	public ArrayList<Trapezoid> getTextMaxTrapezoidArray()
 	{
-		ArrayList<ru.tcgeo.gilib.planimetry.Edge> edges = getTextLineArray();
+		ArrayList<Edge> edges = getTextLineArray();
 		if(edges == null)
 		{
 			return null;
@@ -495,14 +491,14 @@ public class GIGeometryPolygon extends GIShape
 		//boolean oneHasCollected = false;
 		while(counter < edges.size())
 		{
-			ru.tcgeo.gilib.planimetry.Edge top_edge = edges.get(counter);
-			ArrayList<ru.tcgeo.gilib.planimetry.Edge> top_edges = new ArrayList<ru.tcgeo.gilib.planimetry.Edge>();
+			Edge top_edge = edges.get(counter);
+			ArrayList<Edge> top_edges = new ArrayList<Edge>();
 			top_counter = counter + 1;
 			//oneHasCollected = false;
 			canBeAddedTop = true;
 			while((top_counter < edges.size())&&(Math.abs(top_edge.m_start.y - edges.get(top_counter).m_start.y) < Vertex.delta))
 			{
-				ru.tcgeo.gilib.planimetry.Edge next_top = edges.get(top_counter);
+				Edge next_top = edges.get(top_counter);
 				//top_edges.add(next_top);
 				if((top_edge.CanBeJoin(next_top)))
 				{
@@ -522,13 +518,13 @@ public class GIGeometryPolygon extends GIShape
 			counter = top_counter;
 			if(counter < edges.size())
 			{
-				ru.tcgeo.gilib.planimetry.Edge bottom_edge = edges.get(counter);
+				Edge bottom_edge = edges.get(counter);
 				int bottom_counter = counter + 1;
 				canBeAddedBottom = true;
-				ArrayList<ru.tcgeo.gilib.planimetry.Edge> bottom_edges = new ArrayList<ru.tcgeo.gilib.planimetry.Edge>();
+				ArrayList<Edge> bottom_edges = new ArrayList<Edge>();
 				while((bottom_counter < edges.size())&&(Math.abs(bottom_edge.m_start.y - edges.get(bottom_counter).m_start.y) < Vertex.delta))
 				{
-					ru.tcgeo.gilib.planimetry.Edge next_bottom = edges.get(bottom_counter);
+					Edge next_bottom = edges.get(bottom_counter);
 					bottom_edges.add(next_bottom);
 					if((bottom_edge.CanBeJoin(next_bottom))/*&&canBeAddedTop&&!oneHasCollected*/)
 					{
@@ -562,7 +558,7 @@ public class GIGeometryPolygon extends GIShape
 	public ArrayList<Trapezoid> getTextMinTrapezoidArray()
 	{
 
-		ArrayList<ru.tcgeo.gilib.planimetry.Edge> edges = getTextLineArray();
+		ArrayList<Edge> edges = getTextLineArray();
 		if(edges == null)
 		{
 			return null;
@@ -575,14 +571,14 @@ public class GIGeometryPolygon extends GIShape
 		//boolean oneHasCollected = false;
 		while(counter < edges.size())
 		{
-			ru.tcgeo.gilib.planimetry.Edge top_edge = edges.get(counter);
-			ArrayList<ru.tcgeo.gilib.planimetry.Edge> top_edges = new ArrayList<ru.tcgeo.gilib.planimetry.Edge>();
+			Edge top_edge = edges.get(counter);
+			ArrayList<Edge> top_edges = new ArrayList<Edge>();
 			top_counter = counter + 1;
 			//oneHasCollected = false;
 			canBeAddedTop = true;
 			while((top_counter < edges.size())&&(Math.abs(top_edge.m_start.y - edges.get(top_counter).m_start.y) < Vertex.delta))
 			{
-				ru.tcgeo.gilib.planimetry.Edge next_top = edges.get(top_counter);
+				Edge next_top = edges.get(top_counter);
 				top_edges.add(next_top);
 				if((top_edge.CanBeJoin(next_top))&&canBeAddedTop)
 				{
@@ -598,13 +594,13 @@ public class GIGeometryPolygon extends GIShape
 			counter = top_counter;
 			if(counter < edges.size())
 			{
-				ru.tcgeo.gilib.planimetry.Edge bottom_edge = edges.get(counter);
+				Edge bottom_edge = edges.get(counter);
 				int bottom_counter = counter + 1;
 				canBeAddedBottom = true;
-				ArrayList<ru.tcgeo.gilib.planimetry.Edge> bottom_edges = new ArrayList<ru.tcgeo.gilib.planimetry.Edge>();
+				ArrayList<Edge> bottom_edges = new ArrayList<Edge>();
 				while((bottom_counter < edges.size())&&(Math.abs(bottom_edge.m_start.y - edges.get(bottom_counter).m_start.y) < Vertex.delta))
 				{
-					ru.tcgeo.gilib.planimetry.Edge next_bottom = edges.get(bottom_counter);
+					Edge next_bottom = edges.get(bottom_counter);
 					bottom_edges.add(next_bottom);
 					if((bottom_edge.CanBeJoin(next_bottom))&&canBeAddedTop/*&&!oneHasCollected*/)
 					{
@@ -630,13 +626,13 @@ public class GIGeometryPolygon extends GIShape
 
 	public ArrayList<Trapezoid> getTextTrapezoidArray_old()
 	{
-		ArrayList<ru.tcgeo.gilib.planimetry.Edge> edges = getTextLineArray();
+		ArrayList<Edge> edges = getTextLineArray();
 		ArrayList<Trapezoid> result = new ArrayList<Trapezoid>();
 		for(int i = 0; i < edges.size() - 1; i++)
 		{
 			//минимальный вариант. отбрасываем "рога"
-			ru.tcgeo.gilib.planimetry.Edge top_edge = edges.get(i);
-			ru.tcgeo.gilib.planimetry.Edge bottom_edge = edges.get(i+1);
+			Edge top_edge = edges.get(i);
+			Edge bottom_edge = edges.get(i+1);
 			boolean toAddTrapezoid = true;
 			//два отрезка на одной горизонтали
 			if(Math.abs(top_edge.m_start.y - bottom_edge.m_start.y) < Vertex.delta)
@@ -660,7 +656,7 @@ public class GIGeometryPolygon extends GIShape
 			//а вдруг bottom тож можно объеденить?
 			if((i+2) < edges.size())
 			{
-				ru.tcgeo.gilib.planimetry.Edge next = edges.get(i+2);
+				Edge next = edges.get(i+2);
 				//if(bottom_edge.m_start.m_point.y == next.m_start.m_point.y)
 				if(Math.abs(bottom_edge.m_start.y - next.m_start.y) < Vertex.delta)
 				{
@@ -748,9 +744,9 @@ public class GIGeometryPolygon extends GIShape
 		return result;
 	}
 
-	public ArrayList<ru.tcgeo.gilib.planimetry.Edge> getTextLineArray_old_working()
+	public ArrayList<Edge> getTextLineArray_old_working()
 	{
-		ArrayList<ru.tcgeo.gilib.planimetry.Edge> lines = new ArrayList<ru.tcgeo.gilib.planimetry.Edge>();
+		ArrayList<Edge> lines = new ArrayList<Edge>();
 		ArrayList<Vertex> sorted_points = new ArrayList<Vertex>();
 		//adding interior rings
 		ArrayList<Vertex> all_points = new ArrayList<Vertex>();
@@ -813,30 +809,30 @@ public class GIGeometryPolygon extends GIShape
 			return null;
 		}
 
-		ArrayList<ru.tcgeo.gilib.planimetry.Edge> intersection_edges_prev_lvl = new ArrayList<ru.tcgeo.gilib.planimetry.Edge>();
+		ArrayList<Edge> intersection_edges_prev_lvl = new ArrayList<Edge>();
 		//идем по горизонталям последовательно по возрастанию
 		for(int level = 0; level < sorted_points.size(); level++) //??????? -1
 		{
 			float levelY = sorted_points.get(level).y;
 			//для каждой горизонтали создаем список всех пересекающихся с ней Edge
-			ArrayList<ru.tcgeo.gilib.planimetry.Edge> intersection_edges = new ArrayList<ru.tcgeo.gilib.planimetry.Edge>();
+			ArrayList<Edge> intersection_edges = new ArrayList<Edge>();
 			for(int i = 0; i < m_edges.size(); i++)
 			{
-				ru.tcgeo.gilib.planimetry.Edge current_edge = m_edges.get(i);
-				if(ru.tcgeo.gilib.planimetry.Edge.IsEdgeIntersectHorizontal(current_edge, levelY))
+				Edge current_edge = m_edges.get(i);
+				if(Edge.IsEdgeIntersectHorizontal(current_edge, levelY))
 				{
-					current_edge.m_intersection_point = ru.tcgeo.gilib.planimetry.Edge.EdgeIntersectionHorizontal(current_edge, levelY);
+					current_edge.m_intersection_point = Edge.EdgeIntersectionHorizontal(current_edge, levelY);
 					intersection_edges.add(current_edge);
 				}
 			}
-			ArrayList<ru.tcgeo.gilib.planimetry.Edge> intersection_edges_res = new ArrayList<ru.tcgeo.gilib.planimetry.Edge>();
+			ArrayList<Edge> intersection_edges_res = new ArrayList<Edge>();
 			intersection_edges_res.addAll(intersection_edges);
 			//для всех горизонталей
 			for(int i = 0; i < intersection_edges.size(); i ++)
 			{
-				ru.tcgeo.gilib.planimetry.Edge current_edge =  intersection_edges.get(i);
+				Edge current_edge =  intersection_edges.get(i);
 				//  удаляем из списка все пересекающие ее _горизонтальные Edge
-				if(ru.tcgeo.gilib.planimetry.Edge.IsCoincidesHorizontal(current_edge, levelY))
+				if(Edge.IsCoincidesHorizontal(current_edge, levelY))
 				{
 					//TODO: ??????
 					if(current_edge.m_start.x > current_edge.m_end.x)
@@ -900,7 +896,7 @@ public class GIGeometryPolygon extends GIShape
 				}
 				intersection_edges_res.remove(intersection_edges_res.get(left_next_index));
 				// добавили отрезок между самой левой и следующей за ней
-				lines.add(new ru.tcgeo.gilib.planimetry.Edge(new Vertex(new PointF(left, levelY)), new Vertex(new PointF(next_left, levelY))));
+				lines.add(new Edge(new Vertex(new PointF(left, levelY)), new Vertex(new PointF(next_left, levelY))));
 			}
 			intersection_edges_prev_lvl = intersection_edges;
 		}
@@ -912,9 +908,9 @@ public class GIGeometryPolygon extends GIShape
 	 * разбивка полигона на трапеции сечением горизонталями через все вершины
 	 * @return массив лежащих внутри полигона горизонтальных отрезков
 	 */
-	public ArrayList<ru.tcgeo.gilib.planimetry.Edge> getTextLineArray()
+	public ArrayList<Edge> getTextLineArray()
 	{
-		ArrayList<ru.tcgeo.gilib.planimetry.Edge> lines = new ArrayList<ru.tcgeo.gilib.planimetry.Edge>();
+		ArrayList<Edge> lines = new ArrayList<Edge>();
 		ArrayList<Vertex> sorted_points = new ArrayList<Vertex>();
 		//adding interior rings
 		ArrayList<Vertex> all_points = new ArrayList<Vertex>();
@@ -977,30 +973,30 @@ public class GIGeometryPolygon extends GIShape
 			return null;
 		}
 
-		ArrayList<ru.tcgeo.gilib.planimetry.Edge> intersection_edges_prev_lvl = new ArrayList<ru.tcgeo.gilib.planimetry.Edge>();
+		ArrayList<Edge> intersection_edges_prev_lvl = new ArrayList<Edge>();
 		//идем по горизонталям последовательно по возрастанию
 		for(int level = 0; level < sorted_points.size(); level++) //??????? -1
 		{
 			float levelY = sorted_points.get(level).y;
 			//для каждой горизонтали создаем список всех пересекающихся с ней Edge
-			ArrayList<ru.tcgeo.gilib.planimetry.Edge> intersection_edges = new ArrayList<ru.tcgeo.gilib.planimetry.Edge>();
+			ArrayList<Edge> intersection_edges = new ArrayList<Edge>();
 			for(int i = 0; i < m_edges.size(); i++)
 			{
-				ru.tcgeo.gilib.planimetry.Edge current_edge = m_edges.get(i);
-				if(ru.tcgeo.gilib.planimetry.Edge.IsEdgeIntersectHorizontal(current_edge, levelY))
+				Edge current_edge = m_edges.get(i);
+				if(Edge.IsEdgeIntersectHorizontal(current_edge, levelY))
 				{
-					current_edge.m_intersection_point = ru.tcgeo.gilib.planimetry.Edge.EdgeIntersectionHorizontal(current_edge, levelY);
+					current_edge.m_intersection_point = Edge.EdgeIntersectionHorizontal(current_edge, levelY);
 					intersection_edges.add(current_edge);
 				}
 			}
-			ArrayList<ru.tcgeo.gilib.planimetry.Edge> intersection_edges_res = new ArrayList<ru.tcgeo.gilib.planimetry.Edge>();
+			ArrayList<Edge> intersection_edges_res = new ArrayList<Edge>();
 			intersection_edges_res.addAll(intersection_edges);
 			//для всех горизонталей
 			for(int i = 0; i < intersection_edges.size(); i ++)
 			{
-				ru.tcgeo.gilib.planimetry.Edge current_edge =  intersection_edges.get(i);
+				Edge current_edge =  intersection_edges.get(i);
 				//  удаляем из списка все пересекающие ее _горизонтальные Edge
-				if(ru.tcgeo.gilib.planimetry.Edge.IsCoincidesHorizontal(current_edge, levelY))
+				if(Edge.IsCoincidesHorizontal(current_edge, levelY))
 				{
 					//TODO: ??????
 					if(current_edge.m_start.x > current_edge.m_end.x)
@@ -1064,7 +1060,7 @@ public class GIGeometryPolygon extends GIShape
 				}
 				intersection_edges_res.remove(intersection_edges_res.get(left_next_index));
 				// добавили отрезок между самой левой и следующей за ней
-				lines.add(new ru.tcgeo.gilib.planimetry.Edge(new Vertex(new PointF(left, levelY)), new Vertex(new PointF(next_left, levelY))));
+				lines.add(new Edge(new Vertex(new PointF(left, levelY)), new Vertex(new PointF(next_left, levelY))));
 			}
 			intersection_edges_prev_lvl = intersection_edges;
 		}
@@ -1079,7 +1075,7 @@ public class GIGeometryPolygon extends GIShape
 	public boolean IncludePoint(PointF point)
 	{
 		int count = 0;
-		ru.tcgeo.gilib.planimetry.Edge infinity = new ru.tcgeo.gilib.planimetry.Edge(new Vertex(point), new Vertex(new PointF(10000, point.y)));
+		Edge infinity = new Edge(new Vertex(point), new Vertex(new PointF(10000, point.y)));
 		for(int i = 0; i < m_points.size()-1; i++)
 		{
 			if((Math.abs(m_points.get(i).y - point.y) < Vertex.delta) && ((m_points.get(i).x - point.x) > Vertex.delta))
@@ -1110,7 +1106,7 @@ public class GIGeometryPolygon extends GIShape
 			}
 			else
 			{
-				ru.tcgeo.gilib.planimetry.Edge current = new ru.tcgeo.gilib.planimetry.Edge(m_points.get(i), m_points.get(i+1));
+				Edge current = new Edge(m_points.get(i), m_points.get(i+1));
 				if(current.intersectionAsEdgesStrong(infinity) != null)
 				{
 					count++;
@@ -1141,11 +1137,11 @@ public class GIGeometryPolygon extends GIShape
 		}
 		for(int i = 0; i < m_points.size() - 1; i++)
 		{
-			ru.tcgeo.gilib.planimetry.Edge first = new ru.tcgeo.gilib.planimetry.Edge(point, m_points.get(i));
-			ru.tcgeo.gilib.planimetry.Edge second = new ru.tcgeo.gilib.planimetry.Edge(point, m_points.get(i+1));
+			Edge first = new Edge(point, m_points.get(i));
+			Edge second = new Edge(point, m_points.get(i+1));
 
-			double rr = Math.acos(ru.tcgeo.gilib.planimetry.Edge.scalarMultiplication(first, second)/(first.Lenght() * second.Lenght()));
-			double ss = ru.tcgeo.gilib.planimetry.Edge.vectorMultiplication(first, second);
+			double rr = Math.acos(Edge.scalarMultiplication(first, second)/(first.Lenght() * second.Lenght()));
+			double ss = Edge.vectorMultiplication(first, second);
 			result = result + rr*Math.signum(ss);
 		}
 		return (Math.abs(result) > 0.1);
@@ -1194,19 +1190,19 @@ public class GIGeometryPolygon extends GIShape
 	public boolean IsPointInside(PointF point)
 	{
 		int counter = 0;
-		ru.tcgeo.gilib.planimetry.Edge P = new ru.tcgeo.gilib.planimetry.Edge(point, new PointF(point.x + 1000, point.y));
+		Edge P = new Edge(point, new PointF(point.x + 1000, point.y));
 		for(int i = 0; i < m_points.size() - 1; i++)
 		{
 			//R текущее ребро
-			ru.tcgeo.gilib.planimetry.Edge Fi = new ru.tcgeo.gilib.planimetry.Edge(m_points.get(i), m_points.get(i+1));
+			Edge Fi = new Edge(m_points.get(i), m_points.get(i+1));
 			//нормаль к ребру
-			ru.tcgeo.gilib.planimetry.Edge Ni = ru.tcgeo.gilib.planimetry.Edge.VectorNormal(Fi);
+			Edge Ni = Edge.VectorNormal(Fi);
 			//скалярное произведение . определяет взаимную ориентацию отрезка и ребра
-			float pi = ru.tcgeo.gilib.planimetry.Edge.scalarMultiplication(P, Ni);
+			float pi = Edge.scalarMultiplication(P, Ni);
 			//вектор Qt = V(t) - F начинающийся в начальной точке ребра окна и заканчивающийся в некоторой точке V(t) удлиненной линии.
-			ru.tcgeo.gilib.planimetry.Edge Qt = new ru.tcgeo.gilib.planimetry.Edge(m_points.get(i), P.m_start);
+			Edge Qt = new Edge(m_points.get(i), P.m_start);
 			//скалярное произведение  Qt*Ni
-			float qi = ru.tcgeo.gilib.planimetry.Edge.scalarMultiplication(Qt, Ni);
+			float qi = Edge.scalarMultiplication(Qt, Ni);
 			//вырожден в точку либо паралелен стороне
 			if(pi == 0)
 			{
@@ -1248,17 +1244,17 @@ public class GIGeometryPolygon extends GIShape
 		if(m_points.size() > 3)
 		{
 			//boolean cc;
-			ru.tcgeo.gilib.planimetry.Edge last = new ru.tcgeo.gilib.planimetry.Edge(m_points.get(m_points.size() - 2), m_points.get(m_points.size() - 1));
-			ru.tcgeo.gilib.planimetry.Edge first = new ru.tcgeo.gilib.planimetry.Edge(m_points.get(0), m_points.get(1));
-			if(ru.tcgeo.gilib.planimetry.Edge.vectorMultiplication(last, first) < 0)
+			Edge last = new Edge(m_points.get(m_points.size() - 2), m_points.get(m_points.size() - 1));
+			Edge first = new Edge(m_points.get(0), m_points.get(1));
+			if(Edge.vectorMultiplication(last, first) < 0)
 			{
 				return false;
 			}
 			for(int i = 0; i < m_points.size() - 2; i++)
 			{
-				ru.tcgeo.gilib.planimetry.Edge curr = new ru.tcgeo.gilib.planimetry.Edge(m_points.get(i), m_points.get(i + 1));
-				ru.tcgeo.gilib.planimetry.Edge next = new ru.tcgeo.gilib.planimetry.Edge(m_points.get(i + 1), m_points.get(i + 2));
-				if(ru.tcgeo.gilib.planimetry.Edge.vectorMultiplication(curr, next) < 0)
+				Edge curr = new Edge(m_points.get(i), m_points.get(i + 1));
+				Edge next = new Edge(m_points.get(i + 1), m_points.get(i + 2));
+				if(Edge.vectorMultiplication(curr, next) < 0)
 				{
 					return false;
 				}
@@ -1282,9 +1278,9 @@ public class GIGeometryPolygon extends GIShape
 		//int prev = 0;
 		if(m_points.size() > 3)
 		{
-			ru.tcgeo.gilib.planimetry.Edge last = new ru.tcgeo.gilib.planimetry.Edge(m_points.get(m_points.size() - 2), m_points.get(m_points.size() - 1));
-			ru.tcgeo.gilib.planimetry.Edge first = new ru.tcgeo.gilib.planimetry.Edge(m_points.get(0), m_points.get(1));
-			if(ru.tcgeo.gilib.planimetry.Edge.vectorMultiplication(last, first) < 0)
+			Edge last = new Edge(m_points.get(m_points.size() - 2), m_points.get(m_points.size() - 1));
+			Edge first = new Edge(m_points.get(0), m_points.get(1));
+			if(Edge.vectorMultiplication(last, first) < 0)
 			{
 				kind = 1;
 			}
@@ -1295,8 +1291,8 @@ public class GIGeometryPolygon extends GIShape
 
 			for(int i = 0; i < m_points.size() - 2; i++)
 			{
-				ru.tcgeo.gilib.planimetry.Edge curr = new ru.tcgeo.gilib.planimetry.Edge(m_points.get(i), m_points.get(i + 1));
-				ru.tcgeo.gilib.planimetry.Edge next = new ru.tcgeo.gilib.planimetry.Edge(m_points.get(i + 1), m_points.get(i + 2));
+				Edge curr = new Edge(m_points.get(i), m_points.get(i + 1));
+				Edge next = new Edge(m_points.get(i + 1), m_points.get(i + 2));
 				if(Edge.vectorMultiplication(curr, next) < 0)
 				{
 					if(kind == -1)

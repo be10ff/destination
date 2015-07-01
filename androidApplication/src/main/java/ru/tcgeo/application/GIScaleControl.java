@@ -1,9 +1,5 @@
 package ru.tcgeo.application;
 
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GIControl;
-import ru.tcgeo.gilib.GILonLat;
-import ru.tcgeo.gilib.GIMap;
 import android.content.Context;
 import android.graphics.Rect;
 import android.util.AttributeSet;
@@ -11,6 +7,11 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import ru.tcgeo.application.gilib.GIBounds;
+import ru.tcgeo.application.gilib.GIControl;
+import ru.tcgeo.application.gilib.GILonLat;
+import ru.tcgeo.application.gilib.GIMap;
 
 public class GIScaleControl extends RelativeLayout implements GIControl
 {

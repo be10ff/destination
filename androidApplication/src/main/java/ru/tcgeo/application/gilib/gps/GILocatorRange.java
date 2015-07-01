@@ -1,10 +1,5 @@
 package ru.tcgeo.application.gilib.gps;
 
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GIControl;
-import ru.tcgeo.gilib.GIEditLayersKeeper;
-import ru.tcgeo.gilib.GIMap;
-import ru.tcgeo.gilib.R;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,6 +8,12 @@ import android.graphics.Rect;
 import android.view.View;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
+
+import ru.tcgeo.application.R;
+import ru.tcgeo.application.gilib.GIBounds;
+import ru.tcgeo.application.gilib.GIControl;
+import ru.tcgeo.application.gilib.GIEditLayersKeeper;
+import ru.tcgeo.application.gilib.GIMap;
 
 public class GILocatorRange extends View implements GIControl
 {

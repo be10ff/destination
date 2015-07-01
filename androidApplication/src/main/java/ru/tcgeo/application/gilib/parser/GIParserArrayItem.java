@@ -2,10 +2,8 @@ package ru.tcgeo.application.gilib.parser;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
-import ru.tcgeo.gilib.GIPList;
-import ru.tcgeo.gilib.parser.GIParserArray;
-import ru.tcgeo.gilib.parser.GIParserArrayItemKey;
-import ru.tcgeo.gilib.parser.GIParserArrayItemValue;
+
+import ru.tcgeo.application.gilib.GIPList;
 
 public class GIParserArrayItem extends GIParserArray {
 	GIPList.GIMarker m_item;

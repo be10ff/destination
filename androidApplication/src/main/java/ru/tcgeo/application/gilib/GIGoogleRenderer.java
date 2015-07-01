@@ -14,12 +14,6 @@ import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.Rect;
 
-import ru.tcgeo.gilib.GIBounds;
-import ru.tcgeo.gilib.GILayer;
-import ru.tcgeo.gilib.GILonLat;
-import ru.tcgeo.gilib.GIRenderer;
-import ru.tcgeo.gilib.GIStyle;
-import ru.tcgeo.gilib.GITileInfoGoogle;
 
 public class GIGoogleRenderer extends GIRenderer {
 

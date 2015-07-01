@@ -18,6 +18,6 @@ android {
     }
 }
 
-dependencies {
-    compile project(':gILib')
-}
+//dependencies {
+//    compile project(':gILib')
+//}

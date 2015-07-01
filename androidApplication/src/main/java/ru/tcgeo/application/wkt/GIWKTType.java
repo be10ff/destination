@@ -1,11 +1,11 @@
 package ru.tcgeo.application.wkt;
 
-import ru.tcgeo.gilib.script.GIScriptQueue;
+import ru.tcgeo.application.gilib.script.GIScriptQueue;
 
 public class GIWKTType extends GIWKTDescription {
 	String m_type; 
 	
-	public GIWKTType(GIScriptQueue text) 
+	public GIWKTType(GIScriptQueue text)
 	{
 		String literal = "";
 		literal += text.Pop();

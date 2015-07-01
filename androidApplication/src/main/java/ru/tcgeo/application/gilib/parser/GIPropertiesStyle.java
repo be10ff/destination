@@ -2,8 +2,9 @@ package ru.tcgeo.application.gilib.parser;
 
 import java.util.ArrayList;
 
-import ru.tcgeo.gilib.GIColor;
-import ru.tcgeo.gilib.GIIcon;
+import ru.tcgeo.application.gilib.GIColor;
+import ru.tcgeo.application.gilib.GIIcon;
+
 
 public class GIPropertiesStyle 
 {

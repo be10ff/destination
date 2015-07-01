@@ -2,16 +2,15 @@ package ru.tcgeo.application.gilib;
 
 import java.util.ArrayList;
 
-import ru.tcgeo.gilib.*;
-import ru.tcgeo.gilib.GIMap;
-import ru.tcgeo.wkt.GIWKTParser;
-import ru.tcgeo.wkt.GI_WktGeometry;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.util.Log;
+
+import ru.tcgeo.application.wkt.GIWKTParser;
+import ru.tcgeo.application.wkt.GI_WktGeometry;
 
 
 public class GIEditableRenderer extends GIRenderer {
@@ -33,7 +32,7 @@ public class GIEditableRenderer extends GIRenderer {
 	{
 		Canvas m_canvas = new Canvas(bitmap);
 		area = area.Reprojected(GIProjection.WGS84());
-		double _scale = ru.tcgeo.gilib.GIMap.getScale(area, new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight()));
+		double _scale = GIMap.getScale(area, new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight()));
 		if(_scale == 0){return;}
 		float scale_factor = (float) (scale/_scale);
 		GIEditableSQLiteLayer layer = (GIEditableSQLiteLayer)_layer;

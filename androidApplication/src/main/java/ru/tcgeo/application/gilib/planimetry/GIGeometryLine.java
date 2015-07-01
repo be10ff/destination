@@ -13,15 +13,6 @@ import android.graphics.RadialGradient;
 import android.graphics.RectF;
 import android.graphics.Shader;
 
-import ru.tcgeo.gilib.planimetry.*;
-import ru.tcgeo.gilib.planimetry.Edge;
-import ru.tcgeo.gilib.planimetry.GIGeometryObject;
-import ru.tcgeo.gilib.planimetry.GIGeometryPolygon;
-import ru.tcgeo.gilib.planimetry.GIQuadtree;
-import ru.tcgeo.gilib.planimetry.GITextPath;
-import ru.tcgeo.gilib.planimetry.LabelText;
-import ru.tcgeo.gilib.planimetry.Vertex;
-
 /**
  * класс ломанной линии на плоскости
  */
@@ -79,7 +70,7 @@ public class GIGeometryLine extends GIShape {
 		return true;
 	}
 
-	public boolean ResolveConcurrent(ru.tcgeo.gilib.planimetry.GIGeometryLine line)
+	public boolean ResolveConcurrent(GIGeometryLine line)
 	{
 		if(!m_labeltext.equals(line.m_labeltext))
 		{
@@ -120,9 +111,9 @@ public class GIGeometryLine extends GIShape {
 	{
 		return TYPE.line;
 	}
-	public ru.tcgeo.gilib.planimetry.GIGeometryLine clone()
+	public GIGeometryLine clone()
 	{
-		ru.tcgeo.gilib.planimetry.GIGeometryLine result = new ru.tcgeo.gilib.planimetry.GIGeometryLine(m_labeltext);
+		GIGeometryLine result = new GIGeometryLine(m_labeltext);
 		for(int i = 0; i < m_points.size(); i++)
 		{
 			result.add(m_points.get(i).clone());
