@@ -8,12 +8,12 @@
         android:tag="root" >
  
        <!-- ru.tcgeo.gilib.GIMap -->
-       <ru.tcgeo.gilib.GIMap
+       <ru.tcgeo.application.gilib.GIMap
             android:id="@+id/map"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <ru.tcgeo.gilib.GITouchControl
+        <ru.tcgeo.application.gilib.GITouchControl
             android:id="@+id/touchcontrol"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
@@ -67,7 +67,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp" />
 	            
-	            <ru.tcgeo.gilib.gps.GIGPSButtonView
+	            <ru.tcgeo.application.gilib.gps.GIGPSButtonView
 	                android:id="@+id/top_bar_gps_button"
 	                android:layout_width="wrap_content"
 	                android:layout_height="64dp"
@@ -82,7 +82,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp" />	
                             
-                <ru.tcgeo.gilib.gps.GICompassView
+                <ru.tcgeo.application.gilib.gps.GICompassView
                     android:id="@+id/compass_surface_button"
                     android:layout_width="64dp"
                     android:layout_height="64dp"

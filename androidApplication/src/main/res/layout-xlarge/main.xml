@@ -7,13 +7,13 @@
         android:background="@null">
  
        <!-- ru.tcgeo.gilib.GIMap -->
-       <ru.tcgeo.gilib.GIMap
+       <ru.tcgeo.application.gilib.GIMap
             android:id="@+id/map"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="67dp"/>
 
-        <ru.tcgeo.gilib.GITouchControl
+        <ru.tcgeo.application.gilib.GITouchControl
             android:id="@+id/touchcontrol"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
@@ -169,7 +169,7 @@
                     android:onClick="GPSDialogClicked"
                     android:src="@drawable/gps_avaliable" /-->
 
-                <ru.tcgeo.gilib.gps.GIGPSButtonView
+                <ru.tcgeo.application.gilib.gps.GIGPSButtonView
                     android:id="@+id/top_bar_gps_button"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
@@ -319,7 +319,7 @@
         <!-- android:layout_alignLeft="@id/map"-->
         <!-- android:layout_alignBottom="@id/map"-->
         <!-- touchcontrol -->
-        <ru.tcgeo.application.GIScaleControl 
+        <ru.tcgeo.application.GIScaleControl
             android:id="@+id/scale_control_screen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

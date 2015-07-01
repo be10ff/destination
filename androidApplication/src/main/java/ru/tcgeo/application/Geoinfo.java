@@ -38,7 +38,7 @@ import ru.tcgeo.application.gilib.parser.GIPropertiesLayerRef;
 import ru.tcgeo.application.gilib.parser.GIRange;
 import ru.tcgeo.application.gilib.parser.GISQLDB;
 import ru.tcgeo.application.gilib.parser.GISource;
-//import ru.tcgeo.gilib.script.GIScriptExpression;
+
 import ru.tcgeo.application.wkt.GI_WktGeometry;
 import ru.tcgeo.application.wkt.GI_WktPoint;
 import android.app.Activity;
@@ -48,7 +48,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
+
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint;
