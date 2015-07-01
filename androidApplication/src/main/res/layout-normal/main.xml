@@ -195,45 +195,45 @@
 	             
                
 
-			    <EditText
-			        android:id="@+id/search_text"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:layout_gravity="center_vertical"
-			        android:layout_margin="8dp"
-			        android:layout_marginBottom="8dp"
-			        android:layout_marginLeft="8dp"
-			        android:layout_marginRight="8dp"
-			        android:layout_marginTop="8dp"
-			        android:background="@drawable/searchbar_background"
-			        android:ems="6"
-			        android:gravity="center_vertical|center_horizontal"
-			        android:inputType="text"
-			        android:textSize="16sp"
-                    android:visibility="gone">
-			        <!--  android:layout_marginStart="8dp" -->
-					<!-- android:layout_marginEnd="8dp" -->
-					<!-- android:textAlignment="center"  -->
-			    </EditText>
+			    <!--<EditText-->
+			        <!--android:id="@+id/search_text"-->
+			        <!--android:layout_width="wrap_content"-->
+			        <!--android:layout_height="wrap_content"-->
+			        <!--android:layout_gravity="center_vertical"-->
+			        <!--android:layout_margin="8dp"-->
+			        <!--android:layout_marginBottom="8dp"-->
+			        <!--android:layout_marginLeft="8dp"-->
+			        <!--android:layout_marginRight="8dp"-->
+			        <!--android:layout_marginTop="8dp"-->
+			        <!--android:background="@drawable/searchbar_background"-->
+			        <!--android:ems="6"-->
+			        <!--android:gravity="center_vertical|center_horizontal"-->
+			        <!--android:inputType="text"-->
+			        <!--android:textSize="16sp"-->
+                    <!--android:visibility="gone">-->
+			        <!--&lt;!&ndash;  android:layout_marginStart="8dp" &ndash;&gt;-->
+					<!--&lt;!&ndash; android:layout_marginEnd="8dp" &ndash;&gt;-->
+					<!--&lt;!&ndash; android:textAlignment="center"  &ndash;&gt;-->
+			    <!--</EditText>-->
 
-			    <View
-			        android:layout_width="2dp"
-			        android:layout_height="match_parent"
-			        android:layout_marginBottom="8dp"
-			        android:layout_marginTop="8dp"
-			        android:background="#55555555"
-			        android:visibility="gone" />
+			    <!--<View-->
+			        <!--android:layout_width="2dp"-->
+			        <!--android:layout_height="match_parent"-->
+			        <!--android:layout_marginBottom="8dp"-->
+			        <!--android:layout_marginTop="8dp"-->
+			        <!--android:background="#55555555"-->
+			        <!--android:visibility="gone" />-->
 
-			    <ImageButton
-			        android:id="@+id/button_stop_search"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:layout_gravity="center_vertical"
-			        android:layout_margin="8dp"
-			        android:contentDescription="@string/button_stop_search"
-			        android:onClick="on_stop_search"
-			        android:src="@android:drawable/ic_input_delete"
-                    android:visibility="gone"/>
+			    <!--<ImageButton-->
+			        <!--android:id="@+id/button_stop_search"-->
+			        <!--android:layout_width="wrap_content"-->
+			        <!--android:layout_height="wrap_content"-->
+			        <!--android:layout_gravity="center_vertical"-->
+			        <!--android:layout_margin="8dp"-->
+			        <!--android:contentDescription="@string/button_stop_search"-->
+			        <!--android:onClick="on_stop_search"-->
+			        <!--android:src="@android:drawable/ic_input_delete"-->
+                    <!--android:visibility="gone"/>-->
 			    	                
             </LinearLayout>
 	    </HorizontalScrollView>

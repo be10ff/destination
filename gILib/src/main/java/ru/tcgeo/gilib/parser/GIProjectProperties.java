@@ -15,7 +15,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import org.xmlpull.v1.XmlSerializer;
 
 import ru.tcgeo.gilib.GIProjection;
-import ru.tcgeo.gilib.script.GIScriptParser;
+//import ru.tcgeo.gilib.script.GIScriptParser;
 import android.os.Environment;
 import android.util.Log;
 import android.util.Xml;
@@ -42,8 +42,8 @@ public class GIProjectProperties
 	public ru.tcgeo.gilib.parser.GIPropertiesGroup m_Group;
 	public GIPropertiesEdit m_Edit;
 	
-	public GIScriptParser m_scriptparser_info;
-	public GIScriptParser m_scriptparser_search;
+//	public GIScriptParser m_scriptparser_info;
+//	public GIScriptParser m_scriptparser_search;
 	public GIProjectProperties()
 	{
         m_name = "Empty";
@@ -67,8 +67,8 @@ public class GIProjectProperties
 		m_SaveAs = "";
 //		m_Entries = new ArrayList<GIPropertiesPackage>();
 		this.LoadPro(path);
-		m_scriptparser_info = new GIScriptParser(m_point_info);//, null, null);
-		m_scriptparser_search = new GIScriptParser(m_search_body);//, null, null);
+//		m_scriptparser_info = new GIScriptParser(m_point_info);//, null, null);
+//		m_scriptparser_search = new GIScriptParser(m_search_body);//, null, null);
 	}
 	
 	public GIProjectProperties(InputStream stream)
@@ -77,8 +77,8 @@ public class GIProjectProperties
 		m_SaveAs = "";
 //		m_Entries = new ArrayList<GIPropertiesPackage>();
 		this.LoadPro(stream);
-		m_scriptparser_info = new GIScriptParser(m_point_info);//, null, null);
-		m_scriptparser_search = new GIScriptParser(m_search_body);//, null, null);
+//		m_scriptparser_info = new GIScriptParser(m_point_info);//, null, null);
+//		m_scriptparser_search = new GIScriptParser(m_search_body);//, null, null);
 	}
 	
 	public GIProjectProperties(String path, boolean info_only)
@@ -87,8 +87,8 @@ public class GIProjectProperties
 		m_SaveAs = "";
 //		m_Entries = new ArrayList<GIPropertiesPackage>();
 		this.LoadInfo(path);
-		m_scriptparser_info = new GIScriptParser(m_point_info); 
-		m_scriptparser_search = new GIScriptParser(m_search_body);
+//		m_scriptparser_info = new GIScriptParser(m_point_info);
+//		m_scriptparser_search = new GIScriptParser(m_search_body);
 	}
 	
 	public String ToString()

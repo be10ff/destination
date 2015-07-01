@@ -38,7 +38,7 @@ import ru.tcgeo.gilib.parser.GIPropertiesLayerRef;
 import ru.tcgeo.gilib.parser.GIRange;
 import ru.tcgeo.gilib.parser.GISQLDB;
 import ru.tcgeo.gilib.parser.GISource;
-import ru.tcgeo.gilib.script.GIScriptExpression;
+//import ru.tcgeo.gilib.script.GIScriptExpression;
 import ru.tcgeo.wkt.GI_WktGeometry;
 import ru.tcgeo.wkt.GI_WktPoint;
 import android.app.Activity;
@@ -838,66 +838,66 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 		markers_dialog.show();
 	}
 
-	public void AddressSearchDialogClicked(final View text_edit) {
-		final int dialog_max_height = 420;
-		markers_dialog = new Dialog(this, R.style.Theme_layers_dialog);
-		markers_dialog.setContentView(R.layout.markers_dialog);
-		markers_dialog.getWindow().setBackgroundDrawable(
-				new ColorDrawable(android.graphics.Color.TRANSPARENT));
-		markers_dialog.setCanceledOnTouchOutside(true);
-
-		markers_dialog.setOnDismissListener(new OnDismissListener() {
-			public void onDismiss(DialogInterface dialog) {
-				text_edit.setActivated(false);
-				text_edit.clearFocus();
-			}
-		});
-
-		LayoutParams parameters = markers_dialog.getWindow().getAttributes();
-		parameters.height = dialog_max_height; // Some hard-coded size
-
-		int[] button_location = { 0, 0 };
-		text_edit.getLocationOnScreen(button_location);
-
-		int screenCenterX = getWindowManager().getDefaultDisplay().getWidth() / 2;
-		int screenCenterY = getWindowManager().getDefaultDisplay().getHeight() / 2;
-
-		// Dialog's 0,0 coordinates are in the middle of the screen
-		parameters.x = button_location[0] - screenCenterX
-				+ text_edit.getWidth() / 2;
-		parameters.y = button_location[1] - screenCenterY
-				+ text_edit.getHeight() + parameters.height / 2;
-
-		markers_dialog.getWindow().setAttributes(parameters);
-
-		// Fill list with data
-		ListView markers_list = (ListView) markers_dialog
-				.findViewById(R.id.markers_list);
-		AddressSearchAdapter adapter = new AddressSearchAdapter(this,
-				R.layout.markers_list_item, R.id.markers_list_item_text);
-		ArrayList<AddressSearchAdapterItem> array = new ArrayList<AddressSearchAdapterItem>();
-
-		//
-		EditText edit_search = (EditText) findViewById(R.id.search_text);
-		String part = edit_search.getText().toString();
-		String path = map.ps.m_search_file;
-		//
-		GISQLRequest sql = new GISQLRequest(part, "final", path, array);
-		GIScriptExpression res = (GIScriptExpression) map.ps.m_scriptparser_search
-				.Eval(sql);
-		if (res != null) {
-			if (res.Type() == GIScriptExpression.TYPE.error) {
-				// Log.d("ScriptLogs",
-				// ((GIScriptExpressionError)res).error_text);
-			} else if (res.Type() == GIScriptExpression.TYPE.operation) {
-				for (int i = 0; i < array.size(); i++) {
-					adapter.add(array.get(i));
-				}
-			}
-		}
-		markers_list.setAdapter(adapter);
-		markers_dialog.show();
-	}
+//	public void AddressSearchDialogClicked(final View text_edit) {
+//		final int dialog_max_height = 420;
+//		markers_dialog = new Dialog(this, R.style.Theme_layers_dialog);
+//		markers_dialog.setContentView(R.layout.markers_dialog);
+//		markers_dialog.getWindow().setBackgroundDrawable(
+//				new ColorDrawable(android.graphics.Color.TRANSPARENT));
+//		markers_dialog.setCanceledOnTouchOutside(true);
+//
+//		markers_dialog.setOnDismissListener(new OnDismissListener() {
+//			public void onDismiss(DialogInterface dialog) {
+//				text_edit.setActivated(false);
+//				text_edit.clearFocus();
+//			}
+//		});
+//
+//		LayoutParams parameters = markers_dialog.getWindow().getAttributes();
+//		parameters.height = dialog_max_height; // Some hard-coded size
+//
+//		int[] button_location = { 0, 0 };
+//		text_edit.getLocationOnScreen(button_location);
+//
+//		int screenCenterX = getWindowManager().getDefaultDisplay().getWidth() / 2;
+//		int screenCenterY = getWindowManager().getDefaultDisplay().getHeight() / 2;
+//
+//		// Dialog's 0,0 coordinates are in the middle of the screen
+//		parameters.x = button_location[0] - screenCenterX
+//				+ text_edit.getWidth() / 2;
+//		parameters.y = button_location[1] - screenCenterY
+//				+ text_edit.getHeight() + parameters.height / 2;
+//
+//		markers_dialog.getWindow().setAttributes(parameters);
+//
+//		// Fill list with data
+//		ListView markers_list = (ListView) markers_dialog
+//				.findViewById(R.id.markers_list);
+//		AddressSearchAdapter adapter = new AddressSearchAdapter(this,
+//				R.layout.markers_list_item, R.id.markers_list_item_text);
+//		ArrayList<AddressSearchAdapterItem> array = new ArrayList<AddressSearchAdapterItem>();
+//
+//		//
+//		EditText edit_search = (EditText) findViewById(R.id.search_text);
+//		String part = edit_search.getText().toString();
+//		String path = map.ps.m_search_file;
+//		//
+////		GISQLRequest sql = new GISQLRequest(part, "final", path, array);
+////		GIScriptExpression res = (GIScriptExpression) map.ps.m_scriptparser_search
+////				.Eval(sql);
+////		if (res != null) {
+////			if (res.Type() == GIScriptExpression.TYPE.error) {
+////				// Log.d("ScriptLogs",
+////				// ((GIScriptExpressionError)res).error_text);
+////			} else if (res.Type() == GIScriptExpression.TYPE.operation) {
+////				for (int i = 0; i < array.size(); i++) {
+////					adapter.add(array.get(i));
+////				}
+////			}
+////		}
+//		markers_list.setAdapter(adapter);
+//		markers_dialog.show();
+//	}
 
 	public void EditableLayersDialogClicked(final View button) {
 		final int dialog_max_height = getWindowManager().getDefaultDisplay().getHeight() / 2;
@@ -972,16 +972,16 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 		GIEditLayersKeeper.Instance().CompassView();
 	}	
 
-	public void on_stop_search(final View button) {
-		EditText text_edit = (EditText) findViewById(R.id.search_text);
-		text_edit.setText("");
-		text_edit.setActivated(false);
-		text_edit.clearFocus();
-		if (m_marker_point != null) {
-			m_marker_point.Remove();
-			m_marker_point = null;
-		}
-	}
+//	public void on_stop_search(final View button) {
+//		EditText text_edit = (EditText) findViewById(R.id.search_text);
+//		text_edit.setText("");
+//		text_edit.setActivated(false);
+//		text_edit.clearFocus();
+//		if (m_marker_point != null) {
+//			m_marker_point.Remove();
+//			m_marker_point = null;
+//		}
+//	}
 
 	public void LoadPro(String path) {
 		map.ps = new GIProjectProperties(path);
@@ -1635,20 +1635,20 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 			}
 		});
 
-		EditText search_text = (EditText) findViewById(R.id.search_text);
-		search_text.setOnKeyListener(new OnKeyListener() {
-
-			@Override
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				if (event.getAction() == KeyEvent.ACTION_DOWN) {
-					if (keyCode == KeyEvent.KEYCODE_ENTER) {
-						AddressSearchDialogClicked(v);
-						return true;
-					}
-				}
-				return false;
-			}
-		});
+//		EditText search_text = (EditText) findViewById(R.id.search_text);
+//		search_text.setOnKeyListener(new OnKeyListener() {
+//
+//			@Override
+//			public boolean onKey(View v, int keyCode, KeyEvent event) {
+//				if (event.getAction() == KeyEvent.ACTION_DOWN) {
+//					if (keyCode == KeyEvent.KEYCODE_ENTER) {
+//						AddressSearchDialogClicked(v);
+//						return true;
+//					}
+//				}
+//				return false;
+//			}
+//		});
 
 		rule_button = (ImageButton) findViewById(R.id.toggleButtonRule);
 
@@ -1734,12 +1734,12 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 			top_bar.setImageDrawable(getResources().getDrawable(
 					R.drawable.top_bar));
 		}
-		View edittext = (View) findViewById(R.id.search_text);
-
-		Bitmap bkg = ((BitmapDrawable) getResources().getDrawable(
-				R.drawable.searchbar_background)).getBitmap();
-		BitmapDrawable bkgbt = new BitmapDrawable(getResources(), bkg);
-		edittext.setBackgroundDrawable((Drawable) bkgbt);
+//		View edittext = (View) findViewById(R.id.search_text);
+//
+//		Bitmap bkg = ((BitmapDrawable) getResources().getDrawable(
+//				R.drawable.searchbar_background)).getBitmap();
+//		BitmapDrawable bkgbt = new BitmapDrawable(getResources(), bkg);
+//		edittext.setBackgroundDrawable((Drawable) bkgbt);
 	}
 
 	private boolean createMap() {

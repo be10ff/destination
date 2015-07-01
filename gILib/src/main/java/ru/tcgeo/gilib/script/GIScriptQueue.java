@@ -3,7 +3,7 @@ package ru.tcgeo.gilib.script;
 public class GIScriptQueue {
 
 	private String m_string;
-	
+
 	final static boolean IsVal(char c)
 	{
 		String Vals = "=+-!?><_";
