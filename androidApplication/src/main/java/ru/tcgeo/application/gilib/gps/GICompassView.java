@@ -12,9 +12,11 @@ import android.view.SurfaceView;
 public class GICompassView extends SurfaceView implements SurfaceHolder.Callback
 {
 	private GICompassDrawThread drawThread;
+	private Context mContext;
 	public GICompassView(Context context)
 	{
 		super(context);
+		mContext = context;
 		getHolder().addCallback(this);
 		setZOrderOnTop(true);    // necessary
 		getHolder().setFormat(PixelFormat.TRANSLUCENT);
@@ -22,6 +24,7 @@ public class GICompassView extends SurfaceView implements SurfaceHolder.Callback
 	public GICompassView(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
+		mContext = context;
 		getHolder().addCallback(this);
 		if(!isInEditMode())
 		{
@@ -32,18 +35,20 @@ public class GICompassView extends SurfaceView implements SurfaceHolder.Callback
 	public GICompassView(Context context, AttributeSet attrs, int defStyle)
 	{
 		super(context, attrs, defStyle);
+		mContext = context;
 		getHolder().addCallback(this);
 		setZOrderOnTop(true);    // necessary
 		getHolder().setFormat(PixelFormat.TRANSLUCENT);
 	}
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,	int height)
 	{
+		int whats = 0;
 
 	}
 
 	public void surfaceCreated(SurfaceHolder holder)
 	{
-	      drawThread = new GICompassDrawThread(getHolder());
+	      drawThread = new GICompassDrawThread(mContext, getHolder());
 	      drawThread.setRunning(true);
 	      drawThread.start();
 	      //setWillNotDraw(false);
@@ -84,4 +89,5 @@ public class GICompassView extends SurfaceView implements SurfaceHolder.Callback
     {
     	super.onLayout(changed, left, top, right, bottom);
     }
+
 }

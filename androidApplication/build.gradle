@@ -1,13 +1,15 @@
 apply plugin: 'com.android.application'
 
+ext.supportVersion = '22.2.0';
+
 android {
     compileSdkVersion 15
     buildToolsVersion "22.0.1"
 
     defaultConfig {
         applicationId "ru.geoinfo.application"
-        minSdkVersion 11
-        targetSdkVersion 15
+        minSdkVersion 16
+        targetSdkVersion 17
     }
 
     buildTypes {
@@ -18,6 +20,16 @@ android {
     }
 }
 
-//dependencies {
-//    compile project(':gILib')
-//}
+dependencies {
+    compile "com.android.support:support-v4:${supportVersion}"
+    compile "com.android.support:support-v13:${supportVersion}"
+//    compile "com.android.support:appcompat-v7:${supportVersion}"
+
+    compile 'com.jakewharton:butterknife:7.0.1'
+
+    compile 'com.github.wangjiegulu:RapidFloatingActionButton:1.0.3'
+
+    compile 'com.getbase:floatingactionbutton:1.9.1'
+
+    compile 'com.github.clans:fab:1.5.3'
+}

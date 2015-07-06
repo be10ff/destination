@@ -50,7 +50,7 @@ public class GIEditLayersKeeper {
 	
 	private GITouchControl m_TouchControl;
 	public GIMap m_Map;
-	private Context m_context;
+//	private Context m_context;
 	private int m_root;
 	public LocationManager m_location_manager;
 	// views
@@ -187,14 +187,15 @@ public class GIEditLayersKeeper {
 	{
 		return m_Map;
 	}
-	public Context getContext()
-	{
-		return m_context;
-	}
-	public void setContext(Context context)
-	{
-		m_context = context;
-	}
+
+//	public Context getContext()
+//	{
+//		return m_context;
+//	}
+//	public void setContext(Context context)
+//	{
+//		m_context = context;
+//	}
 	
 	public void AddLayer(GIEditableLayer layer)
 	{

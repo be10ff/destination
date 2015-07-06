@@ -39,6 +39,14 @@ import ru.tcgeo.application.gilib.parser.GIRange;
 import ru.tcgeo.application.gilib.parser.GISQLDB;
 import ru.tcgeo.application.gilib.parser.GISource;
 
+import ru.tcgeo.application.home_screen.EditableLayersAdapter;
+import ru.tcgeo.application.home_screen.EditableLayersAdapterItem;
+import ru.tcgeo.application.home_screen.LayersAdapter;
+import ru.tcgeo.application.home_screen.LayersAdapterItem;
+import ru.tcgeo.application.home_screen.MarkersAdapter;
+import ru.tcgeo.application.home_screen.MarkersAdapterItem;
+import ru.tcgeo.application.home_screen.ProjectsAdapter;
+import ru.tcgeo.application.home_screen.ProjectsAdapterItem;
 import ru.tcgeo.application.wkt.GI_WktGeometry;
 import ru.tcgeo.application.wkt.GI_WktPoint;
 import android.app.Activity;
@@ -92,7 +100,7 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 	GITouchControl touchControl;
 	SharedPreferences sp;
 
-	final String SAVED_PATH = "default_project_path";
+	final public String SAVED_PATH = "default_project_path";
 	Dialog projects_dialog;
 	Dialog markers_dialog;
 	Dialog editablelayers_dialog;
@@ -110,358 +118,6 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 	GIGPSButtonView m_gps_button;
 
 	public final IFolderItemListener m_fileOpenListener = this;
-
-//	public class GPSLocationListener implements LocationListener 
-//	{
-//		public GILonLat m_location;
-//		public void onLocationChanged(Location location) 
-//		{
-//			// Assuming we get wgs84 coordinates
-//			m_location = new GILonLat(location.getLongitude(), location.getLatitude());
-//
-//			m_location = GIProjection.ReprojectLonLat(m_location, GIProjection.WGS84(), map.Projection());
-//			// map.SetCenter(m_location);
-//
-//			// GILonLat deg = new GILonLat(location.getLongitude(),
-//			// location.getLatitude());
-//			// GIPositionControl.Instance(map.getContext(), map).setLonLat(deg);
-//			GIEditLayersKeeper.Instance().onGPSLocationChanged(location);
-//		}
-//
-//		public void onProviderDisabled(String provider) 
-//		{
-//			GIEditLayersKeeper.Instance().onGPSProviderEnabled(provider, false);
-//		}
-//
-//		public void onProviderEnabled(String provider) 
-//		{
-//			GIEditLayersKeeper.Instance().onGPSProviderEnabled(provider, true);
-//		}
-//
-//		public void onStatusChanged(String provider, int status, Bundle extras) 
-//		{
-//			GIEditLayersKeeper.Instance().onGPSStatusChanged(provider, status,	extras);
-//		}
-//	}
-
-	// Class is a wrapper for GITuple to use in ArrayAdapter
-	public class LayersAdapterItem {
-		final public GITuple m_tuple;
-
-		LayersAdapterItem(GITuple tuple) {
-			m_tuple = tuple;
-		}
-
-		@Override
-		public String toString() {
-			return m_tuple.layer.getName();
-		}
-	}
-
-	public class ProjectsAdapterItem {
-		final public GIProjectProperties m_project_settings;
-
-		ProjectsAdapterItem(GIProjectProperties proj) {
-			m_project_settings = proj;
-		}
-
-		@Override
-		public String toString() {
-			return m_project_settings.m_name;
-		}
-	}
-
-	public class MarkersAdapterItem {
-		final public GIPList.GIMarker m_marker;
-
-		MarkersAdapterItem(GIPList.GIMarker marker) {
-			m_marker = marker;
-		}
-
-		@Override
-		public String toString() {
-			return m_marker.m_name + " " + m_marker.m_lon + ":"
-					+ m_marker.m_lat;
-		}
-
-	}
-
-	public class EditableLayersAdapterItem {
-		final public GIEditableLayer m_layer;
-
-		EditableLayersAdapterItem(GIEditableLayer layer) {
-			m_layer = layer;
-		}
-
-		@Override
-		public String toString() {
-			return m_layer.getName();
-		}
-
-	}
-
-	public class LayersAdapter extends ArrayAdapter<LayersAdapterItem> {
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			final LayersAdapterItem item = getItem(position);
-			View v = LayoutInflater.from(getContext()).inflate(
-					R.layout.layers_list_item, null);
-			((TextView) v.findViewById(R.id.layers_list_item_text))
-					.setText(item.m_tuple.layer.getName());
-
-			CheckBox checkbox = (CheckBox) v
-					.findViewById(R.id.layers_list_item_switch);
-			checkbox.setChecked(item.m_tuple.visible);
-
-			checkbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-				public void onCheckedChanged(CompoundButton buttonView,
-						boolean isChecked) {
-					item.m_tuple.visible = isChecked;
-					map.UpdateMap();
-				}
-			});
-			return v;
-		}
-
-		public LayersAdapter(Context context, int resource,
-				int textViewResourceId) {
-			super(context, resource, textViewResourceId);
-		}
-	}
-
-	public class ProjectsAdapter extends ArrayAdapter<ProjectsAdapterItem> {
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			final ProjectsAdapterItem item = getItem(position);
-			View v = LayoutInflater.from(getContext()).inflate(
-					R.layout.project_selector_list_item, null);
-			TextView text_name = (TextView) v
-					.findViewById(R.id.project_list_item_name);
-			TextView text_path = (TextView) v
-					.findViewById(R.id.project_list_item_path);
-			ImageView iv = (ImageView) v.findViewById(R.id.imageViewStatus);
-
-			text_name.setText(item.m_project_settings.m_name);
-			text_path.setText(item.m_project_settings.m_path);
-
-			// String pspath = map.ps.m_path;
-			if (map != null) {
-				if (!item.m_project_settings.m_path
-						.equalsIgnoreCase(map.ps.m_path)) {
-					iv.setImageBitmap(null);
-				} else {
-					text_name.setEnabled(false);
-					text_name.setTextColor(Color.GRAY);
-				}
-			}
-
-			/*
-			 * text_name.setOnLongClickListener(new OnLongClickListener() {
-			 * 
-			 * public boolean onLongClick(View v) {
-			 * if(item.m_project_settings.m_path != ps.m_path) { map.Clear();
-			 * //String new_path = item.m_project_settings.m_path;
-			 * LoadPro(item.m_project_settings.m_path); map.UpdateMap(); sp =
-			 * getPreferences(MODE_PRIVATE); SharedPreferences.Editor editor =
-			 * sp.edit(); editor.putString(SAVED_PATH,
-			 * item.m_project_settings.m_path); editor.commit();
-			 * projects_dialog.cancel(); return true; } return false; } });
-			 */
-			v.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					if (!item.m_project_settings.m_path.equals(map.ps.m_path)) {
-						map.Clear();
-						LoadPro(item.m_project_settings.m_path);
-						map.UpdateMap();
-						sp = getPreferences(MODE_PRIVATE);
-						SharedPreferences.Editor editor = sp.edit();
-						editor.putString(SAVED_PATH,
-								item.m_project_settings.m_path);
-						editor.apply();
-						editor.commit();
-						projects_dialog.cancel();
-					}
-				}
-			});
-
-			return v;
-		}
-
-		public ProjectsAdapter(Context context, int resource,
-				int textViewResourceId) {
-			super(context, resource, textViewResourceId);
-		}
-	}
-
-	public class MarkersAdapter extends ArrayAdapter<MarkersAdapterItem> {
-		@Override
-		public View getView(int position, View convertView,
-				final ViewGroup parent) {
-			final MarkersAdapterItem item = getItem(position);
-			View v = LayoutInflater.from(getContext()).inflate(
-					R.layout.markers_list_item, null);
-			TextView text_name = (TextView) v
-					.findViewById(R.id.markers_list_item_text);
-			ImageView iv = (ImageView) v.findViewById(R.id.imageViewDirection);
-			text_name.setText(item.m_marker.m_name);
-			if (map.ps.m_markers_source != null) {
-				if (map.ps.m_markers_source.equalsIgnoreCase("layer")) {
-					if (GIEditLayersKeeper.Instance().m_CurrentTarget != null) {
-						if (item.m_marker.m_lat == ((GI_WktPoint) GIEditLayersKeeper
-								.Instance().m_CurrentTarget).m_lat
-								&& item.m_marker.m_lon == ((GI_WktPoint) GIEditLayersKeeper
-										.Instance().m_CurrentTarget).m_lon) {
-							iv.setVisibility(View.VISIBLE);
-						}
-					}
-				}
-			}
-
-			v.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					markers_dialog.cancel();
-					GILonLat new_center = new GILonLat(item.m_marker.m_lon,
-							item.m_marker.m_lat);
-					RelativeLayout layout = (RelativeLayout) findViewById(R.id.root);
-					if (m_marker_point == null) {
-						m_marker_point = new GIControlFloating(parent
-								.getContext());
-						layout.addView(m_marker_point);
-						m_marker_point.setMap(map);
-					}
-					m_marker_point.setLonLat(new_center);
-					if (item.m_marker.m_diag != 0) {
-						map.SetCenter(new_center, item.m_marker.m_diag);
-					} else {
-						map.SetCenter(GIProjection.ReprojectLonLat(new_center,
-								GIProjection.WGS84(), map.Projection()));
-					}
-				}
-			});
-			if (map.ps.m_markers_source != null) {
-				if (map.ps.m_markers_source.equalsIgnoreCase("layer")) {
-					v.setOnLongClickListener(new OnLongClickListener() {
-
-						@Override
-						public boolean onLongClick(View v) {
-
-							markers_dialog.cancel();
-							GILonLat new_center = new GILonLat(
-									item.m_marker.m_lon, item.m_marker.m_lat);
-							GI_WktPoint poi = new GI_WktPoint(new_center);
-							GIEditLayersKeeper.Instance().m_CurrentTarget = poi;
-							//GILocator arr = new GILocator(poi);
-							GIDirectionToPOIArrow arrow = new GIDirectionToPOIArrow(poi);
-							GIEditLayersKeeper.Instance().LocatorView(poi);
-							//GIEditLayersKeeper.Instance().AccurancyRangeView(true);
-							return false;
-						}
-					});
-				}
-			}
-			return v;
-		}
-
-		public MarkersAdapter(Context context, int resource,
-				int textViewResourceId) {
-			super(context, resource, textViewResourceId);
-		}
-	}
-
-	public class AddressSearchAdapter extends
-			ArrayAdapter<AddressSearchAdapterItem> {
-		@Override
-		public View getView(int position, View convertView,
-				final ViewGroup parent) {
-			final AddressSearchAdapterItem item = getItem(position);
-			View v = LayoutInflater.from(getContext()).inflate(
-					R.layout.markers_list_item, null);
-			TextView text_name = (TextView) v
-					.findViewById(R.id.markers_list_item_text);
-			text_name.setText(item.m_name);
-			v.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					if ((item.m_lon == 0) && (item.m_lat == 0)) {
-						return;
-					}
-					markers_dialog.cancel();
-					GILonLat new_center = new GILonLat(item.m_lon, item.m_lat);
-					RelativeLayout layout = (RelativeLayout) findViewById(R.id.root);
-					if (m_marker_point == null) {
-						m_marker_point = new GIControlFloating(parent
-								.getContext());
-						m_marker_point.setMap(map);
-						m_marker_point.setRoot(layout);
-					}
-					m_marker_point.setLonLat(new_center);
-					map.SetCenter(new_center, item.m_diag);
-				}
-			});
-			return v;
-		}
-
-		public AddressSearchAdapter(Context context, int resource,
-				int textViewResourceId) {
-			super(context, resource, textViewResourceId);
-		}
-	}
-
-	public class EditableLayersAdapter extends
-			ArrayAdapter<EditableLayersAdapterItem> {
-		@Override
-		public View getView(int position, View convertView,
-				final ViewGroup parent) {
-			final EditableLayersAdapterItem item = getItem(position);
-			View v = LayoutInflater.from(getContext()).inflate(
-					R.layout.markers_list_item, null);
-			TextView text_name = (TextView) v
-					.findViewById(R.id.markers_list_item_text);
-
-			text_name.setText(item.m_layer.getName());
-
-			GIEditableLayer layer = (GIEditableLayer) item.m_layer;
-			switch (layer.m_Status) {
-			case UNEDITED: {
-				text_name.setTextColor(Color.BLACK);
-				break;
-			}
-			case EDITED: {
-				text_name.setTextColor(Color.BLUE);
-				break;
-			}
-			case UNSAVED: {
-				text_name.setTextColor(Color.RED);
-				break;
-			}
-			default: {
-				text_name.setTextColor(Color.BLACK);
-				break;
-			}
-			}
-
-			v.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					GIEditableLayer layer = (GIEditableLayer) item.m_layer;
-					// GIEditLayersKeeper.Instance().setMap(map);
-					GIEditLayersKeeper.Instance().StartEditing(layer);
-					// layer.Serialize();
-					editablelayers_dialog.cancel();
-				}
-			});
-
-			return v;
-		}
-
-		public EditableLayersAdapter(Context context, int resource,
-				int textViewResourceId) {
-			super(context, resource, textViewResourceId);
-		}
-	}
 
 	public void AddProjects(ArrayAdapter<ProjectsAdapterItem> adapter) {
 		File dir = (Environment.getExternalStorageDirectory());
@@ -507,26 +163,18 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 						break;
 					}
 				}
-				if (layer != null) 
-				{
+				if (layer != null){
 					adapter.clear();
 					GIPList list = new GIPList();
-					for (GI_WktGeometry geom : layer.m_shapes) 
-					{
+					for (GI_WktGeometry geom : layer.m_shapes){
 						GI_WktPoint point = (GI_WktPoint) geom;
-						if (point != null) 
-						{
+						if (point != null) {
 							GIPList.GIMarker marker = list.new GIMarker();
-							if (geom.m_attributes.containsKey("Name")) 
-							{
+							if (geom.m_attributes.containsKey("Name")){
 								marker.m_name = (String) geom.m_attributes.get("Name").m_value.toString();
-							}
-							else if (!geom.m_attributes.keySet().isEmpty()) 
-							{
+							}else if (!geom.m_attributes.keySet().isEmpty()){
 								marker.m_name = (String) geom.m_attributes.get(geom.m_attributes.keySet().toArray()[0]).m_value;
-							}
-							else
-							{
+							}else{
 								marker.m_name = String.valueOf(geom.m_ID);
 							}
 							marker.m_lon = point.m_lon;
@@ -738,58 +386,7 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 		project_list.setAdapter(adapter);
 		projects_dialog.show();
 	}
-//
-//	public void ProjectSelectorDialog() {
-//		final int dialog_max_height = 420;
-//
-//		projects_dialog = new Dialog(this, R.style.Theme_layers_dialog);
-//		projects_dialog.setContentView(R.layout.project_selector_dialog);
-//		projects_dialog.getWindow().setBackgroundDrawable(
-//				new ColorDrawable(android.graphics.Color.TRANSPARENT));
-//		projects_dialog.setCanceledOnTouchOutside(true);
-//
-//		// Place dialog under the button
-//		LayoutParams parameters = projects_dialog.getWindow().getAttributes();
-//		parameters.height = dialog_max_height; // Some hard-coded size
-//
-//		int[] button_location = { 200, 10 };
-//
-//		// Official documentation says that this will give actual screen size,
-//		// without taking into account decor elements (status bar).
-//		// But it works exactly as I expected - gives full accessible window
-//		// size.
-//		int screenCenterX = getWindowManager().getDefaultDisplay().getWidth() / 2;
-//		int screenCenterY = getWindowManager().getDefaultDisplay().getHeight() / 2;
-//
-//		// Dialog's 0,0 coordinates are in the middle of the screen
-//		parameters.x = button_location[0] - screenCenterX;
-//		parameters.y = button_location[1] - screenCenterY;
-//
-//		projects_dialog.getWindow().setAttributes(parameters);
-//
-//		// Fill list with data
-//		ListView project_list = (ListView) projects_dialog
-//				.findViewById(R.id.projects_list);
-////		View header = getLayoutInflater().inflate(
-////				R.layout.project_list_management_item, null);
-////		header.setOnClickListener(new OnClickListener() {
-////
-////			@Override
-////			public void onClick(View v) {
-////				projects_dialog.cancel();
-////				ru.tcgeo.gilib.projectmanagement.GIServer.Instance()
-////						.getPresenter().getDialog()
-////						.show(getFragmentManager(), "dialog");
-////			}
-////		});
-////		project_list.addHeaderView(header);
-//		ProjectsAdapter adapter = new ProjectsAdapter(this,
-//				R.layout.project_selector_list_item,
-//				R.id.project_list_item_path);
-//		AddProjects(adapter);
-//		project_list.setAdapter(adapter);
-//		projects_dialog.show();
-//	}
+
 
 	public void MarkersDialogClicked(final View button) {
 		final int dialog_max_height = getWindowManager().getDefaultDisplay().getHeight() / 2;
@@ -838,66 +435,6 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 		markers_dialog.show();
 	}
 
-//	public void AddressSearchDialogClicked(final View text_edit) {
-//		final int dialog_max_height = 420;
-//		markers_dialog = new Dialog(this, R.style.Theme_layers_dialog);
-//		markers_dialog.setContentView(R.layout.markers_dialog);
-//		markers_dialog.getWindow().setBackgroundDrawable(
-//				new ColorDrawable(android.graphics.Color.TRANSPARENT));
-//		markers_dialog.setCanceledOnTouchOutside(true);
-//
-//		markers_dialog.setOnDismissListener(new OnDismissListener() {
-//			public void onDismiss(DialogInterface dialog) {
-//				text_edit.setActivated(false);
-//				text_edit.clearFocus();
-//			}
-//		});
-//
-//		LayoutParams parameters = markers_dialog.getWindow().getAttributes();
-//		parameters.height = dialog_max_height; // Some hard-coded size
-//
-//		int[] button_location = { 0, 0 };
-//		text_edit.getLocationOnScreen(button_location);
-//
-//		int screenCenterX = getWindowManager().getDefaultDisplay().getWidth() / 2;
-//		int screenCenterY = getWindowManager().getDefaultDisplay().getHeight() / 2;
-//
-//		// Dialog's 0,0 coordinates are in the middle of the screen
-//		parameters.x = button_location[0] - screenCenterX
-//				+ text_edit.getWidth() / 2;
-//		parameters.y = button_location[1] - screenCenterY
-//				+ text_edit.getHeight() + parameters.height / 2;
-//
-//		markers_dialog.getWindow().setAttributes(parameters);
-//
-//		// Fill list with data
-//		ListView markers_list = (ListView) markers_dialog
-//				.findViewById(R.id.markers_list);
-//		AddressSearchAdapter adapter = new AddressSearchAdapter(this,
-//				R.layout.markers_list_item, R.id.markers_list_item_text);
-//		ArrayList<AddressSearchAdapterItem> array = new ArrayList<AddressSearchAdapterItem>();
-//
-//		//
-//		EditText edit_search = (EditText) findViewById(R.id.search_text);
-//		String part = edit_search.getText().toString();
-//		String path = map.ps.m_search_file;
-//		//
-////		GISQLRequest sql = new GISQLRequest(part, "final", path, array);
-////		GIScriptExpression res = (GIScriptExpression) map.ps.m_scriptparser_search
-////				.Eval(sql);
-////		if (res != null) {
-////			if (res.Type() == GIScriptExpression.TYPE.error) {
-////				// Log.d("ScriptLogs",
-////				// ((GIScriptExpressionError)res).error_text);
-////			} else if (res.Type() == GIScriptExpression.TYPE.operation) {
-////				for (int i = 0; i < array.size(); i++) {
-////					adapter.add(array.get(i));
-////				}
-////			}
-////		}
-//		markers_list.setAdapter(adapter);
-//		markers_dialog.show();
-//	}
 
 	public void EditableLayersDialogClicked(final View button) {
 		final int dialog_max_height = getWindowManager().getDefaultDisplay().getHeight() / 2;
@@ -972,16 +509,7 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 		GIEditLayersKeeper.Instance().CompassView();
 	}	
 
-//	public void on_stop_search(final View button) {
-//		EditText text_edit = (EditText) findViewById(R.id.search_text);
-//		text_edit.setText("");
-//		text_edit.setActivated(false);
-//		text_edit.clearFocus();
-//		if (m_marker_point != null) {
-//			m_marker_point.Remove();
-//			m_marker_point = null;
-//		}
-//	}
+
 
 	public void LoadPro(String path) {
 		map.ps = new GIProjectProperties(path);
@@ -1558,22 +1086,7 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 							{
 								m_top_bar.setVisibility(View.VISIBLE);
 							}
-//							if (m_top_bar.getWidth() > 10) 
-//							{
-//								RelativeLayout.LayoutParams m_param;
-//								m_param = new RelativeLayout.LayoutParams(0, 0);
-//								m_param.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-//								m_param.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-//								m_top_bar.setLayoutParams(m_param);
-//							} 
-//							else 
-//							{
-//								RelativeLayout.LayoutParams m_param;
-//								m_param = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-//								m_param.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-//								m_param.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-//								m_top_bar.setLayoutParams(m_param);
-//							}
+
 						}
 					});
 			/*View surface_button = (View)findViewById(R.id.compass_surface_button);
@@ -1635,20 +1148,6 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 			}
 		});
 
-//		EditText search_text = (EditText) findViewById(R.id.search_text);
-//		search_text.setOnKeyListener(new OnKeyListener() {
-//
-//			@Override
-//			public boolean onKey(View v, int keyCode, KeyEvent event) {
-//				if (event.getAction() == KeyEvent.ACTION_DOWN) {
-//					if (keyCode == KeyEvent.KEYCODE_ENTER) {
-//						AddressSearchDialogClicked(v);
-//						return true;
-//					}
-//				}
-//				return false;
-//			}
-//		});
 
 		rule_button = (ImageButton) findViewById(R.id.toggleButtonRule);
 
@@ -1764,7 +1263,6 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 			editor.putString(SAVED_PATH, Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + map.ps.m_SaveAs);
 			editor.apply();
 			editor.commit();
-			//String path_ = sp.getString(SAVED_PATH,	getResources().getString(R.string.default_project_path));
 			touchControl.InitMap(map);
 			return false;
 		}
@@ -1826,5 +1324,23 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 		map.UpdateMap();
 	}
 
+	public GIMap getMap() {
+		return map;
+	}
 
+	public Dialog getProjectsDialog() {
+		return projects_dialog;
+	}
+
+	public Dialog getMarkersDialog() {
+		return markers_dialog;
+	}
+
+	public GIControlFloating getMarkerPoint() {
+		return m_marker_point;
+	}
+
+	public Dialog getEditablelayersDialog() {
+		return editablelayers_dialog;
+	}
 }

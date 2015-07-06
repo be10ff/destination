@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">GeoInfo</string>
+    <string name="sub_app_name">Navigator</string>
     <string name="background">background</string>
     <string name="button_zoomin">Zoom In</string>
     <string name="button_zoomout">Zoom Out</string>

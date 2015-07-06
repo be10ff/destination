@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.Surface;
 import android.view.WindowManager;
 
+import ru.tcgeo.application.App;
 import ru.tcgeo.application.gilib.GIEditLayersKeeper;
 
 
@@ -26,10 +27,18 @@ public class GISensors
 		}
 		return instance;
 	}
-
-	private GISensors() 
+//	public static GISensors Instance(Context context)
+//	{
+//		if(instance == null)
+//		{
+//			instance = new GISensors(context);
+//		}
+//		return instance;
+//	}
+	private GISensors()
 	{
-		m_context = GIEditLayersKeeper.Instance().getContext();
+		m_context = App.getInstance();
+		App.getInstance();
 		m_sensor_manager = (SensorManager)m_context.getSystemService(Context.SENSOR_SERVICE);
 		m_sensor_gravity = m_sensor_manager.getDefaultSensor(Sensor.TYPE_GRAVITY);
 		m_sensor_accelerometer = m_sensor_manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -52,6 +61,7 @@ public class GISensors
 		m_locationManager = (LocationManager)m_context.getSystemService(Context.LOCATION_SERVICE);
 
 	}
+
 
 	private LocationManager m_locationManager;
 	GIMNK2DFilter m_buffer;
