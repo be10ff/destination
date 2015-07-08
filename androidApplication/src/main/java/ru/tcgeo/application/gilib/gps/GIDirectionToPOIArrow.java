@@ -14,13 +14,14 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import ru.tcgeo.application.R;
-import ru.tcgeo.application.gilib.GIBounds;
+import ru.tcgeo.application.gilib.models.GIBounds;
 import ru.tcgeo.application.gilib.GIControl;
 import ru.tcgeo.application.gilib.GIEditLayersKeeper;
-import ru.tcgeo.application.gilib.GILonLat;
+import ru.tcgeo.application.gilib.models.GILonLat;
 import ru.tcgeo.application.gilib.GIMap;
-import ru.tcgeo.application.gilib.GIProjection;
+import ru.tcgeo.application.gilib.models.GIProjection;
 import ru.tcgeo.application.gilib.GIRuleToolControl;
+import ru.tcgeo.application.utils.MapUtils;
 import ru.tcgeo.application.wkt.GI_WktGeometry;
 import ru.tcgeo.application.wkt.GI_WktPoint;
 
@@ -86,11 +87,11 @@ public class GIDirectionToPOIArrow  extends View implements GIControl
     protected void onDraw(Canvas canvas)
 	{
 		GILonLat center = GIProjection.ReprojectLonLat(m_map.Center(), m_map.Projection(), GIProjection.WGS84());
-		double azimuth = m_map.GetAzimuth(center, m_lon_lat_poi);
+		double azimuth = MapUtils.GetAzimuth(center, m_lon_lat_poi);
 
 		path.reset();
 
-		String text = GIRuleToolControl.GetLengthText(m_map.GetDistanceBetween(center, m_lon_lat_poi));
+		String text = GIRuleToolControl.GetLengthText(MapUtils.GetDistanceBetween(center, m_lon_lat_poi));
 		//Rect bounds = new Rect();
 		paint_fill.getTextBounds(text, 0, text.length() - 1, bounds);
 		int offset_x = 0;

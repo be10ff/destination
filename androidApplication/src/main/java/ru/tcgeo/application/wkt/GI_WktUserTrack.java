@@ -13,13 +13,14 @@ import android.os.Environment;
 import java.io.File;
 import java.util.ArrayList;
 
-import ru.tcgeo.application.gilib.GIBounds;
+import ru.tcgeo.application.App;
+import ru.tcgeo.application.gilib.models.GIBounds;
 import ru.tcgeo.application.gilib.GIEditLayersKeeper;
 import ru.tcgeo.application.gilib.GIEditableSQLiteLayer;
-import ru.tcgeo.application.gilib.GIEncoding;
-import ru.tcgeo.application.gilib.GILonLat;
-import ru.tcgeo.application.gilib.GIProjection;
-import ru.tcgeo.application.gilib.GIVectorStyle;
+import ru.tcgeo.application.gilib.models.GIEncoding;
+import ru.tcgeo.application.gilib.models.GILonLat;
+import ru.tcgeo.application.gilib.models.GIProjection;
+import ru.tcgeo.application.gilib.models.GIVectorStyle;
 import ru.tcgeo.application.gilib.planimetry.Edge;
 import ru.tcgeo.application.gilib.planimetry.Vertex;
 
@@ -152,7 +153,7 @@ public class GI_WktUserTrack extends GI_WktGeometry {
 	{
 		m_name_wo_extention = name;
 		m_file = name  + ".db";
-		DBHelper dbHelper = new DBHelper(GIEditLayersKeeper.Instance().getContext(),  Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + m_file); // "/sdcard/"
+		DBHelper dbHelper = new DBHelper(App.getInstance(),  Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + m_file); // "/sdcard/"
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		db.close();
 		m_layer = new GIEditableSQLiteLayer( Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + m_file, style, encoding); // "/sdcard/"

@@ -8,9 +8,9 @@ import android.location.LocationManager;
 import android.os.Bundle;
 
 import ru.tcgeo.application.gilib.GIEditLayersKeeper;
-import ru.tcgeo.application.gilib.GILonLat;
+import ru.tcgeo.application.gilib.models.GILonLat;
 import ru.tcgeo.application.gilib.GIMap;
-import ru.tcgeo.application.gilib.GIProjection;
+import ru.tcgeo.application.gilib.models.GIProjection;
 
 public class GIGPSLocationListener implements LocationListener 
 {

@@ -15,6 +15,6 @@ public abstract interface GIGeometryObject
 	//there are Points just like a pair (int, int)
 	//x is code_L, min Morton's code of bound rect;
 	//y is code_H, max Morton's code of bound rect;
-	abstract public Point getMortonCodes();
-	abstract public void setMortonCodes(Point codes);
+//	abstract public Point getMortonCodes();
+//	abstract public void setMortonCodes(Point codes);
 }

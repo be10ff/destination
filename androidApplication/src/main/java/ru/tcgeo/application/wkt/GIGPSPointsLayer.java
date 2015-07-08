@@ -14,8 +14,8 @@ import java.io.IOException;
 import java.io.StringWriter;
 
 import ru.tcgeo.application.gilib.GIEditableLayer;
-import ru.tcgeo.application.gilib.GIEncoding;
-import ru.tcgeo.application.gilib.GIVectorStyle;
+import ru.tcgeo.application.gilib.models.GIEncoding;
+import ru.tcgeo.application.gilib.models.GIVectorStyle;
 
 public class GIGPSPointsLayer  extends GIEditableLayer
 {

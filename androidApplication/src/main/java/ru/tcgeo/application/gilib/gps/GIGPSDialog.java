@@ -15,8 +15,8 @@ import android.widget.FrameLayout.LayoutParams;
 
 import ru.tcgeo.application.R;
 import ru.tcgeo.application.gilib.GIEditLayersKeeper;
-import ru.tcgeo.application.gilib.GILonLat;
-import ru.tcgeo.application.gilib.GIProjection;
+import ru.tcgeo.application.gilib.models.GILonLat;
+import ru.tcgeo.application.gilib.models.GIProjection;
 
 public class GIGPSDialog extends Fragment implements OnClickListener, OnLongClickListener {
 

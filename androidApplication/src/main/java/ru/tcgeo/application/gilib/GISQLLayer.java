@@ -9,6 +9,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import ru.tcgeo.application.gilib.models.GIBounds;
+import ru.tcgeo.application.gilib.models.GIITile;
+import ru.tcgeo.application.gilib.models.GIProjection;
+
 
 public class GISQLLayer extends GILayer {
 
@@ -211,8 +215,8 @@ public class GISQLLayer extends GILayer {
 	 */
 	public ArrayList<GITileInfoOSM> GetTilesIteration (SQLiteDatabase db, ArrayList<GITileInfoOSM> tiles, GITileInfoOSM root, GIBounds area, GIBounds bounds, int z, int to, int actual)
 	{
-    	GITileInfoOSM left_top_tile = GIITile.CreateTile(z, bounds.m_left, bounds.m_top, type_);
-        GITileInfoOSM right_bottom_tile = GIITile.CreateTile(z, bounds.m_right, bounds.m_bottom, type_);
+    	GITileInfoOSM left_top_tile = GIITile.CreateTile(z, bounds.left(), bounds.top(), type_);
+        GITileInfoOSM right_bottom_tile = GIITile.CreateTile(z, bounds.right(), bounds.bottom(), type_);
 //    	GITileInfoOSM left_top_tile = new GITileInfoOSM(z, bounds.m_left, bounds.m_top);
 //        GITileInfoOSM right_bottom_tile = new GITileInfoOSM(z, bounds.m_right, bounds.m_bottom);
         boolean present = true;
@@ -260,8 +264,8 @@ public class GISQLLayer extends GILayer {
 		ArrayList<GITileInfoOSM> tiles = new ArrayList<GITileInfoOSM>();
 //    	GITileInfoOSM left_top_tile = new GITileInfoOSM(actual, area.m_left, area.m_top);
 //        GITileInfoOSM right_bottom_tile = new GITileInfoOSM(actual, area.m_right, area.m_bottom);
-    	GITileInfoOSM left_top_tile = GIITile.CreateTile(actual, area.m_left, area.m_top, type_);
-        GITileInfoOSM right_bottom_tile = GIITile.CreateTile(actual, area.m_right, area.m_bottom, type_);
+    	GITileInfoOSM left_top_tile = GIITile.CreateTile(actual, area.left(), area.top(), type_);
+        GITileInfoOSM right_bottom_tile = GIITile.CreateTile(actual, area.right(), area.bottom(), type_);
         //boolean present = true;
     	for(int x = left_top_tile.m_xtile; x <= right_bottom_tile.m_xtile; x++)
     	{

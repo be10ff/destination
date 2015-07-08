@@ -10,11 +10,11 @@ import android.graphics.PointF;
 
 import java.util.ArrayList;
 
-import ru.tcgeo.application.gilib.GIBounds;
+import ru.tcgeo.application.gilib.models.GIBounds;
 import ru.tcgeo.application.gilib.GIEditLayersKeeper;
-import ru.tcgeo.application.gilib.GILonLat;
-import ru.tcgeo.application.gilib.GIProjection;
-import ru.tcgeo.application.gilib.GIVectorStyle;
+import ru.tcgeo.application.gilib.models.GILonLat;
+import ru.tcgeo.application.gilib.models.GIProjection;
+import ru.tcgeo.application.gilib.models.GIVectorStyle;
 import ru.tcgeo.application.gilib.planimetry.GIGeometryPolygon;
 
 public class GI_WktPolygon extends GI_WktGeometry

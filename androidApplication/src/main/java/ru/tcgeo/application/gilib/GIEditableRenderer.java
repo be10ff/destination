@@ -9,6 +9,10 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.util.Log;
 
+import ru.tcgeo.application.gilib.models.GIBounds;
+import ru.tcgeo.application.gilib.models.GIProjection;
+import ru.tcgeo.application.gilib.models.GIStyle;
+import ru.tcgeo.application.gilib.models.GIVectorStyle;
 import ru.tcgeo.application.wkt.GIWKTParser;
 import ru.tcgeo.application.wkt.GI_WktGeometry;
 
@@ -136,7 +140,7 @@ public class GIEditableRenderer extends GIRenderer {
 	}
 
 	@Override
-	public void AddStyle(GIStyle style) 
+	public void AddStyle(GIStyle style)
 	{
 		m_additional_styles.add((GIVectorStyle) style);
 	}

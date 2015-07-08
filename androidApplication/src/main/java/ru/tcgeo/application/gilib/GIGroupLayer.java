@@ -6,6 +6,9 @@ import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.util.Log;
 
+import ru.tcgeo.application.gilib.models.GIBounds;
+import ru.tcgeo.application.gilib.models.GIScaleRange;
+
 
 public class GIGroupLayer extends GILayer
 {

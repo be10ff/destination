@@ -1,29 +1,25 @@
-package ru.tcgeo.application.gilib;
+package ru.tcgeo.application.gilib.models;
 
-import ru.tcgeo.application.gilib.GILonLat;
-import ru.tcgeo.application.gilib.gps.GIYandexUtils;
+import ru.tcgeo.application.utils.GIYandexUtils;
 
 public class GIProjection
 {
-//	long m_id;
 	int mId;
 	private String mWKT;
 	
 	private GIProjection (String wkt_description, int id)
     {
-//		m_id = initProjection(wkt_description);
 		mWKT = wkt_description;
 		mId = id;
     }
-	public GIProjection (long epgs)
-    {
-//		m_id = initProjectionFromEPSG(epgs);
-    }
+//	public GIProjection (long epgs)
+//    {
+//    }
 
 
-	public static ru.tcgeo.application.gilib.GIProjection WGS84()
+	public static GIProjection WGS84()
 	{
-		return new ru.tcgeo.application.gilib.GIProjection(
+		return new GIProjection(
 				"GEOGCS[\"WGS 84\"," +
                          "DATUM[\"WGS_1984\"," +
                           		 "SPHEROID[\"WGS 84\"," +
@@ -42,10 +38,10 @@ public class GIProjection
 	}
 	
 
-	public static ru.tcgeo.application.gilib.GIProjection WorldMercator()
+	public static GIProjection WorldMercator()
 	
 	{
-		return new ru.tcgeo.application.gilib.GIProjection(
+		return new GIProjection(
 				"PROJCS[\"WGS 84 / World Mercator\"," +
 						 "GEOGCS[\"WGS 84\"," +
 						 		  "DATUM[\"WGS_1984\"," +
@@ -77,17 +73,12 @@ public class GIProjection
 	
 	public static GILonLat ReprojectLonLat (GILonLat point, GIProjection source, GIProjection dest)
 	{
-//		if(source != dest)
-//		{
-//			if(source == WorldMercator() && dest == WGS84())
 			if(WorldMercator().mId == source.mId && WGS84().mId == dest.mId) {
 				return GIYandexUtils.MercatorToGeo(point);
-//			}else if(dest == WorldMercator() && source == WGS84()){
 			}if(WGS84().mId == source.mId && WorldMercator().mId == dest.mId){
 				return GIYandexUtils.GeoToMercator(point);
 			}
-//		}
-		return point;
 
+		return point;
 	}
 }

@@ -2,6 +2,8 @@ package ru.tcgeo.application.gilib;
 
 import android.graphics.Rect;
 
+import ru.tcgeo.application.gilib.models.GIBounds;
+
 
 public interface GIControl
 {

@@ -1,6 +1,9 @@
 package ru.tcgeo.application.gilib;
 
 
+import ru.tcgeo.application.gilib.models.GIBounds;
+import ru.tcgeo.application.gilib.models.GILonLat;
+import ru.tcgeo.application.gilib.models.GIProjection;
 
 public class GITileInfoYandex
 {

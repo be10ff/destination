@@ -1,15 +1,14 @@
-package ru.tcgeo.application.gilib.views;
+package ru.tcgeo.application.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.LinearLayout;
 
 /**
  * Created by a_belov on 03.07.15.
  */
 
-//ru.tcgeo.application.gilib.views.FloatingLinearLayout
+//ru.tcgeo.application.views.FloatingLinearLayout
 public class FloatingLinearLayout extends LinearLayout {
     private Context mContext;
     public FloatingLinearLayout(Context context, AttributeSet attrs, int defStyle) {

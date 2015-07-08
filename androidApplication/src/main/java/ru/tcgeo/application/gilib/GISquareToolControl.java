@@ -9,6 +9,10 @@ import android.graphics.Path;
 import android.graphics.Point;
 import android.widget.RelativeLayout;
 
+import ru.tcgeo.application.gilib.models.GILonLat;
+import ru.tcgeo.application.gilib.models.GIProjection;
+import ru.tcgeo.application.utils.MapUtils;
+
 public class GISquareToolControl extends GIRuleToolControl {
 
 	Paint paint_fill;
@@ -108,9 +112,9 @@ public class GISquareToolControl extends GIRuleToolControl {
 				{
 					sign = -1;
 				}
-				double dist_a = m_map.GetDistanceBetween(curve.get(0), curve.get(i-1));
-				double dist_b = m_map.GetDistanceBetween(curve.get(0), curve.get(i));
-				double dist_c = m_map.GetDistanceBetween(curve.get(i), curve.get(i-1));
+				double dist_a = MapUtils.GetDistanceBetween(curve.get(0), curve.get(i - 1));
+				double dist_b = MapUtils.GetDistanceBetween(curve.get(0), curve.get(i));
+				double dist_c = MapUtils.GetDistanceBetween(curve.get(i), curve.get(i-1));
 				
 				//--- for high ranges ---- 
 				//- commented for velocity

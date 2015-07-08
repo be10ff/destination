@@ -1,8 +1,11 @@
-package ru.tcgeo.application.gilib;
+package ru.tcgeo.application.gilib.models;
 
 
+import ru.tcgeo.application.gilib.GILayer;
+import ru.tcgeo.application.gilib.GISQLYandexTile;
+import ru.tcgeo.application.gilib.GITileInfoOSM;
 
-public abstract class GIITile 
+public abstract class GIITile
 {
 	public static GITileInfoOSM CreateTile(int z, double lon, double lat, GILayer.GILayerType type)
 	{

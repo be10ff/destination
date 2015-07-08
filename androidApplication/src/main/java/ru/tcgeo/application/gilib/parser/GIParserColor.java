@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
-import ru.tcgeo.application.gilib.GIColor;
+import ru.tcgeo.application.gilib.models.GIColor;
 
 
 public class GIParserColor extends GIParser

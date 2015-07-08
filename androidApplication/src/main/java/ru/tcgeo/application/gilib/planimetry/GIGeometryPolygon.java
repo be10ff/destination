@@ -112,30 +112,30 @@ public class GIGeometryPolygon extends GIShape
         canvas.drawPath(path, paint);
 
 	}
-	@Override
-	public void DrawRects(Canvas canvas, Paint paint_text)
-	{
-		Paint paint = new Paint();
-        paint.setColor(Color.CYAN);
-        paint.setStyle(Style.FILL_AND_STROKE);
-        paint.setTextSize(12);
-
-        if(m_rects == null)
-        {
-        	return;
-        }
-
-        for(int k = 0; k < m_rects.size(); k++)
-		{
-        	RectF rect = m_rects.get(k);
-        	canvas.drawRect(rect, paint);
-        }
-	}
-	@Override
-	public void DrawBoundaries(Canvas canvas)
-	{
-
-	}
+//	@Override
+//	public void DrawRects(Canvas canvas, Paint paint_text)
+//	{
+//		Paint paint = new Paint();
+//        paint.setColor(Color.CYAN);
+//        paint.setStyle(Style.FILL_AND_STROKE);
+//        paint.setTextSize(12);
+//
+//        if(m_rects == null)
+//        {
+//        	return;
+//        }
+//
+//        for(int k = 0; k < m_rects.size(); k++)
+//		{
+//        	RectF rect = m_rects.get(k);
+//        	canvas.drawRect(rect, paint);
+//        }
+//	}
+//	@Override
+//	public void DrawBoundaries(Canvas canvas)
+//	{
+//
+//	}
 /**
  * построение массива отрезков полигона по массиву точек
  */
@@ -360,713 +360,713 @@ public class GIGeometryPolygon extends GIShape
 	 * кажется устаревшее. строит прямоугольники для текста по медианам трапеций
 	 * @return
 	 */
-	public ArrayList<RectF> getTextRectArray()
-	{
-		ArrayList<Edge> edges = getTextLineArray();
-		ArrayList<RectF> result = new ArrayList<RectF>();
-		for(int i = 0; i < edges.size() - 1; i++)
-		{
-			Edge top_edge = edges.get(i);
-			Edge bottom_edge = edges.get(i+1);
-			Edge left_edge = new Edge(top_edge.m_start, bottom_edge.m_start);
-			Edge right_edge = new Edge(top_edge.m_end, bottom_edge.m_end);
-
-			float left = left_edge.center_point().x;
-			float right = right_edge.center_point().x;
-			float top = top_edge.m_start.y;
-			float bottom = bottom_edge.m_start.y;
-			RectF rect = new RectF(left, top, right, bottom);
-			result.add(rect);
-		}
-		m_rects = result;
-		return result;
-	}
-	public ArrayList<Trapezoid> getTextTrapezoidArray()
-	{
-		ArrayList<Edge> edges = getTextLineArray();
-		if(edges == null)
-		{
-			return null;
-		}
-		ArrayList<Trapezoid> result = new ArrayList<Trapezoid>();
-		int counter = 0;
-		int internal_counter = 0;
-
-		ArrayList<ArrayList<Edge>> levels = new ArrayList<ArrayList<Edge>>();
-		while(counter < edges.size())
-		{
-			Edge top_edge = edges.get(counter);
-			ArrayList<Edge> one_lvl_edges = new ArrayList<Edge>();
-			one_lvl_edges.add(top_edge);
-			internal_counter = counter + 1;
-			while((internal_counter < edges.size())&&(Math.abs(top_edge.m_start.y - edges.get(internal_counter).m_start.y) < Vertex.delta))
-			{
-				Edge next_top = edges.get(internal_counter);
-				one_lvl_edges.add(next_top);
-				internal_counter++;
-			}
-			levels.add(one_lvl_edges);
-			counter = internal_counter;
-		}
-		for(int i = 0; i < levels.size() - 1; i++)
-		{
-			ArrayList<Edge> top_edges = levels.get(i);
-			ArrayList<Edge> bottom_edges = levels.get(i+1);
-			boolean CanJoinTop = true;
-			boolean CanJoinBottom = true;
-			int j = 1;
-			Edge top = top_edges.get(0);
-			while(CanJoinTop && j  < top_edges.size())
-			{
-				Edge next = top_edges.get(j);
-				if(!top.CanBeJoin(next))
-				{
-					CanJoinTop = false;
-				}
-				else
-				{
-					top = top.Join(next);
-				}
-				j++;
-			}
-			j = 1;
-			Edge bottom = bottom_edges.get(0);
-			while(CanJoinBottom && j  < bottom_edges.size())
-			{
-				Edge next = bottom_edges.get(j);
-				if(!bottom.CanBeJoin(next))
-				{
-					CanJoinBottom = false;
-				}
-				else
-				{
-					bottom = bottom.Join(next);
-				}
-
-				j++;
-			}
-			if(CanJoinBottom && CanJoinTop)
-			{
-				Trapezoid segment = new Trapezoid(top, bottom);
-				result.add(segment);
-			}
-			/*else
-			{
-				//Vertex top_left = top_edges.get(0).m_start;
-				int k = 0;
-				while(k < top_edges.size())
-				{
-					Vertex current = top_edges.get(k).m_start;
-					int t = 0;
-					boolean current_has_link = true;
-					while( t < bottom_edges.size() && current_has_link)
-					{
-						compare = bottom_edges.get(t);
-						for(int n = 0; n < m_edges.size(); n++)
-						{
-							if()
-						}
-						t++;
-					}
-				}
-
-
-			}*/
-		}
-		return result;
-	}
-
-	public ArrayList<Trapezoid> getTextMaxTrapezoidArray()
-	{
-		ArrayList<Edge> edges = getTextLineArray();
-		if(edges == null)
-		{
-			return null;
-		}
-		ArrayList<Trapezoid> result = new ArrayList<Trapezoid>();
-		int counter = 0;
-		int top_counter = 0;
-		boolean canBeAddedTop = false;
-		boolean canBeAddedBottom = false;
-		//boolean oneHasCollected = false;
-		while(counter < edges.size())
-		{
-			Edge top_edge = edges.get(counter);
-			ArrayList<Edge> top_edges = new ArrayList<Edge>();
-			top_counter = counter + 1;
-			//oneHasCollected = false;
-			canBeAddedTop = true;
-			while((top_counter < edges.size())&&(Math.abs(top_edge.m_start.y - edges.get(top_counter).m_start.y) < Vertex.delta))
-			{
-				Edge next_top = edges.get(top_counter);
-				//top_edges.add(next_top);
-				if((top_edge.CanBeJoin(next_top)))
-				{
-					top_edge = top_edge.Join(next_top);
-					//oneHasCollected = true;
-				}
-				else
-				{
-					canBeAddedTop = false;
-				}
-				if(!canBeAddedTop)
-				{
-					top_edges.add(top_edge);
-				}
-				top_counter++;
-			}
-			counter = top_counter;
-			if(counter < edges.size())
-			{
-				Edge bottom_edge = edges.get(counter);
-				int bottom_counter = counter + 1;
-				canBeAddedBottom = true;
-				ArrayList<Edge> bottom_edges = new ArrayList<Edge>();
-				while((bottom_counter < edges.size())&&(Math.abs(bottom_edge.m_start.y - edges.get(bottom_counter).m_start.y) < Vertex.delta))
-				{
-					Edge next_bottom = edges.get(bottom_counter);
-					bottom_edges.add(next_bottom);
-					if((bottom_edge.CanBeJoin(next_bottom))/*&&canBeAddedTop&&!oneHasCollected*/)
-					{
-						bottom_edge = bottom_edge.Join(next_bottom);
-						//oneHasCollected = true;
-					}
-					else
-					{
-						canBeAddedBottom = false;
-					}
-					if(!canBeAddedBottom)
-					{
-						top_edges.add(bottom_edge);
-					}
-					bottom_counter++;
-				}
-				if(canBeAddedTop&&canBeAddedBottom&&(top_edge != null)&&(bottom_edge != null))
-				{
-					Trapezoid segment = new Trapezoid(top_edge, bottom_edge);
-					result.add(segment);
-				}
-			}
-		}
-		return result;
-	}
-
-	/**
-	 * строит массив пригодных для написания текстов трапеций
-	 * @return
-	 */
-	public ArrayList<Trapezoid> getTextMinTrapezoidArray()
-	{
-
-		ArrayList<Edge> edges = getTextLineArray();
-		if(edges == null)
-		{
-			return null;
-		}
-		ArrayList<Trapezoid> result = new ArrayList<Trapezoid>();
-		int counter = 0;
-		int top_counter = 0;
-		boolean canBeAddedTop = false;
-		boolean canBeAddedBottom = false;
-		//boolean oneHasCollected = false;
-		while(counter < edges.size())
-		{
-			Edge top_edge = edges.get(counter);
-			ArrayList<Edge> top_edges = new ArrayList<Edge>();
-			top_counter = counter + 1;
-			//oneHasCollected = false;
-			canBeAddedTop = true;
-			while((top_counter < edges.size())&&(Math.abs(top_edge.m_start.y - edges.get(top_counter).m_start.y) < Vertex.delta))
-			{
-				Edge next_top = edges.get(top_counter);
-				top_edges.add(next_top);
-				if((top_edge.CanBeJoin(next_top))&&canBeAddedTop)
-				{
-					top_edge = top_edge.Join(next_top);
-					//oneHasCollected = true;
-				}
-				else
-				{
-					canBeAddedTop = false;
-				}
-				top_counter++;
-			}
-			counter = top_counter;
-			if(counter < edges.size())
-			{
-				Edge bottom_edge = edges.get(counter);
-				int bottom_counter = counter + 1;
-				canBeAddedBottom = true;
-				ArrayList<Edge> bottom_edges = new ArrayList<Edge>();
-				while((bottom_counter < edges.size())&&(Math.abs(bottom_edge.m_start.y - edges.get(bottom_counter).m_start.y) < Vertex.delta))
-				{
-					Edge next_bottom = edges.get(bottom_counter);
-					bottom_edges.add(next_bottom);
-					if((bottom_edge.CanBeJoin(next_bottom))&&canBeAddedTop/*&&!oneHasCollected*/)
-					{
-						bottom_edge = bottom_edge.Join(next_bottom);
-						//oneHasCollected = true;
-					}
-					else
-					{
-						canBeAddedBottom = false;
-					}
-					bottom_counter++;
-				}
-				if(canBeAddedTop&&canBeAddedBottom&&(top_edge != null)&&(bottom_edge != null))
-				{
-					Trapezoid segment = new Trapezoid(top_edge, bottom_edge);
-					result.add(segment);
-				}
-			}
-		}
-		return result;
-	}
-
-
-	public ArrayList<Trapezoid> getTextTrapezoidArray_old()
-	{
-		ArrayList<Edge> edges = getTextLineArray();
-		ArrayList<Trapezoid> result = new ArrayList<Trapezoid>();
-		for(int i = 0; i < edges.size() - 1; i++)
-		{
-			//минимальный вариант. отбрасываем "рога"
-			Edge top_edge = edges.get(i);
-			Edge bottom_edge = edges.get(i+1);
-			boolean toAddTrapezoid = true;
-			//два отрезка на одной горизонтали
-			if(Math.abs(top_edge.m_start.y - bottom_edge.m_start.y) < Vertex.delta)
-			{
-				if(i < edges.size() - 2)
-				{
-					if(top_edge.CanBeJoin(bottom_edge))
-					{
-						//новые top_edge bottom_edge
-						top_edge = (top_edge.Join(bottom_edge));
-						bottom_edge = edges.get(i+2);
-						i++;
-					}
-					else
-					{
-						toAddTrapezoid = false; //????
-						i++;
-					}
-				}
-			}
-			//а вдруг bottom тож можно объеденить?
-			if((i+2) < edges.size())
-			{
-				Edge next = edges.get(i+2);
-				//if(bottom_edge.m_start.m_point.y == next.m_start.m_point.y)
-				if(Math.abs(bottom_edge.m_start.y - next.m_start.y) < Vertex.delta)
-				{
-					if(bottom_edge.CanBeJoin(next))
-					{
-						//новый top_edge bottom_edge
-						bottom_edge = (bottom_edge.Join(next));
-					}
-					else
-					{
-						toAddTrapezoid = false;
-					}
-				}
-			}
-			if(toAddTrapezoid)
-			{
-				Trapezoid segment = new Trapezoid(top_edge, bottom_edge);
-				result.add(segment);
-			}
-
-			//вариант. используем "рога"
-			/*
-			PointF center = getCenterOfBounds();
-			Edge top_edge = edges.get(i);
-			Edge bottom_edge = edges.get(i+1);
-			boolean toAddTrapezoid = true;
-			boolean topCouldBeJoined = true;
-			boolean topHasJoined = false;
-			//два отрезка на одной горизонтали
-			if(top_edge.m_start.m_point.y == bottom_edge.m_start.m_point.y)
-			{
-				if(i < edges.size() - 2)
-				{
-					if(top_edge.CanBeJoin(bottom_edge))
-					{
-						//новые top_edge bottom_edge
-						top_edge = (top_edge.Join(bottom_edge));
-						bottom_edge = edges.get(i+2);
-						topCouldBeJoined = true;
-						topHasJoined = true;
-						//joinedYet = true;
-						i++;
-					}
-					else
-					{
-						top_edge = Edge.NearestToPointOfTwo(top_edge, bottom_edge, center);
-						bottom_edge = edges.get(i+2);
-						topCouldBeJoined = false;
-						topHasJoined = false;
-						center = top_edge.center_point().m_point;
-						//toAddTrapezoid = false;
-						i++;
-					}
-				}
-			}
-			//а вдруг bottom тож можно объеденить?
-			if((i+2) < edges.size())
-			{
-				Edge next = edges.get(i+2);
-				if(bottom_edge.m_start.m_point.y == next.m_start.m_point.y)
-				{
-					if(bottom_edge.CanBeJoin(next)&&topHasJoined)
-					{
-						//новый top_edge bottom_edge
-						bottom_edge = (bottom_edge.Join(next));
-					}
-					else
-					{
-						bottom_edge = Edge.NearestToPointOfTwo(next, bottom_edge, center);
-						if(topHasJoined)
-						{
-							center = bottom_edge.center_point().m_point;
-							top_edge = Edge.NearestToPointOfTwo(edges.get(i), edges.get(i-1), center);
-						}
-					}
-				}
-			}
-			if(toAddTrapezoid)
-			{
-				Trapezoid segment = new Trapezoid(top_edge, bottom_edge);
-				center = bottom_edge.center_point().m_point;
-				result.add(segment);
-			}*/
-		}
-		return result;
-	}
-
-	public ArrayList<Edge> getTextLineArray_old_working()
-	{
-		ArrayList<Edge> lines = new ArrayList<Edge>();
-		ArrayList<Vertex> sorted_points = new ArrayList<Vertex>();
-		//adding interior rings
-		ArrayList<Vertex> all_points = new ArrayList<Vertex>();
-		all_points.addAll(m_points);
-		if(m_rings != null)
-		{
-			for(int i = 0; i < m_rings.size(); i++)
-			{
-				all_points.addAll(m_rings.get(i).m_points);
-			}
-		}
-		// получаем неповторяющийся список горизонталей через все вершины полигона
-		for(int d = 0; d < all_points.size(); d++)
-		{
-			Vertex current_point = all_points.get(d);
-			//TODO excluding fully invisible inner rings. works. commented for debugging LabelGeometry.Difference
-			//if(current_point.GetOriginVisiblity())
-			{
-				if(sorted_points.size() == 0)
-				{
-					sorted_points.add(current_point);
-				}
-				else
-				{
-					if(current_point.y > sorted_points.get(sorted_points.size()-1).y)
-					{
-						sorted_points.add(current_point);
-					}
-					else
-					{
-						for(int k = 0; k < sorted_points.size(); k++)
-						{
-							PointF compare = sorted_points.get(k);
-							if(Math.abs(current_point.y - compare.y) < Vertex.delta)
-							{
-								k = sorted_points.size();
-								continue;
-							}
-							if(current_point.y < compare.y)
-							{
-								sorted_points.add(k, current_point);
-								k = sorted_points.size();
-							}
-						}
-					}
-				}
-			}
-		}
-		// this
-		//generalize(1);
-		//MakeEdgesRing();
-		// or this
-		Difference(); //MakeEdgesRing(); inside : получаем m_edges, последовательно и замкнуто обходящий исходный полигон
-		if(m_edges == null)
-		{
-			return null;
-		}
-		if(m_edges.size() == 0)
-		{
-			return null;
-		}
-
-		ArrayList<Edge> intersection_edges_prev_lvl = new ArrayList<Edge>();
-		//идем по горизонталям последовательно по возрастанию
-		for(int level = 0; level < sorted_points.size(); level++) //??????? -1
-		{
-			float levelY = sorted_points.get(level).y;
-			//для каждой горизонтали создаем список всех пересекающихся с ней Edge
-			ArrayList<Edge> intersection_edges = new ArrayList<Edge>();
-			for(int i = 0; i < m_edges.size(); i++)
-			{
-				Edge current_edge = m_edges.get(i);
-				if(Edge.IsEdgeIntersectHorizontal(current_edge, levelY))
-				{
-					current_edge.m_intersection_point = Edge.EdgeIntersectionHorizontal(current_edge, levelY);
-					intersection_edges.add(current_edge);
-				}
-			}
-			ArrayList<Edge> intersection_edges_res = new ArrayList<Edge>();
-			intersection_edges_res.addAll(intersection_edges);
-			//для всех горизонталей
-			for(int i = 0; i < intersection_edges.size(); i ++)
-			{
-				Edge current_edge =  intersection_edges.get(i);
-				//  удаляем из списка все пересекающие ее _горизонтальные Edge
-				if(Edge.IsCoincidesHorizontal(current_edge, levelY))
-				{
-					//TODO: ??????
-					if(current_edge.m_start.x > current_edge.m_end.x)
-					{
-						current_edge.Swap();
-					}
-					lines.add(current_edge);
-					//TODO : horizontal edge problems
-					intersection_edges_res.remove(current_edge);
-				}
-				//кроме нижней удаляем из списка все оканчивающиеся/начинающиеся Edge которые были задеты на предыдущей горизонтали
-				//
-				//if(level != sorted_points.size() - 1)
-				{
-					for(int j = 0; j < intersection_edges_prev_lvl.size(); j++)
-					{
-						if((intersection_edges_prev_lvl.get(j) == current_edge)&&(current_edge.HasPointAsEnd(current_edge.m_intersection_point)))
-						{
-							//если ниже из точки есть продолжения
-							int num = 0;
-							for(int k = 0; k < m_edges.size(); k++)
-							{
-								if(m_edges.get(k).HasPointAsEnd(current_edge.m_intersection_point) && m_edges.get(k).center_point().y + Vertex.delta >= levelY)
-								{
-									num++;
-								}
-							}
-							if(num >0)
-							{
-								intersection_edges_res.remove(current_edge);
-							}
-						}
-					}
-				}
-			}
-			//пока оставшийся список не пуст
-			while(intersection_edges_res.size() > 1)
-			{
-				//нашли самую левую точку и удалили ее
-				float left = intersection_edges_res.get(0).m_intersection_point.x;
-				int left_index = 0;
-				for(int i = 1; i < intersection_edges_res.size();i++)
-				{
-					if(intersection_edges_res.get(i).m_intersection_point.x < left)
-					{
-						left = intersection_edges_res.get(i).m_intersection_point.x;
-						left_index = i;
-					}
-				}
-				//еще раз нашли самую левую точку и удалили ее
-				intersection_edges_res.remove(intersection_edges_res.get(left_index));
-				float next_left = intersection_edges_res.get(0).m_intersection_point.x;
-				int left_next_index = 0;
-				for(int i = 1; i < intersection_edges_res.size();i++)
-				{
-					if(intersection_edges_res.get(i).m_intersection_point.x < next_left)
-					{
-						next_left = intersection_edges_res.get(i).m_intersection_point.x;
-						left_next_index = i;
-					}
-				}
-				intersection_edges_res.remove(intersection_edges_res.get(left_next_index));
-				// добавили отрезок между самой левой и следующей за ней
-				lines.add(new Edge(new Vertex(new PointF(left, levelY)), new Vertex(new PointF(next_left, levelY))));
-			}
-			intersection_edges_prev_lvl = intersection_edges;
-		}
-		m_levels = lines;
-		return lines;
-	}
+//	public ArrayList<RectF> getTextRectArray()
+//	{
+//		ArrayList<Edge> edges = getTextLineArray();
+//		ArrayList<RectF> result = new ArrayList<RectF>();
+//		for(int i = 0; i < edges.size() - 1; i++)
+//		{
+//			Edge top_edge = edges.get(i);
+//			Edge bottom_edge = edges.get(i+1);
+//			Edge left_edge = new Edge(top_edge.m_start, bottom_edge.m_start);
+//			Edge right_edge = new Edge(top_edge.m_end, bottom_edge.m_end);
+//
+//			float left = left_edge.center_point().x;
+//			float right = right_edge.center_point().x;
+//			float top = top_edge.m_start.y;
+//			float bottom = bottom_edge.m_start.y;
+//			RectF rect = new RectF(left, top, right, bottom);
+//			result.add(rect);
+//		}
+//		m_rects = result;
+//		return result;
+//	}
+//	public ArrayList<Trapezoid> getTextTrapezoidArray()
+//	{
+//		ArrayList<Edge> edges = getTextLineArray();
+//		if(edges == null)
+//		{
+//			return null;
+//		}
+//		ArrayList<Trapezoid> result = new ArrayList<Trapezoid>();
+//		int counter = 0;
+//		int internal_counter = 0;
+//
+//		ArrayList<ArrayList<Edge>> levels = new ArrayList<ArrayList<Edge>>();
+//		while(counter < edges.size())
+//		{
+//			Edge top_edge = edges.get(counter);
+//			ArrayList<Edge> one_lvl_edges = new ArrayList<Edge>();
+//			one_lvl_edges.add(top_edge);
+//			internal_counter = counter + 1;
+//			while((internal_counter < edges.size())&&(Math.abs(top_edge.m_start.y - edges.get(internal_counter).m_start.y) < Vertex.delta))
+//			{
+//				Edge next_top = edges.get(internal_counter);
+//				one_lvl_edges.add(next_top);
+//				internal_counter++;
+//			}
+//			levels.add(one_lvl_edges);
+//			counter = internal_counter;
+//		}
+//		for(int i = 0; i < levels.size() - 1; i++)
+//		{
+//			ArrayList<Edge> top_edges = levels.get(i);
+//			ArrayList<Edge> bottom_edges = levels.get(i+1);
+//			boolean CanJoinTop = true;
+//			boolean CanJoinBottom = true;
+//			int j = 1;
+//			Edge top = top_edges.get(0);
+//			while(CanJoinTop && j  < top_edges.size())
+//			{
+//				Edge next = top_edges.get(j);
+//				if(!top.CanBeJoin(next))
+//				{
+//					CanJoinTop = false;
+//				}
+//				else
+//				{
+//					top = top.Join(next);
+//				}
+//				j++;
+//			}
+//			j = 1;
+//			Edge bottom = bottom_edges.get(0);
+//			while(CanJoinBottom && j  < bottom_edges.size())
+//			{
+//				Edge next = bottom_edges.get(j);
+//				if(!bottom.CanBeJoin(next))
+//				{
+//					CanJoinBottom = false;
+//				}
+//				else
+//				{
+//					bottom = bottom.Join(next);
+//				}
+//
+//				j++;
+//			}
+//			if(CanJoinBottom && CanJoinTop)
+//			{
+//				Trapezoid segment = new Trapezoid(top, bottom);
+//				result.add(segment);
+//			}
+//			/*else
+//			{
+//				//Vertex top_left = top_edges.get(0).m_start;
+//				int k = 0;
+//				while(k < top_edges.size())
+//				{
+//					Vertex current = top_edges.get(k).m_start;
+//					int t = 0;
+//					boolean current_has_link = true;
+//					while( t < bottom_edges.size() && current_has_link)
+//					{
+//						compare = bottom_edges.get(t);
+//						for(int n = 0; n < m_edges.size(); n++)
+//						{
+//							if()
+//						}
+//						t++;
+//					}
+//				}
+//
+//
+//			}*/
+//		}
+//		return result;
+//	}
+//
+//	public ArrayList<Trapezoid> getTextMaxTrapezoidArray()
+//	{
+//		ArrayList<Edge> edges = getTextLineArray();
+//		if(edges == null)
+//		{
+//			return null;
+//		}
+//		ArrayList<Trapezoid> result = new ArrayList<Trapezoid>();
+//		int counter = 0;
+//		int top_counter = 0;
+//		boolean canBeAddedTop = false;
+//		boolean canBeAddedBottom = false;
+//		//boolean oneHasCollected = false;
+//		while(counter < edges.size())
+//		{
+//			Edge top_edge = edges.get(counter);
+//			ArrayList<Edge> top_edges = new ArrayList<Edge>();
+//			top_counter = counter + 1;
+//			//oneHasCollected = false;
+//			canBeAddedTop = true;
+//			while((top_counter < edges.size())&&(Math.abs(top_edge.m_start.y - edges.get(top_counter).m_start.y) < Vertex.delta))
+//			{
+//				Edge next_top = edges.get(top_counter);
+//				//top_edges.add(next_top);
+//				if((top_edge.CanBeJoin(next_top)))
+//				{
+//					top_edge = top_edge.Join(next_top);
+//					//oneHasCollected = true;
+//				}
+//				else
+//				{
+//					canBeAddedTop = false;
+//				}
+//				if(!canBeAddedTop)
+//				{
+//					top_edges.add(top_edge);
+//				}
+//				top_counter++;
+//			}
+//			counter = top_counter;
+//			if(counter < edges.size())
+//			{
+//				Edge bottom_edge = edges.get(counter);
+//				int bottom_counter = counter + 1;
+//				canBeAddedBottom = true;
+//				ArrayList<Edge> bottom_edges = new ArrayList<Edge>();
+//				while((bottom_counter < edges.size())&&(Math.abs(bottom_edge.m_start.y - edges.get(bottom_counter).m_start.y) < Vertex.delta))
+//				{
+//					Edge next_bottom = edges.get(bottom_counter);
+//					bottom_edges.add(next_bottom);
+//					if((bottom_edge.CanBeJoin(next_bottom))/*&&canBeAddedTop&&!oneHasCollected*/)
+//					{
+//						bottom_edge = bottom_edge.Join(next_bottom);
+//						//oneHasCollected = true;
+//					}
+//					else
+//					{
+//						canBeAddedBottom = false;
+//					}
+//					if(!canBeAddedBottom)
+//					{
+//						top_edges.add(bottom_edge);
+//					}
+//					bottom_counter++;
+//				}
+//				if(canBeAddedTop&&canBeAddedBottom&&(top_edge != null)&&(bottom_edge != null))
+//				{
+//					Trapezoid segment = new Trapezoid(top_edge, bottom_edge);
+//					result.add(segment);
+//				}
+//			}
+//		}
+//		return result;
+//	}
+//
+//	/**
+//	 * строит массив пригодных для написания текстов трапеций
+//	 * @return
+//	 */
+//	public ArrayList<Trapezoid> getTextMinTrapezoidArray()
+//	{
+//
+//		ArrayList<Edge> edges = getTextLineArray();
+//		if(edges == null)
+//		{
+//			return null;
+//		}
+//		ArrayList<Trapezoid> result = new ArrayList<Trapezoid>();
+//		int counter = 0;
+//		int top_counter = 0;
+//		boolean canBeAddedTop = false;
+//		boolean canBeAddedBottom = false;
+//		//boolean oneHasCollected = false;
+//		while(counter < edges.size())
+//		{
+//			Edge top_edge = edges.get(counter);
+//			ArrayList<Edge> top_edges = new ArrayList<Edge>();
+//			top_counter = counter + 1;
+//			//oneHasCollected = false;
+//			canBeAddedTop = true;
+//			while((top_counter < edges.size())&&(Math.abs(top_edge.m_start.y - edges.get(top_counter).m_start.y) < Vertex.delta))
+//			{
+//				Edge next_top = edges.get(top_counter);
+//				top_edges.add(next_top);
+//				if((top_edge.CanBeJoin(next_top))&&canBeAddedTop)
+//				{
+//					top_edge = top_edge.Join(next_top);
+//					//oneHasCollected = true;
+//				}
+//				else
+//				{
+//					canBeAddedTop = false;
+//				}
+//				top_counter++;
+//			}
+//			counter = top_counter;
+//			if(counter < edges.size())
+//			{
+//				Edge bottom_edge = edges.get(counter);
+//				int bottom_counter = counter + 1;
+//				canBeAddedBottom = true;
+//				ArrayList<Edge> bottom_edges = new ArrayList<Edge>();
+//				while((bottom_counter < edges.size())&&(Math.abs(bottom_edge.m_start.y - edges.get(bottom_counter).m_start.y) < Vertex.delta))
+//				{
+//					Edge next_bottom = edges.get(bottom_counter);
+//					bottom_edges.add(next_bottom);
+//					if((bottom_edge.CanBeJoin(next_bottom))&&canBeAddedTop/*&&!oneHasCollected*/)
+//					{
+//						bottom_edge = bottom_edge.Join(next_bottom);
+//						//oneHasCollected = true;
+//					}
+//					else
+//					{
+//						canBeAddedBottom = false;
+//					}
+//					bottom_counter++;
+//				}
+//				if(canBeAddedTop&&canBeAddedBottom&&(top_edge != null)&&(bottom_edge != null))
+//				{
+//					Trapezoid segment = new Trapezoid(top_edge, bottom_edge);
+//					result.add(segment);
+//				}
+//			}
+//		}
+//		return result;
+//	}
+//
+//
+//	public ArrayList<Trapezoid> getTextTrapezoidArray_old()
+//	{
+//		ArrayList<Edge> edges = getTextLineArray();
+//		ArrayList<Trapezoid> result = new ArrayList<Trapezoid>();
+//		for(int i = 0; i < edges.size() - 1; i++)
+//		{
+//			//минимальный вариант. отбрасываем "рога"
+//			Edge top_edge = edges.get(i);
+//			Edge bottom_edge = edges.get(i+1);
+//			boolean toAddTrapezoid = true;
+//			//два отрезка на одной горизонтали
+//			if(Math.abs(top_edge.m_start.y - bottom_edge.m_start.y) < Vertex.delta)
+//			{
+//				if(i < edges.size() - 2)
+//				{
+//					if(top_edge.CanBeJoin(bottom_edge))
+//					{
+//						//новые top_edge bottom_edge
+//						top_edge = (top_edge.Join(bottom_edge));
+//						bottom_edge = edges.get(i+2);
+//						i++;
+//					}
+//					else
+//					{
+//						toAddTrapezoid = false; //????
+//						i++;
+//					}
+//				}
+//			}
+//			//а вдруг bottom тож можно объеденить?
+//			if((i+2) < edges.size())
+//			{
+//				Edge next = edges.get(i+2);
+//				//if(bottom_edge.m_start.m_point.y == next.m_start.m_point.y)
+//				if(Math.abs(bottom_edge.m_start.y - next.m_start.y) < Vertex.delta)
+//				{
+//					if(bottom_edge.CanBeJoin(next))
+//					{
+//						//новый top_edge bottom_edge
+//						bottom_edge = (bottom_edge.Join(next));
+//					}
+//					else
+//					{
+//						toAddTrapezoid = false;
+//					}
+//				}
+//			}
+//			if(toAddTrapezoid)
+//			{
+//				Trapezoid segment = new Trapezoid(top_edge, bottom_edge);
+//				result.add(segment);
+//			}
+//
+//			//вариант. используем "рога"
+//			/*
+//			PointF center = getCenterOfBounds();
+//			Edge top_edge = edges.get(i);
+//			Edge bottom_edge = edges.get(i+1);
+//			boolean toAddTrapezoid = true;
+//			boolean topCouldBeJoined = true;
+//			boolean topHasJoined = false;
+//			//два отрезка на одной горизонтали
+//			if(top_edge.m_start.m_point.y == bottom_edge.m_start.m_point.y)
+//			{
+//				if(i < edges.size() - 2)
+//				{
+//					if(top_edge.CanBeJoin(bottom_edge))
+//					{
+//						//новые top_edge bottom_edge
+//						top_edge = (top_edge.Join(bottom_edge));
+//						bottom_edge = edges.get(i+2);
+//						topCouldBeJoined = true;
+//						topHasJoined = true;
+//						//joinedYet = true;
+//						i++;
+//					}
+//					else
+//					{
+//						top_edge = Edge.NearestToPointOfTwo(top_edge, bottom_edge, center);
+//						bottom_edge = edges.get(i+2);
+//						topCouldBeJoined = false;
+//						topHasJoined = false;
+//						center = top_edge.center_point().m_point;
+//						//toAddTrapezoid = false;
+//						i++;
+//					}
+//				}
+//			}
+//			//а вдруг bottom тож можно объеденить?
+//			if((i+2) < edges.size())
+//			{
+//				Edge next = edges.get(i+2);
+//				if(bottom_edge.m_start.m_point.y == next.m_start.m_point.y)
+//				{
+//					if(bottom_edge.CanBeJoin(next)&&topHasJoined)
+//					{
+//						//новый top_edge bottom_edge
+//						bottom_edge = (bottom_edge.Join(next));
+//					}
+//					else
+//					{
+//						bottom_edge = Edge.NearestToPointOfTwo(next, bottom_edge, center);
+//						if(topHasJoined)
+//						{
+//							center = bottom_edge.center_point().m_point;
+//							top_edge = Edge.NearestToPointOfTwo(edges.get(i), edges.get(i-1), center);
+//						}
+//					}
+//				}
+//			}
+//			if(toAddTrapezoid)
+//			{
+//				Trapezoid segment = new Trapezoid(top_edge, bottom_edge);
+//				center = bottom_edge.center_point().m_point;
+//				result.add(segment);
+//			}*/
+//		}
+//		return result;
+//	}
+//
+//	public ArrayList<Edge> getTextLineArray_old_working()
+//	{
+//		ArrayList<Edge> lines = new ArrayList<Edge>();
+//		ArrayList<Vertex> sorted_points = new ArrayList<Vertex>();
+//		//adding interior rings
+//		ArrayList<Vertex> all_points = new ArrayList<Vertex>();
+//		all_points.addAll(m_points);
+//		if(m_rings != null)
+//		{
+//			for(int i = 0; i < m_rings.size(); i++)
+//			{
+//				all_points.addAll(m_rings.get(i).m_points);
+//			}
+//		}
+//		// получаем неповторяющийся список горизонталей через все вершины полигона
+//		for(int d = 0; d < all_points.size(); d++)
+//		{
+//			Vertex current_point = all_points.get(d);
+//			//TODO excluding fully invisible inner rings. works. commented for debugging LabelGeometry.Difference
+//			//if(current_point.GetOriginVisiblity())
+//			{
+//				if(sorted_points.size() == 0)
+//				{
+//					sorted_points.add(current_point);
+//				}
+//				else
+//				{
+//					if(current_point.y > sorted_points.get(sorted_points.size()-1).y)
+//					{
+//						sorted_points.add(current_point);
+//					}
+//					else
+//					{
+//						for(int k = 0; k < sorted_points.size(); k++)
+//						{
+//							PointF compare = sorted_points.get(k);
+//							if(Math.abs(current_point.y - compare.y) < Vertex.delta)
+//							{
+//								k = sorted_points.size();
+//								continue;
+//							}
+//							if(current_point.y < compare.y)
+//							{
+//								sorted_points.add(k, current_point);
+//								k = sorted_points.size();
+//							}
+//						}
+//					}
+//				}
+//			}
+//		}
+//		// this
+//		//generalize(1);
+//		//MakeEdgesRing();
+//		// or this
+//		Difference(); //MakeEdgesRing(); inside : получаем m_edges, последовательно и замкнуто обходящий исходный полигон
+//		if(m_edges == null)
+//		{
+//			return null;
+//		}
+//		if(m_edges.size() == 0)
+//		{
+//			return null;
+//		}
+//
+//		ArrayList<Edge> intersection_edges_prev_lvl = new ArrayList<Edge>();
+//		//идем по горизонталям последовательно по возрастанию
+//		for(int level = 0; level < sorted_points.size(); level++) //??????? -1
+//		{
+//			float levelY = sorted_points.get(level).y;
+//			//для каждой горизонтали создаем список всех пересекающихся с ней Edge
+//			ArrayList<Edge> intersection_edges = new ArrayList<Edge>();
+//			for(int i = 0; i < m_edges.size(); i++)
+//			{
+//				Edge current_edge = m_edges.get(i);
+//				if(Edge.IsEdgeIntersectHorizontal(current_edge, levelY))
+//				{
+//					current_edge.m_intersection_point = Edge.EdgeIntersectionHorizontal(current_edge, levelY);
+//					intersection_edges.add(current_edge);
+//				}
+//			}
+//			ArrayList<Edge> intersection_edges_res = new ArrayList<Edge>();
+//			intersection_edges_res.addAll(intersection_edges);
+//			//для всех горизонталей
+//			for(int i = 0; i < intersection_edges.size(); i ++)
+//			{
+//				Edge current_edge =  intersection_edges.get(i);
+//				//  удаляем из списка все пересекающие ее _горизонтальные Edge
+//				if(Edge.IsCoincidesHorizontal(current_edge, levelY))
+//				{
+//					//TODO: ??????
+//					if(current_edge.m_start.x > current_edge.m_end.x)
+//					{
+//						current_edge.Swap();
+//					}
+//					lines.add(current_edge);
+//					//TODO : horizontal edge problems
+//					intersection_edges_res.remove(current_edge);
+//				}
+//				//кроме нижней удаляем из списка все оканчивающиеся/начинающиеся Edge которые были задеты на предыдущей горизонтали
+//				//
+//				//if(level != sorted_points.size() - 1)
+//				{
+//					for(int j = 0; j < intersection_edges_prev_lvl.size(); j++)
+//					{
+//						if((intersection_edges_prev_lvl.get(j) == current_edge)&&(current_edge.HasPointAsEnd(current_edge.m_intersection_point)))
+//						{
+//							//если ниже из точки есть продолжения
+//							int num = 0;
+//							for(int k = 0; k < m_edges.size(); k++)
+//							{
+//								if(m_edges.get(k).HasPointAsEnd(current_edge.m_intersection_point) && m_edges.get(k).center_point().y + Vertex.delta >= levelY)
+//								{
+//									num++;
+//								}
+//							}
+//							if(num >0)
+//							{
+//								intersection_edges_res.remove(current_edge);
+//							}
+//						}
+//					}
+//				}
+//			}
+//			//пока оставшийся список не пуст
+//			while(intersection_edges_res.size() > 1)
+//			{
+//				//нашли самую левую точку и удалили ее
+//				float left = intersection_edges_res.get(0).m_intersection_point.x;
+//				int left_index = 0;
+//				for(int i = 1; i < intersection_edges_res.size();i++)
+//				{
+//					if(intersection_edges_res.get(i).m_intersection_point.x < left)
+//					{
+//						left = intersection_edges_res.get(i).m_intersection_point.x;
+//						left_index = i;
+//					}
+//				}
+//				//еще раз нашли самую левую точку и удалили ее
+//				intersection_edges_res.remove(intersection_edges_res.get(left_index));
+//				float next_left = intersection_edges_res.get(0).m_intersection_point.x;
+//				int left_next_index = 0;
+//				for(int i = 1; i < intersection_edges_res.size();i++)
+//				{
+//					if(intersection_edges_res.get(i).m_intersection_point.x < next_left)
+//					{
+//						next_left = intersection_edges_res.get(i).m_intersection_point.x;
+//						left_next_index = i;
+//					}
+//				}
+//				intersection_edges_res.remove(intersection_edges_res.get(left_next_index));
+//				// добавили отрезок между самой левой и следующей за ней
+//				lines.add(new Edge(new Vertex(new PointF(left, levelY)), new Vertex(new PointF(next_left, levelY))));
+//			}
+//			intersection_edges_prev_lvl = intersection_edges;
+//		}
+//		m_levels = lines;
+//		return lines;
+//	}
 //-------------------------------------------------------------------------------------------
 	/**
 	 * разбивка полигона на трапеции сечением горизонталями через все вершины
 	 * @return массив лежащих внутри полигона горизонтальных отрезков
 	 */
-	public ArrayList<Edge> getTextLineArray()
-	{
-		ArrayList<Edge> lines = new ArrayList<Edge>();
-		ArrayList<Vertex> sorted_points = new ArrayList<Vertex>();
-		//adding interior rings
-		ArrayList<Vertex> all_points = new ArrayList<Vertex>();
-		all_points.addAll(m_points);
-		if(m_rings != null)
-		{
-			for(int i = 0; i < m_rings.size(); i++)
-			{
-				all_points.addAll(m_rings.get(i).m_points);
-			}
-		}
-		// получаем неповторяющийся список горизонталей через все вершины полигона
-		for(int d = 0; d < all_points.size(); d++)
-		{
-			Vertex current_point = all_points.get(d);
-			//TODO excluding fully invisible inner rings. works. commented for debugging LabelGeometry.Difference
-			//if(current_point.GetOriginVisiblity())
-			{
-				if(sorted_points.size() == 0)
-				{
-					sorted_points.add(current_point);
-				}
-				else
-				{
-					if(current_point.y > sorted_points.get(sorted_points.size()-1).y)
-					{
-						sorted_points.add(current_point);
-					}
-					else
-					{
-						for(int k = 0; k < sorted_points.size(); k++)
-						{
-							PointF compare = sorted_points.get(k);
-							if(Math.abs(current_point.y - compare.y) < Vertex.delta)
-							{
-								k = sorted_points.size();
-								continue;
-							}
-							if(current_point.y < compare.y)
-							{
-								sorted_points.add(k, current_point);
-								k = sorted_points.size();
-							}
-						}
-					}
-				}
-			}
-		}
-		// this
-		//generalize(1);
-		//MakeEdgesRing();
-		// or this
-		Difference(); //MakeEdgesRing(); inside : получаем m_edges, последовательно и замкнуто обходящий исходный полигон
-		if(m_edges == null)
-		{
-			return null;
-		}
-		if(m_edges.size() == 0)
-		{
-			return null;
-		}
-
-		ArrayList<Edge> intersection_edges_prev_lvl = new ArrayList<Edge>();
-		//идем по горизонталям последовательно по возрастанию
-		for(int level = 0; level < sorted_points.size(); level++) //??????? -1
-		{
-			float levelY = sorted_points.get(level).y;
-			//для каждой горизонтали создаем список всех пересекающихся с ней Edge
-			ArrayList<Edge> intersection_edges = new ArrayList<Edge>();
-			for(int i = 0; i < m_edges.size(); i++)
-			{
-				Edge current_edge = m_edges.get(i);
-				if(Edge.IsEdgeIntersectHorizontal(current_edge, levelY))
-				{
-					current_edge.m_intersection_point = Edge.EdgeIntersectionHorizontal(current_edge, levelY);
-					intersection_edges.add(current_edge);
-				}
-			}
-			ArrayList<Edge> intersection_edges_res = new ArrayList<Edge>();
-			intersection_edges_res.addAll(intersection_edges);
-			//для всех горизонталей
-			for(int i = 0; i < intersection_edges.size(); i ++)
-			{
-				Edge current_edge =  intersection_edges.get(i);
-				//  удаляем из списка все пересекающие ее _горизонтальные Edge
-				if(Edge.IsCoincidesHorizontal(current_edge, levelY))
-				{
-					//TODO: ??????
-					if(current_edge.m_start.x > current_edge.m_end.x)
-					{
-						current_edge.Swap();
-					}
-					lines.add(current_edge);
-					//TODO : horizontal edge problems
-					intersection_edges_res.remove(current_edge);
-				}
-				//кроме нижней удаляем из списка все оканчивающиеся/начинающиеся Edge которые были задеты на предыдущей горизонтали
-				//
-				//if(level != sorted_points.size() - 1)
-				{
-					for(int j = 0; j < intersection_edges_prev_lvl.size(); j++)
-					{
-						if((intersection_edges_prev_lvl.get(j) == current_edge)&&(current_edge.HasPointAsEnd(current_edge.m_intersection_point)))
-						{
-							//если ниже из точки есть продолжения
-							int num = 0;
-							for(int k = 0; k < m_edges.size(); k++)
-							{
-								if(m_edges.get(k).HasPointAsEnd(current_edge.m_intersection_point) && m_edges.get(k).center_point().y + Vertex.delta >= levelY)
-								{
-									num++;
-								}
-							}
-							if(num >0)
-							{
-								intersection_edges_res.remove(current_edge);
-							}
-						}
-					}
-				}
-			}
-			//пока оставшийся список не пуст
-			while(intersection_edges_res.size() > 1)
-			{
-				//нашли самую левую точку и удалили ее
-				float left = intersection_edges_res.get(0).m_intersection_point.x;
-				int left_index = 0;
-				for(int i = 1; i < intersection_edges_res.size();i++)
-				{
-					if(intersection_edges_res.get(i).m_intersection_point.x < left)
-					{
-						left = intersection_edges_res.get(i).m_intersection_point.x;
-						left_index = i;
-					}
-				}
-				//еще раз нашли самую левую точку и удалили ее
-				intersection_edges_res.remove(intersection_edges_res.get(left_index));
-				float next_left = intersection_edges_res.get(0).m_intersection_point.x;
-				int left_next_index = 0;
-				for(int i = 1; i < intersection_edges_res.size();i++)
-				{
-					if(intersection_edges_res.get(i).m_intersection_point.x < next_left)
-					{
-						next_left = intersection_edges_res.get(i).m_intersection_point.x;
-						left_next_index = i;
-					}
-				}
-				intersection_edges_res.remove(intersection_edges_res.get(left_next_index));
-				// добавили отрезок между самой левой и следующей за ней
-				lines.add(new Edge(new Vertex(new PointF(left, levelY)), new Vertex(new PointF(next_left, levelY))));
-			}
-			intersection_edges_prev_lvl = intersection_edges;
-		}
-		m_levels = lines;
-		return lines;
-	}
+//	public ArrayList<Edge> getTextLineArray()
+//	{
+//		ArrayList<Edge> lines = new ArrayList<Edge>();
+//		ArrayList<Vertex> sorted_points = new ArrayList<Vertex>();
+//		//adding interior rings
+//		ArrayList<Vertex> all_points = new ArrayList<Vertex>();
+//		all_points.addAll(m_points);
+//		if(m_rings != null)
+//		{
+//			for(int i = 0; i < m_rings.size(); i++)
+//			{
+//				all_points.addAll(m_rings.get(i).m_points);
+//			}
+//		}
+//		// получаем неповторяющийся список горизонталей через все вершины полигона
+//		for(int d = 0; d < all_points.size(); d++)
+//		{
+//			Vertex current_point = all_points.get(d);
+//			//TODO excluding fully invisible inner rings. works. commented for debugging LabelGeometry.Difference
+//			//if(current_point.GetOriginVisiblity())
+//			{
+//				if(sorted_points.size() == 0)
+//				{
+//					sorted_points.add(current_point);
+//				}
+//				else
+//				{
+//					if(current_point.y > sorted_points.get(sorted_points.size()-1).y)
+//					{
+//						sorted_points.add(current_point);
+//					}
+//					else
+//					{
+//						for(int k = 0; k < sorted_points.size(); k++)
+//						{
+//							PointF compare = sorted_points.get(k);
+//							if(Math.abs(current_point.y - compare.y) < Vertex.delta)
+//							{
+//								k = sorted_points.size();
+//								continue;
+//							}
+//							if(current_point.y < compare.y)
+//							{
+//								sorted_points.add(k, current_point);
+//								k = sorted_points.size();
+//							}
+//						}
+//					}
+//				}
+//			}
+//		}
+//		// this
+//		//generalize(1);
+//		//MakeEdgesRing();
+//		// or this
+//		Difference(); //MakeEdgesRing(); inside : получаем m_edges, последовательно и замкнуто обходящий исходный полигон
+//		if(m_edges == null)
+//		{
+//			return null;
+//		}
+//		if(m_edges.size() == 0)
+//		{
+//			return null;
+//		}
+//
+//		ArrayList<Edge> intersection_edges_prev_lvl = new ArrayList<Edge>();
+//		//идем по горизонталям последовательно по возрастанию
+//		for(int level = 0; level < sorted_points.size(); level++) //??????? -1
+//		{
+//			float levelY = sorted_points.get(level).y;
+//			//для каждой горизонтали создаем список всех пересекающихся с ней Edge
+//			ArrayList<Edge> intersection_edges = new ArrayList<Edge>();
+//			for(int i = 0; i < m_edges.size(); i++)
+//			{
+//				Edge current_edge = m_edges.get(i);
+//				if(Edge.IsEdgeIntersectHorizontal(current_edge, levelY))
+//				{
+//					current_edge.m_intersection_point = Edge.EdgeIntersectionHorizontal(current_edge, levelY);
+//					intersection_edges.add(current_edge);
+//				}
+//			}
+//			ArrayList<Edge> intersection_edges_res = new ArrayList<Edge>();
+//			intersection_edges_res.addAll(intersection_edges);
+//			//для всех горизонталей
+//			for(int i = 0; i < intersection_edges.size(); i ++)
+//			{
+//				Edge current_edge =  intersection_edges.get(i);
+//				//  удаляем из списка все пересекающие ее _горизонтальные Edge
+//				if(Edge.IsCoincidesHorizontal(current_edge, levelY))
+//				{
+//					//TODO: ??????
+//					if(current_edge.m_start.x > current_edge.m_end.x)
+//					{
+//						current_edge.Swap();
+//					}
+//					lines.add(current_edge);
+//					//TODO : horizontal edge problems
+//					intersection_edges_res.remove(current_edge);
+//				}
+//				//кроме нижней удаляем из списка все оканчивающиеся/начинающиеся Edge которые были задеты на предыдущей горизонтали
+//				//
+//				//if(level != sorted_points.size() - 1)
+//				{
+//					for(int j = 0; j < intersection_edges_prev_lvl.size(); j++)
+//					{
+//						if((intersection_edges_prev_lvl.get(j) == current_edge)&&(current_edge.HasPointAsEnd(current_edge.m_intersection_point)))
+//						{
+//							//если ниже из точки есть продолжения
+//							int num = 0;
+//							for(int k = 0; k < m_edges.size(); k++)
+//							{
+//								if(m_edges.get(k).HasPointAsEnd(current_edge.m_intersection_point) && m_edges.get(k).center_point().y + Vertex.delta >= levelY)
+//								{
+//									num++;
+//								}
+//							}
+//							if(num >0)
+//							{
+//								intersection_edges_res.remove(current_edge);
+//							}
+//						}
+//					}
+//				}
+//			}
+//			//пока оставшийся список не пуст
+//			while(intersection_edges_res.size() > 1)
+//			{
+//				//нашли самую левую точку и удалили ее
+//				float left = intersection_edges_res.get(0).m_intersection_point.x;
+//				int left_index = 0;
+//				for(int i = 1; i < intersection_edges_res.size();i++)
+//				{
+//					if(intersection_edges_res.get(i).m_intersection_point.x < left)
+//					{
+//						left = intersection_edges_res.get(i).m_intersection_point.x;
+//						left_index = i;
+//					}
+//				}
+//				//еще раз нашли самую левую точку и удалили ее
+//				intersection_edges_res.remove(intersection_edges_res.get(left_index));
+//				float next_left = intersection_edges_res.get(0).m_intersection_point.x;
+//				int left_next_index = 0;
+//				for(int i = 1; i < intersection_edges_res.size();i++)
+//				{
+//					if(intersection_edges_res.get(i).m_intersection_point.x < next_left)
+//					{
+//						next_left = intersection_edges_res.get(i).m_intersection_point.x;
+//						left_next_index = i;
+//					}
+//				}
+//				intersection_edges_res.remove(intersection_edges_res.get(left_next_index));
+//				// добавили отрезок между самой левой и следующей за ней
+//				lines.add(new Edge(new Vertex(new PointF(left, levelY)), new Vertex(new PointF(next_left, levelY))));
+//			}
+//			intersection_edges_prev_lvl = intersection_edges;
+//		}
+//		m_levels = lines;
+//		return lines;
+//	}
 	/**
 	 * принадлежность точки многоугольнику через подсчет числа пересечений
 	 * @param point интересующая точка

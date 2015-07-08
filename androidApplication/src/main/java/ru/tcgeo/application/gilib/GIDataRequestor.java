@@ -1,6 +1,7 @@
 package ru.tcgeo.application.gilib;
 
 
+import ru.tcgeo.application.gilib.models.GILonLat;
 
 public interface GIDataRequestor
 {

@@ -18,6 +18,13 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import ru.tcgeo.application.gilib.models.GIBitmap;
+import ru.tcgeo.application.gilib.models.GIBounds;
+import ru.tcgeo.application.gilib.models.GILonLat;
+import ru.tcgeo.application.gilib.models.GIProjection;
+import ru.tcgeo.application.gilib.models.GIScaleRange;
+import ru.tcgeo.application.utils.MapUtils;
+
 
 public class GIMap extends SurfaceView //implements SurfaceHolder.Callback//implements Runnable SurfaceView
 {
@@ -304,7 +311,7 @@ public class GIMap extends SurfaceView //implements SurfaceHolder.Callback//impl
 	public void Clear()
 	{
 		m_layers.RemoveAll();
-		initialize ();
+		initialize();
 	}
 	
 	public void InitBounds (GIBounds initial_extent)
@@ -384,11 +391,7 @@ public class GIMap extends SurfaceView //implements SurfaceHolder.Callback//impl
 		return new GILonLat((m_bounds.left() + m_bounds.right())/2,
 							(m_bounds.top() + m_bounds.bottom())/2);
 	}
-	public GIProjectedPoint MapCenter()
-	{
-		return new GIProjectedPoint(this.Projection(), (m_bounds.left() + m_bounds.right())/2,
-							(m_bounds.top() + m_bounds.bottom())/2);
-	}
+
 	
 	public void SetCenter (GILonLat point)
 	{
@@ -571,7 +574,7 @@ public class GIMap extends SurfaceView //implements SurfaceHolder.Callback//impl
 		GIBounds actual_bounds;
 		public void run() 
 		{
-			actual_bounds = new GIBounds(m_bounds.m_projection, m_bounds.m_left, m_bounds.m_top, m_bounds.m_right, m_bounds.m_bottom);
+			actual_bounds = new GIBounds(m_bounds.projection(), m_bounds.left(), m_bounds.top(), m_bounds.right(), m_bounds.bottom());
 			System.gc();
 			final Bitmap tmp_bitmap = Bitmap.createBitmap(m_view.width(), m_view.height(), Bitmap.Config.ARGB_8888);
 			tmp_bitmap.eraseColor(Color.WHITE);
@@ -603,8 +606,8 @@ public class GIMap extends SurfaceView //implements SurfaceHolder.Callback//impl
 		public void run() 
 		{
 			
-			actual_bounds = new GIBounds(m_bounds.m_projection, m_bounds.m_left - m_bounds.width(), 
-			m_bounds.m_top + m_bounds.height(), m_bounds.m_right + m_bounds.width(), m_bounds.m_bottom - m_bounds.height());
+			actual_bounds = new GIBounds(m_bounds.projection(), m_bounds.left() - m_bounds.width(),
+			m_bounds.top() + m_bounds.height(), m_bounds.right() + m_bounds.width(), m_bounds.bottom() - m_bounds.height());
 			System.gc();
 			final Bitmap tmp_bitmap = Bitmap.createBitmap(m_view.width(), m_view.height(), Bitmap.Config.ARGB_8888);
 			double scale_ = GIMap.getScale(actual_bounds, m_view);
@@ -911,186 +914,25 @@ public class GIMap extends SurfaceView //implements SurfaceHolder.Callback//impl
 		return new_lonlat;
 	}
 
-	public double GetDistanceBetween(GILonLat from, GILonLat to)
-	{
-		/*double slat= from.lat();
-		double slon= from.lon();
-		double flat= to.lat();
-		double flon= to.lon();
-		
-		double lat1=Math.toRadians(slat);
-		double lon1=Math.toRadians(slon);
-		double lat2=Math.toRadians(flat);
-		double lon2=Math.toRadians(flon);
-
-		double cl1 = Math.cos(lat1);
-		double cl2 = Math.cos(lat2);
-		double sl1 = Math.sin(lat1);
-		double sl2 = Math.sin(lat2);
-
-		double delta = lon2 - lon1;
-		double cdelta = Math.cos(delta);
-		double sdelta = Math.sin(delta);
-		
-		double y = Math.hypot(cl2*sdelta, cl1*sl2 - sl1*cl2*cdelta);
-		double x = sl1*sl2 + cl1*cl2*cdelta;
-		double ad = Math.atan2(y, x);
-		double dist = ad*6372795;
-		return dist;*/
-		return GetDistance(from, to);
-	}
-	public static double GetDistance(GILonLat from, GILonLat to)
-	{
-		double slat= from.lat();
-		double slon= from.lon();
-		double flat= to.lat();
-		double flon= to.lon();
-		
-		double lat1=Math.toRadians(slat);
-		double lon1=Math.toRadians(slon);
-		double lat2=Math.toRadians(flat);
-		double lon2=Math.toRadians(flon);
-
-		double cl1 = Math.cos(lat1);
-		double cl2 = Math.cos(lat2);
-		double sl1 = Math.sin(lat1);
-		double sl2 = Math.sin(lat2);
-
-		double delta = lon2 - lon1;
-		double cdelta = Math.cos(delta);
-		double sdelta = Math.sin(delta);
-		
-		double y = Math.hypot(cl2*sdelta, cl1*sl2 - sl1*cl2*cdelta);
-		double x = sl1*sl2 + cl1*cl2*cdelta;
-		double ad = Math.atan2(y, x);
-		double dist = ad*6372795;
-		return dist;
-	}
-	
-	public double GetRadBetween(GILonLat from, GILonLat to)
-	{
-		double slat= from.lat();
-		double slon= from.lon();
-		double flat= to.lat();
-		double flon= to.lon();
-		
-		double lat1=Math.toRadians(slat);
-		double lon1=Math.toRadians(slon);
-		double lat2=Math.toRadians(flat);
-		double lon2=Math.toRadians(flon);
-
-		double cl1 = Math.cos(lat1);
-		double cl2 = Math.cos(lat2);
-		double sl1 = Math.sin(lat1);
-		double sl2 = Math.sin(lat2);
-
-		double delta = lon2 - lon1;
-		double cdelta = Math.cos(delta);
-		double sdelta = Math.sin(delta);
-		
-		double y = Math.hypot(cl2*sdelta, cl1*sl2 - sl1*cl2*cdelta);
-		double x = sl1*sl2 + cl1*cl2*cdelta;
-		double ad = Math.atan2(y, x);
-		return ad;
-	}
-	public double GetAngle_A_OfTriangle(GILonLat A, GILonLat B, GILonLat C)
-	{
-		double a = GetRadBetween(B, C);
-		double b =  GetRadBetween(C, A);
-		double c = GetRadBetween(A, B);
-		
-		double angle = Math.acos((Math.cos(a) - Math.cos(b)*Math.cos(c))/(Math.sin(b)*Math.sin(c)));
-		return angle;
-	}
-	
-	public double GetAzimuth(GILonLat from, GILonLat to)
-	{
-		double slat= from.lat();
-		double slon= from.lon();
-		double flat= to.lat();
-		double flon= to.lon();
-		
-		double lat1=Math.toRadians(slat);
-		double lon1=Math.toRadians(slon);
-		double lat2=Math.toRadians(flat);
-		double lon2=Math.toRadians(flon);
-
-		double cl1 = Math.cos(lat1);
-		double cl2 = Math.cos(lat2);
-		double sl1 = Math.sin(lat1);
-		double sl2 = Math.sin(lat2);
-
-		double delta = lon2 - lon1;
-
-		double cdelta = Math.cos(delta);
-		double sdelta = Math.sin(delta);
-		
-		double x = (cl1*sl2) - (sl1*cl2*cdelta);
-		double y = sdelta*cl2;
-		double z = Math.toDegrees(Math.atan(-y/x));
-		if(x < 0)
-		{
-			z = z + 180.;
-		}
-		double z2 = ((z + 180.)%360.) - 180.;
-		z2 = - Math.toRadians(z2);
-		double anglerad2 = z2 - ((2*Math.PI)*Math.floor(z2/(2*Math.PI)));
-		double angledeg = Math.toDegrees(anglerad2);
-		return angledeg;
-	}
-
 	public double MetersInPixel()
 	{
 		
 		GIBounds wgs_bounds = m_bounds.Reprojected(GIProjection.WGS84());
-		double dist = GetDistanceBetween(wgs_bounds.TopLeft(), wgs_bounds.BottomRight());
-		//
-		/*GILonLat top_left_d = new GILonLat(wgs_bounds.m_left, wgs_bounds.m_top);
-		GILonLat bottom_right_d = new GILonLat(wgs_bounds.m_right, wgs_bounds.m_bottom);
-
-		GILonLat top_left_r = new GILonLat(Math.toRadians(wgs_bounds.m_left), Math.toRadians(wgs_bounds.m_top));
-		GILonLat bottom_right_r = new GILonLat(Math.toRadians(wgs_bounds.m_right), Math.toRadians(wgs_bounds.m_bottom));
-		//
-		
-		//	public GIBounds (GIProjection projection, double left, double top, double right, double bottom)
-		// GIBounds wgs_bounds = new GIBounds(GIProjection.WGS84(), 120.398, 77.1539, 129.55, 77.1804);
-		
-		double lat1 = Math.toRadians(wgs_bounds.m_top);
-		double lat2 = Math.toRadians(wgs_bounds.m_bottom);
-		double lon1 = Math.toRadians(wgs_bounds.m_left);
-		double lon2 = Math.toRadians(wgs_bounds.m_right);
-		*/
-		
-		
-		/*double cl1 = Math.cos(Math.toRadians(wgs_bounds.m_top));
-		double cl2 = Math.cos(Math.toRadians(wgs_bounds.m_bottom));
-		double sl1 = Math.sin(Math.toRadians(wgs_bounds.m_top));
-		double sl2 = Math.sin(Math.toRadians(wgs_bounds.m_bottom));
-		double delta = Math.toRadians(wgs_bounds.m_right) - Math.toRadians(wgs_bounds.m_left);
-		double cdelta = Math.cos(delta);
-		double sdelta = Math.sin(delta);
-		
-		double y = Math.hypot(cl2*sdelta, cl1*sl2 - sl1*cl2*cdelta);
-		double x = sl1*sl2 + cl1*cl2*cdelta;
-		double ad = Math.atan2(y, x);
-		double dist = ad*6372795;
-		
-		*/
+		double dist = MapUtils.GetDistanceBetween(wgs_bounds.TopLeft(), wgs_bounds.BottomRight());
 		double px_dist = Math.hypot(m_view.width(), m_view.height());
 		
 		double meters_in_px = dist/px_dist;
 		return meters_in_px;
-		
 
 	}
 
 	public void Synhronize()
 	{
 		GIBounds wgs_bounds = m_bounds.Reprojected(GIProjection.WGS84());
-		ps.m_left = wgs_bounds.m_left;
-		ps.m_top = wgs_bounds.m_top;
-		ps.m_right = wgs_bounds.m_right;
-		ps.m_bottom = wgs_bounds.m_bottom;
+		ps.m_left = wgs_bounds.left();
+		ps.m_top = wgs_bounds.top();
+		ps.m_right = wgs_bounds.right();
+		ps.m_bottom = wgs_bounds.bottom();
 		
 		for(GITuple tuple : m_layers.m_list)
 		{

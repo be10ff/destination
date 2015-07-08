@@ -1,6 +1,9 @@
 package ru.tcgeo.application.gilib;
 
 
+import ru.tcgeo.application.gilib.models.GIBounds;
+import ru.tcgeo.application.gilib.models.GIProjection;
+
 public class GITileInfoOSM
 {
 	//String urlStr = "http://a.tile.openstreetmap.org/" + n + "/" + x + "/" + y + ".png";

@@ -271,7 +271,7 @@
         <!-- android:layout_alignLeft="@id/map"-->
         <!-- android:layout_alignBottom="@id/map"-->
         <!-- touchcontrol -->
-        <ru.tcgeo.application.GIScaleControl 
+        <ru.tcgeo.application.views.GIScaleControl
             android:id="@+id/scale_control_screen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -279,6 +279,6 @@
             android:layout_alignBottom="@id/touchcontrol"
             android:layout_marginLeft="50dp"
             android:layout_marginBottom="40dp">
-        </ru.tcgeo.application.GIScaleControl>
+        </ru.tcgeo.application.views.GIScaleControl>
         
     </RelativeLayout>

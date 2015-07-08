@@ -12,6 +12,9 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
+import ru.tcgeo.application.gilib.models.GIBounds;
+import ru.tcgeo.application.gilib.models.GIStyle;
+
 public class GISQLRenderer extends GIRenderer {
 
 	Canvas m_canvas;
@@ -31,10 +34,10 @@ public class GISQLRenderer extends GIRenderer {
 		//todo adjust zoom ratio for readable labels.
 		double kf = 360.0f/(256.0f*layer.m_layer_properties.m_sqldb.mRatio);
 
-        double left = area.m_left;
-		double top= area.m_top;
-        double right = area.m_right;
-        double bottom = area.m_bottom;
+        double left = area.left();
+		double top= area.top();
+        double right = area.right();
+        double bottom = area.bottom();
 
         double width = right - left;
         double dz = Math.log(Width_px*kf/width)/Math.log(2);

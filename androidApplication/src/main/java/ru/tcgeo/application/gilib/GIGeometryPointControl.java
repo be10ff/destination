@@ -1,6 +1,8 @@
 package ru.tcgeo.application.gilib;
 
 import ru.tcgeo.application.R;
+import ru.tcgeo.application.gilib.models.GIBounds;
+import ru.tcgeo.application.gilib.models.GILonLat;
 import ru.tcgeo.application.wkt.GI_WktPoint;
 import android.content.Context;
 import android.graphics.Bitmap;

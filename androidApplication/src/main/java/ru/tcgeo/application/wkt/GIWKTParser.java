@@ -2,8 +2,8 @@ package ru.tcgeo.application.wkt;
 
 import java.util.ArrayList;
 
-import ru.tcgeo.application.gilib.GILonLat;
-import ru.tcgeo.application.gilib.GIProjection;
+import ru.tcgeo.application.gilib.models.GILonLat;
+import ru.tcgeo.application.gilib.models.GIProjection;
 import ru.tcgeo.application.gilib.script.GIScriptQueue;
 
 

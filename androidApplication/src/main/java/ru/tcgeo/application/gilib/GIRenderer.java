@@ -2,6 +2,9 @@ package ru.tcgeo.application.gilib;
 
 import android.graphics.Bitmap;
 
+import ru.tcgeo.application.gilib.models.GIBounds;
+import ru.tcgeo.application.gilib.models.GIStyle;
+
 public abstract class GIRenderer
 {
 	public abstract void RenderImage (GILayer layer, GIBounds area, int opacity, Bitmap bitmap, double scale);

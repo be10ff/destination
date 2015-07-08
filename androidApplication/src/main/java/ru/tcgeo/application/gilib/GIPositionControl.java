@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import ru.tcgeo.application.R;
+import ru.tcgeo.application.gilib.models.GIBounds;
+import ru.tcgeo.application.gilib.models.GILonLat;
 
 public class GIPositionControl extends View implements GIControl //View
 {

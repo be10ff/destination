@@ -1,4 +1,4 @@
-package ru.tcgeo.application;
+package ru.tcgeo.application.views;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -20,6 +20,9 @@ import android.widget.FrameLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import ru.tcgeo.application.IFolderItemListener;
+import ru.tcgeo.application.R;
 
 public class OpenFileDialog extends DialogFragment implements OnItemClickListener{
 

@@ -8,7 +8,7 @@ import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
-import ru.tcgeo.application.gilib.GIBounds;
+import ru.tcgeo.application.gilib.models.GIBounds;
 import ru.tcgeo.application.gilib.GIControl;
 import ru.tcgeo.application.gilib.GIEditLayersKeeper;
 import ru.tcgeo.application.gilib.GIEditableLayer;

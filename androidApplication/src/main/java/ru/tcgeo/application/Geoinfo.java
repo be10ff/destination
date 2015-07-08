@@ -1,11 +1,9 @@
 package ru.tcgeo.application;
 
 import java.io.File;
-import java.util.ArrayList;
 
-import ru.tcgeo.application.gilib.AddressSearchAdapterItem;
-import ru.tcgeo.application.gilib.GIBounds;
-import ru.tcgeo.application.gilib.GIColor;
+import ru.tcgeo.application.gilib.models.GIBounds;
+import ru.tcgeo.application.gilib.models.GIColor;
 import ru.tcgeo.application.gilib.GIControlFloating;
 import ru.tcgeo.application.gilib.GIEditLayersKeeper;
 import ru.tcgeo.application.gilib.GIEditableLayer;
@@ -14,20 +12,17 @@ import ru.tcgeo.application.gilib.GIEditableSQLiteLayer;
 import ru.tcgeo.application.gilib.GIGroupLayer;
 import ru.tcgeo.application.gilib.GILayer;
 import ru.tcgeo.application.gilib.GILayer.GILayerType;
-import ru.tcgeo.application.gilib.GILonLat;
 import ru.tcgeo.application.gilib.GIMap;
 import ru.tcgeo.application.gilib.GIPList;
-import ru.tcgeo.application.gilib.GIProjection;
+import ru.tcgeo.application.gilib.models.GIProjection;
 import ru.tcgeo.application.gilib.GIRuleToolControl;
 import ru.tcgeo.application.gilib.GISQLLayer;
 import ru.tcgeo.application.gilib.GISQLLayer.GISQLiteZoomingType;
-import ru.tcgeo.application.gilib.GISQLRequest;
-import ru.tcgeo.application.gilib.GIScaleRange;
+import ru.tcgeo.application.gilib.models.GIScaleRange;
 import ru.tcgeo.application.gilib.GISquareToolControl;
 import ru.tcgeo.application.gilib.GITouchControl;
 import ru.tcgeo.application.gilib.GITuple;
-import ru.tcgeo.application.gilib.GIVectorStyle;
-import ru.tcgeo.application.gilib.gps.GIDirectionToPOIArrow;
+import ru.tcgeo.application.gilib.models.GIVectorStyle;
 import ru.tcgeo.application.gilib.gps.GIGPSButtonView;
 import ru.tcgeo.application.gilib.gps.GIGPSLocationListener;
 import ru.tcgeo.application.gilib.gps.GILocatorView;
@@ -47,50 +42,37 @@ import ru.tcgeo.application.home_screen.MarkersAdapter;
 import ru.tcgeo.application.home_screen.MarkersAdapterItem;
 import ru.tcgeo.application.home_screen.ProjectsAdapter;
 import ru.tcgeo.application.home_screen.ProjectsAdapterItem;
+import ru.tcgeo.application.views.GIScaleControl;
+import ru.tcgeo.application.views.OpenFileDialog;
 import ru.tcgeo.application.wkt.GI_WktGeometry;
 import ru.tcgeo.application.wkt.GI_WktPoint;
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.DisplayMetrics;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
-import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class Geoinfo extends Activity implements IFolderItemListener// implements
@@ -530,112 +512,6 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 	{
 		for (GIPropertiesLayer current_layer : current_layer2.m_Entries)
 		{
-			if (current_layer.m_type == GILayerType.VECTOR_LAYER) 
-			{
-
-				// ToDo look for additional vector Styles
-				Paint fill = new Paint();
-				Paint line = new Paint();
-				// Paint paint = new Paint();
-				for (GIColor color : current_layer.m_style.m_colors) 
-				{
-					if (color.m_description.equalsIgnoreCase("line")) 
-					{
-						if (color.m_name.equalsIgnoreCase("custom")) 
-						{
-							line.setARGB(color.m_alpha, color.m_red, color.m_green, color.m_blue);
-						} 
-						else
-						{
-							color.setFromName();
-							line.setARGB(color.m_alpha, color.m_red, color.m_green, color.m_blue);
-						}
-						line.setStyle(Style.STROKE);
-						line.setStrokeWidth((float) current_layer.m_style.m_lineWidth);
-					} else if (color.m_description.equalsIgnoreCase("fill")) {
-						if (color.m_name.equalsIgnoreCase("custom")) {
-							fill.setARGB(color.m_alpha, color.m_red,
-									color.m_green, color.m_blue);
-						} else {
-							color.setFromName();
-							fill.setARGB(color.m_alpha, color.m_red,
-									color.m_green, color.m_blue);
-						}
-						fill.setStrokeWidth((float) current_layer.m_style.m_lineWidth);
-						fill.setStyle(Style.FILL);
-					}
-				}
-				GILayer layer;
-
-				if (current_layer.m_style.m_type.equalsIgnoreCase("vector")) {
-
-					GIVectorStyle vstyle = new GIVectorStyle(line, fill,
-							(int) current_layer2.m_opacity);
-
-					if (current_layer.m_source.m_location
-							.equalsIgnoreCase("local")) {
-
-						layer = GILayer.CreateLayer(
-								current_layer.m_source.GetLocalPath(),
-								GILayerType.VECTOR_LAYER, vstyle,
-								current_layer.m_encoding);
-						if (layer == null) {
-							continue;
-						}
-						layer.setName(current_layer.m_name);
-						layer.m_layer_properties = current_layer;
-						map.AddLayer(layer, new GIScaleRange(
-								current_layer.m_range), current_layer.m_enabled);
-
-					} else {
-						continue;
-					}
-				}
-				if (current_layer.m_style.m_type.equalsIgnoreCase("image")) {
-					// ToDo add bitmap recourse/path here
-					GIVectorStyle vstyle = new GIVectorStyle(
-							BitmapFactory.decodeResource(getResources(),
-									R.drawable.metro_icon));
-					if (current_layer.m_source.m_location
-							.equalsIgnoreCase("local")) {
-						// ToDo add Encoding from XML here
-						// layer =
-						// GILayer.CreateLayer(current_layer.m_source.GetLocalPath(),
-						// GILayerType.VECTOR_LAYER, vstyle, new
-						// GIEncoding("CP1251"));
-						layer = GILayer.CreateLayer(
-								current_layer.m_source.GetLocalPath(),
-								GILayerType.VECTOR_LAYER, vstyle,
-								current_layer.m_encoding);
-						layer.setName(current_layer.m_name);
-						layer.m_layer_properties = current_layer;
-						map.AddLayer(layer, new GIScaleRange(
-								current_layer.m_range), current_layer.m_enabled);
-
-					} else {
-						continue;
-					}
-				}
-
-			}
-			if (current_layer.m_type == GILayerType.RASTER_LAYER) {
-				GILayer layer;
-				if (current_layer.m_source.m_location.equalsIgnoreCase("local")) {
-					layer = GILayer.CreateLayer(
-							current_layer.m_source.GetLocalPath(),
-							GILayerType.RASTER_LAYER);
-					layer.setName(current_layer.m_name);
-					layer.m_layer_properties = current_layer;
-					map.AddLayer(layer,
-							new GIScaleRange(current_layer.m_range),
-							current_layer.m_enabled);
-					// map.AddLayer(layer);
-
-				} else {
-					continue;
-				}
-
-			}
 			if (current_layer.m_type == GILayerType.LAYER_GROUP) {
 				loadGroup((GIPropertiesGroup) current_layer);
 			}
@@ -1053,7 +929,7 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 		super.onCreate(savedInstanceState);
 
 
-		GIEditLayersKeeper.Instance().setContext(this);
+//		GIEditLayersKeeper.Instance().setContext(this);
 
 		getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 		//getWindow().addFlags(LayoutParams.FLAG_FULLSCREEN);

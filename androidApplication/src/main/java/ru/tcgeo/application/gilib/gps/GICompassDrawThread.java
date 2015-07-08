@@ -9,6 +9,7 @@ import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.view.SurfaceHolder;
 
+import ru.tcgeo.application.App;
 import ru.tcgeo.application.R;
 import ru.tcgeo.application.gilib.GIEditLayersKeeper;
 
@@ -22,7 +23,7 @@ public class GICompassDrawThread extends Thread
 	{
 		this.surfaceHolder = surfaceHolder;
 
-		arrow = BitmapFactory.decodeResource(GIEditLayersKeeper.Instance().getContext().getResources(), R.drawable.arrow);
+		arrow = BitmapFactory.decodeResource(App.getInstance().getResources(), R.drawable.arrow);
 	}
 
 	public GICompassDrawThread(Context context, SurfaceHolder surfaceHolder)

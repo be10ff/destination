@@ -9,12 +9,13 @@ import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
+import ru.tcgeo.application.App;
 import ru.tcgeo.application.R;
-import ru.tcgeo.application.gilib.GIBounds;
+import ru.tcgeo.application.gilib.models.GIBounds;
 import ru.tcgeo.application.gilib.GIEditLayersKeeper;
-import ru.tcgeo.application.gilib.GILonLat;
-import ru.tcgeo.application.gilib.GIProjection;
-import ru.tcgeo.application.gilib.GIVectorStyle;
+import ru.tcgeo.application.gilib.models.GILonLat;
+import ru.tcgeo.application.gilib.models.GIProjection;
+import ru.tcgeo.application.gilib.models.GIVectorStyle;
 
 public class GI_WktPoint extends GI_WktGeometry {
 
@@ -26,7 +27,7 @@ public class GI_WktPoint extends GI_WktGeometry {
 	int m_TrackID;
 	public GI_WktPoint() 
 	{
-		m_bitmap = BitmapFactory.decodeResource(GIEditLayersKeeper.Instance().getContext().getResources(), R.drawable.measure_point);
+		m_bitmap = BitmapFactory.decodeResource(App.getInstance().getResources(), R.drawable.measure_point);
 		m_type = GIWKTGeometryType.POINT;
 		m_status = GIWKTGeometryStatus.NEW;
 		m_lon = 0;
@@ -35,7 +36,7 @@ public class GI_WktPoint extends GI_WktGeometry {
 	}
 	public GI_WktPoint(GILonLat point)
 	{
-		m_bitmap = BitmapFactory.decodeResource(GIEditLayersKeeper.Instance().getContext().getResources(), R.drawable.measure_point);
+		m_bitmap = BitmapFactory.decodeResource(App.getInstance().getResources(), R.drawable.measure_point);
 		m_type = GIWKTGeometryType.POINT;
 		m_status = GIWKTGeometryStatus.NEW;
 		m_lon = point.lon();

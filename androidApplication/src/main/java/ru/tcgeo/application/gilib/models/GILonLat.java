@@ -1,4 +1,4 @@
-package ru.tcgeo.application.gilib;
+package ru.tcgeo.application.gilib.models;
 
 import android.location.Location;
 

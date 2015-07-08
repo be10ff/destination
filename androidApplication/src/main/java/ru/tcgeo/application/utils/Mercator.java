@@ -1,4 +1,4 @@
-package ru.tcgeo.application.gilib.gps;
+package ru.tcgeo.application.utils;
 
 /**
  * Created by a_belov on 28.05.15.

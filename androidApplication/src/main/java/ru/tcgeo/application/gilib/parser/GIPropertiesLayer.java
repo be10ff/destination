@@ -5,10 +5,10 @@ import java.util.ArrayList;
 
 import org.xmlpull.v1.XmlSerializer;
 
-import ru.tcgeo.application.gilib.GIColor;
-import ru.tcgeo.application.gilib.GIEncoding;
-import ru.tcgeo.application.gilib.GIIcon;
+import ru.tcgeo.application.gilib.models.GIColor;
+import ru.tcgeo.application.gilib.models.GIEncoding;
 import ru.tcgeo.application.gilib.GILayer;
+//import ru.tcgeo.application.gilib.models.GIIcon;
 
 public class GIPropertiesLayer implements ILayersRoot
 {
@@ -17,7 +17,7 @@ public class GIPropertiesLayer implements ILayersRoot
 	public String m_strType;
 	public boolean m_enabled;
 	public ArrayList<GIPropertiesLayer> m_Entries;
-	public GIIcon m_icon;
+//	public GIIcon m_icon;
 	public GISource m_source;
 	public GIEncoding m_encoding;
 	public GIPropertiesStyle m_style;
@@ -36,10 +36,10 @@ public class GIPropertiesLayer implements ILayersRoot
 	{
 		String Res = "Layer \n";
 		Res += "name=" + m_name + " type=" + m_type + "\n";
-		if(m_icon != null)
-		{
-		Res += m_icon.ToString() + "\n";
-		}
+//		if(m_icon != null)
+//		{
+//		Res += m_icon.ToString() + "\n";
+//		}
 		if(m_source != null)
 		{
 			Res += m_source.ToString() + "\n" ;
@@ -102,15 +102,15 @@ public class GIPropertiesLayer implements ILayersRoot
 		}
 
 		
-		if(m_icon != null)
-		{
-			serializer.startTag("", "Icon");
-			if(m_icon.m_source != null )
-			{
-				serializer =m_icon.m_source.Save(serializer);
-			}
-			serializer.endTag("", "Icon");
-		}
+//		if(m_icon != null)
+//		{
+//			serializer.startTag("", "Icon");
+//			if(m_icon.m_source != null )
+//			{
+//				serializer =m_icon.m_source.Save(serializer);
+//			}
+//			serializer.endTag("", "Icon");
+//		}
 
 		serializer.endTag("", "Layer");
 		return serializer;

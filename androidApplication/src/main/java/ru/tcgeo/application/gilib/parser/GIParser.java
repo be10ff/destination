@@ -79,11 +79,11 @@ public class GIParser
 			GIParserPointInfo parser = new GIParserPointInfo(m_ParserCurrent, m_ps);
 			m_ParserCurrent = parser.ReadSection();
 		}
-		if(CurrentSectionName.equalsIgnoreCase("Search"))
-		{
-			GIParserSearch parser = new GIParserSearch(m_ParserCurrent, m_ps);
-			m_ParserCurrent = parser.ReadSection();
-		}
+//		if(CurrentSectionName.equalsIgnoreCase("Search"))
+//		{
+//			GIParserSearch parser = new GIParserSearch(m_ParserCurrent, m_ps);
+//			m_ParserCurrent = parser.ReadSection();
+//		}
 //		if(CurrentSectionName.equalsIgnoreCase("Package"))
 //		{
 //			GIParserPackage parser = new GIParserPackage(m_ParserCurrent, m_ps);

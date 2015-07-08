@@ -1,4 +1,4 @@
-package ru.tcgeo.application.gilib;
+package ru.tcgeo.application.gilib.models;
 
 import ru.tcgeo.application.gilib.parser.GIRange;
 

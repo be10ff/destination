@@ -2,6 +2,11 @@ package ru.tcgeo.application.gilib;
 
 import android.graphics.Bitmap;
 
+import ru.tcgeo.application.gilib.models.GIBounds;
+import ru.tcgeo.application.gilib.models.GIEncoding;
+import ru.tcgeo.application.gilib.models.GIProjection;
+import ru.tcgeo.application.gilib.models.GIStyle;
+import ru.tcgeo.application.gilib.models.GIVectorStyle;
 import ru.tcgeo.application.gilib.parser.GIPropertiesLayer;
 import ru.tcgeo.application.wkt.GIGPSPointsLayer;
 
@@ -31,14 +36,14 @@ public abstract class GILayer
 		{
 			case ON_LINE:
 			{
-				if(path.equalsIgnoreCase("OSM"))
-					return new GIOSMLayer(path);
-				if(path.equalsIgnoreCase("Google"))
-					return new GIGoogleLayer(path);
-				if(path.equalsIgnoreCase("GeoPortal"))
-					return new GIWMSLayer(path);
-				if(path.equalsIgnoreCase("Yandex"))
-					return new GIYandexLayer(path);
+//				if(path.equalsIgnoreCase("OSM"))
+//					return new GIOSMLayer(path);
+//				if(path.equalsIgnoreCase("Google"))
+//					return new GIGoogleLayer(path);
+//				if(path.equalsIgnoreCase("GeoPortal"))
+//					return new GIWMSLayer(path);
+//				if(path.equalsIgnoreCase("Yandex"))
+//					return new GIYandexLayer(path);
 			}
 			case SQL_LAYER:
 			{
@@ -60,10 +65,10 @@ public abstract class GILayer
 			{
 				return new GIGPSPointsLayer(path, new GIVectorStyle());
 			}
-			case PLIST:
-			{
-				return new GISPECSLayer(path, new GIVectorStyle());
-			}
+//			case PLIST:
+//			{
+//				return new GISPECSLayer(path, new GIVectorStyle());
+//			}
 			default:
 			{
 				return null;
@@ -78,14 +83,14 @@ public abstract class GILayer
 		{
 			case ON_LINE:
 			{
-				if(path.equalsIgnoreCase("OSM"))
-					return new GIOSMLayer(path);
-				if(path.equalsIgnoreCase("Google"))
-					return new GIGoogleLayer(path);
-				if(path.equalsIgnoreCase("GeoPortal"))
-					return new GIWMSLayer(path);
-				if(path.equalsIgnoreCase("Yandex"))
-					return new GIYandexLayer(path);
+//				if(path.equalsIgnoreCase("OSM"))
+//					return new GIOSMLayer(path);
+//				if(path.equalsIgnoreCase("Google"))
+//					return new GIGoogleLayer(path);
+//				if(path.equalsIgnoreCase("GeoPortal"))
+//					return new GIWMSLayer(path);
+//				if(path.equalsIgnoreCase("Yandex"))
+//					return new GIYandexLayer(path);
 			}
 
 			case SQL_LAYER:
@@ -108,10 +113,10 @@ public abstract class GILayer
 			{
 				return new GIGPSPointsLayer(path, (GIVectorStyle)style);
 			}
-			case PLIST:
-			{
-				return new GISPECSLayer(path, (GIVectorStyle)style);
-			}
+//			case PLIST:
+//			{
+//				return new GISPECSLayer(path, (GIVectorStyle)style);
+//			}
 			default:
 			{
 				return null;
@@ -126,14 +131,14 @@ public abstract class GILayer
 		{
 			case ON_LINE:
 			{
-				if(path.equalsIgnoreCase("OSM"))
-					return new GIOSMLayer(path);
-				if(path.equalsIgnoreCase("Google"))
-					return new GIGoogleLayer(path);
-				if(path.equalsIgnoreCase("GeoPortal"))
-					return new GIWMSLayer(path);
-				if(path.equalsIgnoreCase("Yandex"))
-					return new GIYandexLayer(path);
+//				if(path.equalsIgnoreCase("OSM"))
+//					return new GIOSMLayer(path);
+//				if(path.equalsIgnoreCase("Google"))
+//					return new GIGoogleLayer(path);
+//				if(path.equalsIgnoreCase("GeoPortal"))
+//					return new GIWMSLayer(path);
+//				if(path.equalsIgnoreCase("Yandex"))
+//					return new GIYandexLayer(path);
 			}
 			case SQL_LAYER:
 			{
@@ -147,10 +152,10 @@ public abstract class GILayer
 			{
 				return new GIGPSPointsLayer(path, (GIVectorStyle)style, encoding);
 			}
-			case PLIST:
-			{
-				return new GISPECSLayer(path, (GIVectorStyle)style);
-			}
+//			case PLIST:
+//			{
+//				return new GISPECSLayer(path, (GIVectorStyle)style);
+//			}
 			default:
 			{
 				return null;

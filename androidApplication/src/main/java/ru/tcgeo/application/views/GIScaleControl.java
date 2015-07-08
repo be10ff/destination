@@ -1,4 +1,4 @@
-package ru.tcgeo.application;
+package ru.tcgeo.application.views;
 
 import android.content.Context;
 import android.graphics.Rect;
@@ -8,9 +8,10 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import ru.tcgeo.application.gilib.GIBounds;
+import ru.tcgeo.application.R;
+import ru.tcgeo.application.gilib.models.GIBounds;
 import ru.tcgeo.application.gilib.GIControl;
-import ru.tcgeo.application.gilib.GILonLat;
+import ru.tcgeo.application.gilib.models.GILonLat;
 import ru.tcgeo.application.gilib.GIMap;
 
 public class GIScaleControl extends RelativeLayout implements GIControl

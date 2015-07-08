@@ -1,48 +1,35 @@
-package ru.tcgeo.application.gilib;
+package ru.tcgeo.application.gilib.models;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
-import ru.tcgeo.application.gilib.GIBounds;
-import ru.tcgeo.application.gilib.GILonLat;
-
 public class GIBitmap 
 {
-	public GIBounds m_bounds;
-	public Bitmap m_bitmap;
+	private GIBounds m_bounds;
+	private Bitmap m_bitmap;
 	private int m_width;
 	private int m_height;
 	
-	//private double m_left;
-	//private double m_top;
-	//private double m_right;
-	//private double m_bottom;
-	
-	//private float m_scale;
-	
-	//private GIProjection m_projection;
-	
-	public GIBitmap(GIBounds bounds, int width, int height/*, float scale*/)
+
+	public GIBitmap(GIBounds bounds, int width, int height)
 	{
 		m_width = width;
 		m_height = height;
 		System.gc();
 		m_bitmap =  Bitmap.createBitmap(m_width, m_height, Bitmap.Config.ARGB_8888);
 		m_bounds = bounds;
-		//m_scale = scale;
 	}
 	
-	public GIBitmap(GIBounds bounds, Bitmap bitmap/*, float scale*/)
+	public GIBitmap(GIBounds bounds, Bitmap bitmap)
 	{
 		
 		m_bitmap =  bitmap;
 		m_width = bitmap.getWidth();
 		m_height = bitmap.getHeight();
 		m_bounds = bounds;
-		//m_scale = scale;
 	}
-	public void Set(GIBounds bounds, Bitmap bitmap/*, float scale*/)
+	public void Set(GIBounds bounds, Bitmap bitmap)
 	{
 		if(m_bitmap != null)
 		{
@@ -52,7 +39,6 @@ public class GIBitmap
 		m_width = bitmap.getWidth();
 		m_height = bitmap.getHeight();
 		m_bounds = bounds;
-		//m_scale = scale;
 	}
 	public boolean Draw(Canvas canvas, GIBounds bounds)
 	{

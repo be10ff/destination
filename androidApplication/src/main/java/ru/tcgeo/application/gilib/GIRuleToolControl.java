@@ -13,6 +13,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import ru.tcgeo.application.R;
+import ru.tcgeo.application.gilib.models.GIBounds;
+import ru.tcgeo.application.gilib.models.GILonLat;
+import ru.tcgeo.application.utils.MapUtils;
 
 public class GIRuleToolControl extends View implements OnClickListener, GIControl
 {
@@ -105,7 +108,7 @@ public class GIRuleToolControl extends View implements OnClickListener, GIContro
         	Point current = m_map.MapToScreenTempo( m_curve.get(i));
         	Point next = m_map.MapToScreenTempo( m_curve.get(i+1));
         	canvas.drawLine(current.x, current.y, next.x, next.y, m_paint);
-        	result += m_map.GetDistanceBetween( m_curve.get(i),  m_curve.get(i+1));
+        	result += MapUtils.GetDistanceBetween(m_curve.get(i), m_curve.get(i + 1));
         }
 
         if(m_last != null)

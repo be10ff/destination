@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -21,7 +20,7 @@ import java.text.ParseException;
 import java.util.Locale;
 
 import ru.tcgeo.application.R;
-import ru.tcgeo.application.gilib.gps.GIYandexUtils;
+import ru.tcgeo.application.utils.GIYandexUtils;
 import ru.tcgeo.application.utils.MaskedWatcher;
 import ru.tcgeo.application.wkt.GI_WktPoint;
 

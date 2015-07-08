@@ -17,7 +17,7 @@ import android.os.Environment;
 import android.util.Log;
 import android.util.Xml;
 
-import ru.tcgeo.application.gilib.GIProjection;
+import ru.tcgeo.application.gilib.models.GIProjection;
 
 public class GIProjectProperties 
 {
@@ -28,8 +28,8 @@ public class GIProjectProperties
 	public String m_decription;
 	public String m_markers;	
 	public String m_markers_source;
-	public String m_search_file;
-	public String m_search_body;
+//	public String m_search_file;
+//	public String m_search_body;
 	public String m_point_info;
 	public String m_str_projection;
 	public GIProjection m_projection;
@@ -52,9 +52,9 @@ public class GIProjectProperties
         m_path = "Empty.pro";
         m_str_projection = "WGS84";
         m_markers = "";	
-        m_markers_source = "file";
-        m_search_file = "";
-        m_search_body = "";
+//        m_markers_source = "file";
+//        m_search_file = "";
+//        m_search_body = "";
         m_point_info = "";
         
         m_Group = new GIPropertiesGroup();
@@ -101,7 +101,7 @@ public class GIProjectProperties
 		res = res + "Description text=" + m_decription + "\nBounds projection=" + m_str_projection + " top=" + m_top+ " left=" + m_left+ " bottom=" + m_bottom+ " right=" + m_right + "\n";
 		res = res + "Markers file=" +m_markers + "\n";
 		res = res + "PointInfo " + m_point_info + "\n";
-		res = res + "Search file=" + m_search_file + "\n" + m_search_body + "\n" ;
+//		res = res + "Search file=" + m_search_file + "\n" + m_search_body + "\n" ;
 		return res;
 	}
 	public boolean LoadInfo(String path)
@@ -290,10 +290,10 @@ public class GIProjectProperties
 				serializer.endTag("", "PointInfo");
 			}
 			
-			serializer.startTag("", "Search");
-			serializer.attribute("", "file", m_search_file);
-			serializer.text(m_search_body);
-			serializer.endTag("", "Search");
+//			serializer.startTag("", "Search");
+//			serializer.attribute("", "file", m_search_file);
+//			serializer.text(m_search_body);
+//			serializer.endTag("", "Search");
 //			if(m_Entries != null)
 //			{
 //				for(GIPropertiesPackage pack : m_Entries)

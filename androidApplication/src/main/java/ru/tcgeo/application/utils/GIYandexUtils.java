@@ -1,12 +1,12 @@
-package ru.tcgeo.application.gilib.gps;
+package ru.tcgeo.application.utils;
 
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
 
-import ru.tcgeo.application.gilib.GIBounds;
-import ru.tcgeo.application.gilib.GILonLat;
+import ru.tcgeo.application.gilib.models.GIBounds;
+import ru.tcgeo.application.gilib.models.GILonLat;
 import ru.tcgeo.application.gilib.planimetry.Vertex;
 
 public class GIYandexUtils 

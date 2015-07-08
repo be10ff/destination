@@ -1,4 +1,4 @@
-package ru.tcgeo.application.gilib;
+package ru.tcgeo.application.gilib.models;
 
 import java.io.IOException;
 
@@ -15,13 +15,11 @@ public class GIColor {
 	public int m_blue;
 	public int m_alpha;
 	
-	public GIColor()
-	{
+	public GIColor(){
 
 	}
 	
-	public GIColor(String name)
-	{
+	public GIColor(String name){
 		m_name = name;
 		setFromName();
 	}

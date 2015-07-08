@@ -1,13 +1,13 @@
-package ru.tcgeo.application.gilib;
+package ru.tcgeo.application.gilib.models;
 
 
 public class GIBounds
 {
-	protected double       m_top;
-	protected double       m_left;
-	protected double       m_right;
-	protected double       m_bottom;
-	protected GIProjection m_projection;
+	private double       m_top;
+	private double       m_left;
+	private double       m_right;
+	private double       m_bottom;
+	private GIProjection m_projection;
 
 	public GIBounds (GIProjection projection, double left, double top,
 	        double right, double bottom)
@@ -97,14 +97,13 @@ public class GIBounds
 		return new GILonLat(m_right, m_bottom);
 	}
 
-	public Boolean ContainsBounds (ru.tcgeo.application.gilib.GIBounds other)
+	public Boolean ContainsBounds (GIBounds other)
 	{
 		if(m_left <= other.m_left && m_right >= other.m_right && m_top >= other.m_top && m_bottom <= other.m_bottom)
 		{
 			return true;
 		}
 		return false;
-		// TODO
 	}
 
 	public Boolean ContainsPoint (GILonLat raw_point)
@@ -117,17 +116,16 @@ public class GIBounds
 		return false;
 	}
 
-	public Boolean Intersects (ru.tcgeo.application.gilib.GIBounds with)
+	public Boolean Intersects (GIBounds with)
 	{
 		if(m_left > with.m_right || m_right < with.m_left || m_top < with.m_bottom || m_bottom > with.m_top)
 		{
 			return false;
 		}
 		return true;
-		// TODO
 	}
 
-	public ru.tcgeo.application.gilib.GIBounds Intersect (ru.tcgeo.application.gilib.GIBounds with)
+	public GIBounds Intersect (GIBounds with)
 	{
 		if(Intersects(with))
 		{
@@ -135,17 +133,16 @@ public class GIBounds
 			double right = Math.min(m_right, with.m_right);
 			double top = Math.max(m_top, with.m_top);
 			double bottom = Math.min(m_bottom, with.m_bottom);
-			return new ru.tcgeo.application.gilib.GIBounds(m_projection, left, top, right, bottom);
+			return new GIBounds(m_projection, left, top, right, bottom);
 		}
 		return null;
-		// TODO
 	}
 
-	public ru.tcgeo.application.gilib.GIBounds Reprojected (GIProjection destProjection)
+	public GIBounds Reprojected (GIProjection destProjection)
 	{
 		GILonLat TopLeft_new = 		GIProjection.ReprojectLonLat(this.TopLeft(), this.projection(), destProjection);
 		GILonLat BottomRight_new = 	GIProjection.ReprojectLonLat(this.BottomRight(), this.projection(), destProjection);
-		return new ru.tcgeo.application.gilib.GIBounds(destProjection, TopLeft_new.lon(), TopLeft_new.lat(),
+		return new GIBounds(destProjection, TopLeft_new.lon(), TopLeft_new.lat(),
 											BottomRight_new.lon(), BottomRight_new.lat());
 	}
 	

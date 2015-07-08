@@ -1,6 +1,5 @@
 package ru.tcgeo.application.home_screen;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +12,8 @@ import ru.tcgeo.application.Geoinfo;
 import ru.tcgeo.application.R;
 import ru.tcgeo.application.gilib.GIControlFloating;
 import ru.tcgeo.application.gilib.GIEditLayersKeeper;
-import ru.tcgeo.application.gilib.GILonLat;
-import ru.tcgeo.application.gilib.GIProjection;
+import ru.tcgeo.application.gilib.models.GILonLat;
+import ru.tcgeo.application.gilib.models.GIProjection;
 import ru.tcgeo.application.gilib.gps.GIDirectionToPOIArrow;
 import ru.tcgeo.application.wkt.GI_WktPoint;
 

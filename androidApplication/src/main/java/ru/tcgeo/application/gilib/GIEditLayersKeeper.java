@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Locale;
 
 import android.app.FragmentManager;
-import android.content.Context;
 import android.graphics.Point;
 import android.location.Location;
 import android.location.LocationManager;
@@ -18,6 +17,9 @@ import ru.tcgeo.application.gilib.gps.GIGPSDialog;
 import ru.tcgeo.application.gilib.gps.GILocatorFragment;
 import ru.tcgeo.application.gilib.gps.GILocatorRange;
 import ru.tcgeo.application.gilib.gps.GIXMLTrack;
+import ru.tcgeo.application.gilib.models.GIBounds;
+import ru.tcgeo.application.gilib.models.GILonLat;
+import ru.tcgeo.application.gilib.models.GIProjection;
 import ru.tcgeo.application.wkt.GIDBaseField;
 import ru.tcgeo.application.wkt.GIGeometryControl;
 import ru.tcgeo.application.wkt.GI_WktGeometry;
@@ -188,15 +190,6 @@ public class GIEditLayersKeeper {
 		return m_Map;
 	}
 
-//	public Context getContext()
-//	{
-//		return m_context;
-//	}
-//	public void setContext(Context context)
-//	{
-//		m_context = context;
-//	}
-	
 	public void AddLayer(GIEditableLayer layer)
 	{
 		m_Layers.add(layer);

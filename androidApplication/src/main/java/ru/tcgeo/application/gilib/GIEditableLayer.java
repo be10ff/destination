@@ -6,6 +6,10 @@ import java.util.Map;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import ru.tcgeo.application.gilib.models.GIBounds;
+import ru.tcgeo.application.gilib.models.GIEncoding;
+import ru.tcgeo.application.gilib.models.GIProjection;
+import ru.tcgeo.application.gilib.models.GIVectorStyle;
 import ru.tcgeo.application.wkt.GIDBaseField;
 import ru.tcgeo.application.wkt.GI_WktGeometry;
 

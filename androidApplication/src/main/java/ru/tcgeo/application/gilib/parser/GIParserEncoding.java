@@ -3,10 +3,12 @@ package ru.tcgeo.application.gilib.parser;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
+import ru.tcgeo.application.gilib.models.GIEncoding;
+
 public class GIParserEncoding extends ru.tcgeo.application.gilib.parser.GIParser {
-	ru.tcgeo.application.gilib.GIEncoding m_root;
+	GIEncoding m_root;
 	
-	public GIParserEncoding(XmlPullParser parent, ru.tcgeo.application.gilib.GIEncoding root)
+	public GIParserEncoding(XmlPullParser parent, GIEncoding root)
 	{
 		super(parent);
 		section_name = "Encoding";
@@ -23,7 +25,7 @@ public class GIParserEncoding extends ru.tcgeo.application.gilib.parser.GIParser
 				//
 				//m_root.m_encoding = m_ParserCurrent.getAttributeValue(i);
 				String encoding = m_ParserCurrent.getAttributeValue(i);
-				m_root = new ru.tcgeo.application.gilib.GIEncoding(encoding);
+				m_root = new GIEncoding(encoding);
 			}
 		}
 	}
