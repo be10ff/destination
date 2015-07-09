@@ -11,7 +11,6 @@ import android.view.SurfaceHolder;
 
 import ru.tcgeo.application.App;
 import ru.tcgeo.application.R;
-import ru.tcgeo.application.gilib.GIEditLayersKeeper;
 
 public class GICompassDrawThread extends Thread 
 {

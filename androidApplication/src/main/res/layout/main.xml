@@ -159,16 +159,16 @@
 	            android:layout_height="wrap_content" 
 	            android:contentDescription="@string/panel_position" />
 
-	     <ImageButton
-	         android:id="@+id/button_position"
-	         android:layout_width="wrap_content"
-	         android:layout_height="wrap_content"
-	         android:layout_gravity="center_horizontal|top"
-	         android:clickable="true"
-	         android:contentDescription="@string/button_position"
-	         android:onClick="moveToPosition"
-	         android:paddingTop="8dp"
-	         android:src="@drawable/position_button_fixable" />
+	     <!--<ImageButton-->
+	         <!--android:id="@+id/button_position"-->
+	         <!--android:layout_width="wrap_content"-->
+	         <!--android:layout_height="wrap_content"-->
+	         <!--android:layout_gravity="center_horizontal|top"-->
+	         <!--android:clickable="true"-->
+	         <!--android:contentDescription="@string/button_position"-->
+	         <!--android:onClick="moveToPosition"-->
+	         <!--android:paddingTop="8dp"-->
+	         <!--android:src="@drawable/position_button_fixable" />-->
 
         </FrameLayout>
 	            

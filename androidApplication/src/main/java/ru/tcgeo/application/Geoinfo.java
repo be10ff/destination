@@ -89,7 +89,7 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 	GIScaleControl m_scale_control;
 	ImageButton square_button;
 	ImageButton rule_button;
-	ImageButton follow_button;
+//	ImageButton follow_button;
 	GIControlFloating m_marker_point;
 	//LocationManager m_location_manager;
 	GIGPSLocationListener m_location_listener;
@@ -1012,17 +1012,17 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 		
 
 		// Set tint for position button, can't do through xml
-		follow_button = (ImageButton) findViewById(R.id.button_position);
-		follow_button.setOnTouchListener(new OnTouchListener() {
-			public boolean onTouch(View v, MotionEvent event) {
-				if (event.getAction() == MotionEvent.ACTION_DOWN) {
-					((ImageButton) v).setColorFilter(0x99000000);
-				} else if (event.getAction() == MotionEvent.ACTION_UP) {
-					((ImageButton) v).setColorFilter(Color.TRANSPARENT);
-				}
-				return false;
-			}
-		});
+//		follow_button = (ImageButton) findViewById(R.id.button_position);
+//		follow_button.setOnTouchListener(new OnTouchListener() {
+//			public boolean onTouch(View v, MotionEvent event) {
+//				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+//					((ImageButton) v).setColorFilter(0x99000000);
+//				} else if (event.getAction() == MotionEvent.ACTION_UP) {
+//					((ImageButton) v).setColorFilter(Color.TRANSPARENT);
+//				}
+//				return false;
+//			}
+//		});
 
 
 		rule_button = (ImageButton) findViewById(R.id.toggleButtonRule);

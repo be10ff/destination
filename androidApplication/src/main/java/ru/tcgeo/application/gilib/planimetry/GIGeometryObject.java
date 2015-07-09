@@ -1,6 +1,5 @@
 package ru.tcgeo.application.gilib.planimetry;
 
-import android.graphics.Point;
 import android.graphics.RectF;
 
 /**

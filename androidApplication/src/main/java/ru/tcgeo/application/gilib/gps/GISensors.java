@@ -13,7 +13,6 @@ import android.view.Surface;
 import android.view.WindowManager;
 
 import ru.tcgeo.application.App;
-import ru.tcgeo.application.gilib.GIEditLayersKeeper;
 
 
 public class GISensors 
