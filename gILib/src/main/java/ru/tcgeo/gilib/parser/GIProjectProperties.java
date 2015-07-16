@@ -38,7 +38,7 @@ public class GIProjectProperties
 	public double m_bottom;
 	public double m_left;
 	public double m_right;
-//	public ArrayList<GIPropertiesPackage> m_Entries;
+	public ArrayList<GIPropertiesPackage> m_Entries;
 	public ru.tcgeo.gilib.parser.GIPropertiesGroup m_Group;
 	public GIPropertiesEdit m_Edit;
 	

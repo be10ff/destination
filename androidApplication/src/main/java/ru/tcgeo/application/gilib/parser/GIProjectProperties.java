@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.util.ArrayList;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -18,6 +19,7 @@ import android.util.Log;
 import android.util.Xml;
 
 import ru.tcgeo.application.gilib.models.GIProjection;
+
 
 public class GIProjectProperties 
 {

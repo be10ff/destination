@@ -121,7 +121,7 @@ public class GIGPSButtonView extends RelativeLayout
 	{
 		super(context);
 		LayoutInflater m_LayoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		m_LayoutView = m_LayoutInflater.inflate(R.layout.gps_button_layout, this, true);	
+		m_LayoutView = m_LayoutInflater.inflate(R.layout.gps_button_layout, this, true);
 		Init(context);
 	}
 	private void Init(Context context)

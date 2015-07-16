@@ -87,8 +87,6 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 	Dialog markers_dialog;
 	Dialog editablelayers_dialog;
 	GIScaleControl m_scale_control;
-	ImageButton square_button;
-	ImageButton rule_button;
 //	ImageButton follow_button;
 	GIControlFloating m_marker_point;
 	//LocationManager m_location_manager;
@@ -348,19 +346,19 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 		// Fill list with data
 		ListView project_list = (ListView) projects_dialog
 				.findViewById(R.id.projects_list);
-//		View header = getLayoutInflater().inflate(
-//				R.layout.project_list_management_item, null);
+		View header = getLayoutInflater().inflate(
+				R.layout.project_list_management_item, null);
 //		header.setOnClickListener(new OnClickListener() {
 //
 //			@Override
 //			public void onClick(View v) {
 //				projects_dialog.cancel();
-//				ru.tcgeo.gilib.projectmanagement.GIServer.Instance()
+//				GIServer.Instance()
 //						.getPresenter().getDialog()
 //						.show(getFragmentManager(), "dialog");
 //			}
 //		});
-//		project_list.addHeaderView(header);
+		project_list.addHeaderView(header);
 		ProjectsAdapter adapter = new ProjectsAdapter(this,
 				R.layout.project_selector_list_item,
 				R.id.project_list_item_path);
@@ -895,34 +893,6 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 		}
 	}
 
-	public void onRuleTool(View target) {
-		if (rule_button.isActivated()) {
-			rule_button.setActivated(false);
-			GIRuleToolControl.Instance(this, map).Disable();
-		} else {
-			rule_button.setActivated(true);
-			square_button.setActivated(false);
-			GISquareToolControl.Instance(this, map).Disable();
-
-		}
-		GITouchControl tc = (GITouchControl) findViewById(R.id.touchcontrol);
-		tc.SetMeasureState(rule_button.isActivated(),
-				square_button.isActivated());
-	}
-
-	public void onSquareTool(View target) {
-		if (square_button.isActivated()) {
-			square_button.setActivated(false);
-			GISquareToolControl.Instance(this, map).Disable();
-		} else {
-			square_button.setActivated(true);
-			rule_button.setActivated(false);
-			GIRuleToolControl.Instance(this, map).Disable();
-		}
-		GITouchControl tc = (GITouchControl) findViewById(R.id.touchcontrol);
-		tc.SetMeasureState(rule_button.isActivated(),
-				square_button.isActivated());
-	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -1025,9 +995,6 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 //		});
 
 
-		rule_button = (ImageButton) findViewById(R.id.toggleButtonRule);
-
-		square_button = (ImageButton) findViewById(R.id.toggleButtonSquare);
 
 		GIScaleControl m_scale_control_fixed = (GIScaleControl) findViewById(R.id.scale_control_screen);
 		m_scale_control_fixed.setMap(map);
@@ -1104,11 +1071,11 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 
-		ImageView top_bar = (ImageView) findViewById(R.id.top_bar);
-		if (top_bar != null) {
-			top_bar.setImageDrawable(getResources().getDrawable(
-					R.drawable.top_bar));
-		}
+//		ImageView top_bar = (ImageView) findViewById(R.id.top_bar);
+//		if (top_bar != null) {
+//			top_bar.setImageDrawable(getResources().getDrawable(
+//					R.drawable.top_bar));
+//		}
 //		View edittext = (View) findViewById(R.id.search_text);
 //
 //		Bitmap bkg = ((BitmapDrawable) getResources().getDrawable(

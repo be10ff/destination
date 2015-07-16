@@ -40,6 +40,17 @@
             </intent-filter>
         </activity>
 
+        <!--<activity-->
+            <!--android:name=".Navigator"-->
+            <!--android:label="@string/sub_app_name" android:configChanges="orientation|screenSize">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
+
+
         <meta-data android:value="AIzaSyBrFWGgIKU3-Q37qyalvBUeWumBDYT4rcw" android:name="com.google.android.maps.v2.API_KEY"/>
     </application>
 
