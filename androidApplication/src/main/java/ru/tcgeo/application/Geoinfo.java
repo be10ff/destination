@@ -2,6 +2,7 @@ package ru.tcgeo.application;
 
 import java.io.File;
 
+import ru.tcgeo.application.gilib.gps.GICompassView;
 import ru.tcgeo.application.gilib.models.GIBounds;
 import ru.tcgeo.application.gilib.models.GIColor;
 import ru.tcgeo.application.gilib.GIControlFloating;
@@ -108,7 +109,7 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 	GILocatorView m_locator;
 //	GIGPSButtonView m_gps_button;
 
-	FloatingActionMenu actionMenu;
+//	FloatingActionMenu actionMenu;
 	GIGPSButtonView fbGPS;
 
 	public final IFolderItemListener m_fileOpenListener = this;
@@ -1022,14 +1023,14 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 		// GPS buttons
 		//--------------------------------------------------------------------
 		fbGPS = new GIGPSButtonView(this);
-		FloatingActionButton.LayoutParams menu_params = new FloatingActionButton.LayoutParams(ScreenUtils.dpToPx(108), ScreenUtils.dpToPx(108));
-		menu_params.setMargins(ScreenUtils.dpToPx(12), ScreenUtils.dpToPx(12), ScreenUtils.dpToPx(12), ScreenUtils.dpToPx(12));
+		FloatingActionButton.LayoutParams gps_menu_params = new FloatingActionButton.LayoutParams(ScreenUtils.dpToPx(108), ScreenUtils.dpToPx(108));
+		gps_menu_params.setMargins(ScreenUtils.dpToPx(12), ScreenUtils.dpToPx(12), ScreenUtils.dpToPx(12), ScreenUtils.dpToPx(12));
 
-		FloatingActionButton actionButton = new FloatingActionButton.Builder(this)
+		FloatingActionButton gps_action_button = new FloatingActionButton.Builder(this)
 				.setContentView(fbGPS)
 				.setBackgroundDrawable(null)
 				.setPosition(FloatingActionButton.POSITION_TOP_LEFT)
-				.setLayoutParams(menu_params)
+				.setLayoutParams(gps_menu_params)
 				.build();
 
 		SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
@@ -1133,14 +1134,14 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 		//--------------------------------------------------------------------
 		// GPS buttons
 		//--------------------------------------------------------------------
-		actionMenu = new FloatingActionMenu.Builder(this)
+		FloatingActionMenu gpsActionMenu = new FloatingActionMenu.Builder(this)
 
 				.addSubActionView(fbAutoFollow)
 				.addSubActionView(fbTrackControl)
 				.addSubActionView(fbShowTrack)
 				.addSubActionView(fbPoiControl)
 
-				.attachTo(actionButton)
+				.attachTo(gps_action_button)
 				.setRadius(ScreenUtils.dpToPx(150))
 				.setStartAngle(0)
 				.setEndAngle(90)
@@ -1149,7 +1150,54 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 		// GPS buttons
 		//--------------------------------------------------------------------
 
-		
+		//--------------------------------------------------------------------
+		// Compass buttons
+		//--------------------------------------------------------------------
+		GICompassView fbCompass = new GICompassView(this);
+		FloatingActionButton.LayoutParams compass_menu_params = new FloatingActionButton.LayoutParams(ScreenUtils.dpToPx(108), ScreenUtils.dpToPx(108));
+		compass_menu_params.setMargins(ScreenUtils.dpToPx(12), ScreenUtils.dpToPx(12), ScreenUtils.dpToPx(12), ScreenUtils.dpToPx(12));
+
+		FloatingActionButton compass_action_button = new FloatingActionButton.Builder(this)
+				.setContentView(fbCompass)
+				.setBackgroundDrawable(null)
+				.setPosition(FloatingActionButton.POSITION_TOP_RIGHT)
+				.setLayoutParams(compass_menu_params)
+				.build();
+
+		SubActionButton.Builder compass_item_builder = new SubActionButton.Builder(this);
+		FloatingActionButton.LayoutParams compass_action_params = new FloatingActionButton.LayoutParams(ScreenUtils.dpToPx(96), ScreenUtils.dpToPx(96));
+		compass_item_builder.setLayoutParams(compass_action_params);
+
+		//--------------------------------------------------------------------
+		// COMPASS_OPEN_BUTTON
+		//--------------------------------------------------------------------
+		final ImageButton btnProjectSelectorButton = new ImageButton(this);
+		btnProjectSelectorButton.setImageResource(R.drawable.open);
+		btnProjectSelectorButton.setBackgroundDrawable(null);
+		SubActionButton fbOpen = itemBuilder.setContentView(btnProjectSelectorButton).build();
+		fbOpen.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+			}
+		});
+		//--------------------------------------------------------------------
+		// Compass buttons
+		//--------------------------------------------------------------------
+		FloatingActionMenu compassActionMenu = new FloatingActionMenu.Builder(this)
+
+				.addSubActionView(fbOpen)
+
+
+				.attachTo(compass_action_button)
+				.setRadius(ScreenUtils.dpToPx(150))
+				.setStartAngle(90)
+				.setEndAngle(180)
+				.build();
+		//--------------------------------------------------------------------
+		// Compass buttons
+		//--------------------------------------------------------------------
+
 	}
 
 	@Override
