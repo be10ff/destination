@@ -17,7 +17,7 @@ import ru.tcgeo.application.R;
 import ru.tcgeo.application.gilib.GIEditLayersKeeper;
 import ru.tcgeo.application.gilib.models.GILonLat;
 import ru.tcgeo.application.gilib.models.GIProjection;
-
+@Deprecated
 public class GIGPSDialog extends Fragment implements OnClickListener, OnLongClickListener {
 
 	//public ToggleButton m_btnGPSStatus;

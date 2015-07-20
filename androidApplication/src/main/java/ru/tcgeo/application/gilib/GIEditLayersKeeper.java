@@ -13,7 +13,7 @@ import android.location.LocationManager;
 import android.view.View;
 
 import ru.tcgeo.application.gilib.gps.GICompassFragment;
-import ru.tcgeo.application.gilib.gps.GIGPSDialog;
+//import ru.tcgeo.application.gilib.gps.GIGPSDialog;
 import ru.tcgeo.application.gilib.gps.GILocatorFragment;
 import ru.tcgeo.application.gilib.gps.GILocatorRange;
 import ru.tcgeo.application.gilib.gps.GIXMLTrack;
@@ -57,7 +57,7 @@ public class GIEditLayersKeeper {
 	public LocationManager m_location_manager;
 	// views
 	public GIEditLayerDialog m_EditLayerDialog;
-	public GIGPSDialog m_GPSDialog;
+//	public GIGPSDialog m_GPSDialog;
 	public GICompassFragment m_compass;
 	public GILocatorFragment m_locator;
 	public GILocatorRange m_range;
@@ -301,22 +301,22 @@ public class GIEditLayersKeeper {
 		m_controls.clear();
 	}
 
-	public void GPSDialog()
-	{
-		m_GPSDialog = (GIGPSDialog) m_FragmentManager.findFragmentByTag(gps_dialog_tag);
-		if(m_GPSDialog == null)
-		{
-			m_GPSDialog = new GIGPSDialog();
-			m_FragmentManager.beginTransaction().add(m_root, m_GPSDialog, gps_dialog_tag).commit();
-		}
-		else
-		{
-			if(m_GPSDialog.isAdded())
-			{
-				m_FragmentManager.beginTransaction().remove( m_GPSDialog).commit();
-			}
-		}
-	}
+//	public void GPSDialog()
+//	{
+//		m_GPSDialog = (GIGPSDialog) m_FragmentManager.findFragmentByTag(gps_dialog_tag);
+//		if(m_GPSDialog == null)
+//		{
+//			m_GPSDialog = new GIGPSDialog();
+//			m_FragmentManager.beginTransaction().add(m_root, m_GPSDialog, gps_dialog_tag).commit();
+//		}
+//		else
+//		{
+//			if(m_GPSDialog.isAdded())
+//			{
+//				m_FragmentManager.beginTransaction().remove( m_GPSDialog).commit();
+//			}
+//		}
+//	}
 	public void AccurancyRangeView(boolean show)
 	{
 		if(show)

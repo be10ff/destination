@@ -14,6 +14,7 @@ import ru.tcgeo.application.gilib.GILayer;
 import ru.tcgeo.application.gilib.GILayer.GILayerType;
 import ru.tcgeo.application.gilib.GIMap;
 import ru.tcgeo.application.gilib.GIPList;
+import ru.tcgeo.application.gilib.models.GILonLat;
 import ru.tcgeo.application.gilib.models.GIProjection;
 import ru.tcgeo.application.gilib.GIRuleToolControl;
 import ru.tcgeo.application.gilib.GISQLLayer;
@@ -42,6 +43,7 @@ import ru.tcgeo.application.home_screen.MarkersAdapter;
 import ru.tcgeo.application.home_screen.MarkersAdapterItem;
 import ru.tcgeo.application.home_screen.ProjectsAdapter;
 import ru.tcgeo.application.home_screen.ProjectsAdapterItem;
+import ru.tcgeo.application.utils.ScreenUtils;
 import ru.tcgeo.application.views.GIScaleControl;
 import ru.tcgeo.application.views.OpenFileDialog;
 import ru.tcgeo.application.wkt.GI_WktGeometry;
@@ -57,10 +59,12 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -69,11 +73,17 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
+
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
+import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
 public class Geoinfo extends Activity implements IFolderItemListener// implements
 																	// OnTouchListener
@@ -86,6 +96,7 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 	Dialog projects_dialog;
 	Dialog markers_dialog;
 	Dialog editablelayers_dialog;
+
 	GIScaleControl m_scale_control;
 //	ImageButton follow_button;
 	GIControlFloating m_marker_point;
@@ -95,7 +106,10 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 	FrameLayout m_top_bar;
 	//GICompassView m_compass_view;
 	GILocatorView m_locator;
-	GIGPSButtonView m_gps_button;
+//	GIGPSButtonView m_gps_button;
+
+	FloatingActionMenu actionMenu;
+	GIGPSButtonView fbGPS;
 
 	public final IFolderItemListener m_fileOpenListener = this;
 
@@ -478,11 +492,11 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 		editablelayers_dialog.show();
 	}
 
-	public void GPSDialogClicked(final View button) {
-		// GIEditLayersKeeper.Instance().setMap(map);
-		GIEditLayersKeeper.Instance().GPSDialog();
-
-	}
+//	public void GPSDialogClicked(final View button) {
+//		// GIEditLayersKeeper.Instance().setMap(map);
+//		GIEditLayersKeeper.Instance().GPSDialog();
+//
+//	}
 	
 	public void CompassClicked(final View button) 
 	{
@@ -911,7 +925,9 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 		touchControl = (GITouchControl) findViewById(R.id.touchcontrol);
 		
 		// map = (GIMap)findViewById(R.id.map);
-		m_gps_button = (GIGPSButtonView)findViewById(R.id.top_bar_gps_button);
+//		m_gps_button = (GIGPSButtonView)findViewById(R.id.top_bar_gps_button);
+
+
 		if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_NORMAL) 
 		{
 			//View
@@ -944,13 +960,13 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 				}
 			});*/
 
-			m_gps_button.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					GPSDialogClicked(v);					
-				}
-			});
+//			m_gps_button.setOnClickListener(new OnClickListener() {
+//
+//				@Override
+//				public void onClick(View v) {
+//					GPSDialogClicked(v);
+//				}
+//			});
 		}
 		createMap();
 
@@ -977,7 +993,7 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 		m_location_listener = new GIGPSLocationListener(map);
 		GIEditLayersKeeper.Instance().m_location_manager = m_location_listener.m_location_manager;
 		
-		m_gps_button.SetGPSEnabledStatus(m_location_listener.m_location_manager.isProviderEnabled(LocationManager.GPS_PROVIDER));				
+//		m_gps_button.SetGPSEnabledStatus(m_location_listener.m_location_manager.isProviderEnabled(LocationManager.GPS_PROVIDER));
 		//GIEditLayersKeeper.Instance().UpdateGPSButton();
 		
 
@@ -998,6 +1014,141 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 
 		GIScaleControl m_scale_control_fixed = (GIScaleControl) findViewById(R.id.scale_control_screen);
 		m_scale_control_fixed.setMap(map);
+		//--------------------------------------------------------------------
+		// floating buttons
+		//--------------------------------------------------------------------
+
+		//--------------------------------------------------------------------
+		// GPS buttons
+		//--------------------------------------------------------------------
+		fbGPS = new GIGPSButtonView(this);
+		FloatingActionButton.LayoutParams menu_params = new FloatingActionButton.LayoutParams(ScreenUtils.dpToPx(108), ScreenUtils.dpToPx(108));
+		menu_params.setMargins(ScreenUtils.dpToPx(12), ScreenUtils.dpToPx(12), ScreenUtils.dpToPx(12), ScreenUtils.dpToPx(12));
+
+		FloatingActionButton actionButton = new FloatingActionButton.Builder(this)
+				.setContentView(fbGPS)
+				.setBackgroundDrawable(null)
+				.setPosition(FloatingActionButton.POSITION_TOP_LEFT)
+				.setLayoutParams(menu_params)
+				.build();
+
+		SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
+		FloatingActionButton.LayoutParams action_params = new FloatingActionButton.LayoutParams(ScreenUtils.dpToPx(96), ScreenUtils.dpToPx(96));
+		itemBuilder.setLayoutParams(action_params);
+		fbGPS.SetGPSEnabledStatus(m_location_listener.m_location_manager.isProviderEnabled(LocationManager.GPS_PROVIDER));
+
+		//--------------------------------------------------------------------
+		// GPS AUTO_FOLL0W
+		//--------------------------------------------------------------------
+//		final CheckBox m_btnAutoFollow = (CheckBox)getLayoutInflater().inflate(R.layout.button_autofollow, null);
+		final CheckBox m_btnAutoFollow = new CheckBox(this);
+		m_btnAutoFollow.setButtonDrawable(R.drawable.auto_follow_status_);
+		SubActionButton fbAutoFollow = itemBuilder.setContentView(m_btnAutoFollow).build();
+		m_btnAutoFollow.setChecked(GIEditLayersKeeper.Instance().m_AutoFollow);
+		m_btnAutoFollow.setOnClickListener(new View.OnClickListener()
+			{
+			@Override
+			public void onClick(View v) {
+				GIEditLayersKeeper.Instance().m_AutoFollow = m_btnAutoFollow.isChecked();
+				if (m_btnAutoFollow.isChecked()) {
+					Location location = GIEditLayersKeeper.Instance().m_location_manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+					if (location != null) {
+						GILonLat go_to = GILonLat.fromLocation(location);
+						GILonLat go_to_map = GIProjection.ReprojectLonLat(go_to, GIProjection.WGS84(), GIProjection.WorldMercator());
+						GIEditLayersKeeper.Instance().getMap().SetCenter(go_to_map);
+						GIEditLayersKeeper.Instance().GetPositionControl();
+					}
+				}
+				GIEditLayersKeeper.Instance().GetPositionControl();
+			}
+		});
+		fbAutoFollow.setOnLongClickListener(new View.OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				GIEditLayersKeeper.Instance().m_current_track_control.Show(!GIEditLayersKeeper.Instance().m_current_track_control.mShow);
+				return false;
+			}
+		});
+
+		//--------------------------------------------------------------------
+		// GPS TRACK_CONTROL
+		//--------------------------------------------------------------------
+//		final CheckBox m_btnTrackControl = (CheckBox)getLayoutInflater().inflate(R.layout.button_trackcontrol, null);
+		final CheckBox m_btnTrackControl = new CheckBox(this);
+		m_btnTrackControl.setButtonDrawable(R.drawable.stop_start_track_button);
+		SubActionButton fbTrackControl = itemBuilder.setContentView(m_btnTrackControl).build();
+		m_btnTrackControl.setChecked(GIEditLayersKeeper.Instance().m_TrackingStatus == GIEditLayersKeeper.GITrackingStatus.WRITE);
+		m_btnTrackControl.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (GIEditLayersKeeper.Instance().m_TrackingStatus == GIEditLayersKeeper.GITrackingStatus.STOP) {
+					if (!GIEditLayersKeeper.Instance().CreateTrack()) {
+						GIEditLayersKeeper.Instance().m_TrackingStatus = GIEditLayersKeeper.GITrackingStatus.STOP;
+						m_btnTrackControl.setChecked(false);
+					}
+				} else {
+					GIEditLayersKeeper.Instance().m_TrackingStatus = GIEditLayersKeeper.GITrackingStatus.STOP;
+					GIEditLayersKeeper.Instance().StopTrack();
+				}
+			}
+		});
+
+		//--------------------------------------------------------------------
+		// GPS SHOW TRACK
+		//--------------------------------------------------------------------
+//		final CheckBox m_btnShowTrack = (CheckBox)getLayoutInflater().inflate(R.layout.button_show_track, null);
+		final CheckBox m_btnShowTrack = new CheckBox(this);
+		m_btnShowTrack.setButtonDrawable(R.drawable.fixable_button);
+		SubActionButton fbShowTrack = itemBuilder.setContentView(m_btnShowTrack).build();
+		m_btnShowTrack.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(GIEditLayersKeeper.Instance().m_current_track_control != null) {
+					GIEditLayersKeeper.Instance().m_current_track_control.Show(m_btnShowTrack.isChecked());
+					GIEditLayersKeeper.Instance().getMap().UpdateMap();
+				}
+			}
+		});
+
+		//--------------------------------------------------------------------
+		// GPS POI CONTROL
+		//--------------------------------------------------------------------
+//		final CheckBox m_btnPoiControl = (CheckBox)getLayoutInflater().inflate(R.layout.button_poi_control, null);
+		final CheckBox m_btnPoiControl = new CheckBox(this);
+		m_btnPoiControl.setButtonDrawable(R.drawable.poi_status);
+		SubActionButton fbPoiControl = itemBuilder.setContentView(m_btnPoiControl).build();
+		m_btnPoiControl.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(GIEditLayersKeeper.Instance().getState() != GIEditLayersKeeper.GIEditingStatus.EDITING_POI && GIEditLayersKeeper.Instance().getState() != GIEditLayersKeeper.GIEditingStatus.EDITING_GEOMETRY)
+				{
+					GIEditLayersKeeper.Instance().CreatePOI();
+				}
+				else
+				{
+					GIEditLayersKeeper.Instance().StopEditing();
+				}
+			}
+		});
+		//--------------------------------------------------------------------
+		// GPS buttons
+		//--------------------------------------------------------------------
+		actionMenu = new FloatingActionMenu.Builder(this)
+
+				.addSubActionView(fbAutoFollow)
+				.addSubActionView(fbTrackControl)
+				.addSubActionView(fbShowTrack)
+				.addSubActionView(fbPoiControl)
+
+				.attachTo(actionButton)
+				.setRadius(ScreenUtils.dpToPx(150))
+				.setStartAngle(0)
+				.setEndAngle(90)
+				.build();
+		//--------------------------------------------------------------------
+		// GPS buttons
+		//--------------------------------------------------------------------
+
 		
 	}
 
@@ -1011,7 +1162,9 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 	protected void onResume() {
 		super.onResume();
 		GIEditLayersKeeper.Instance().onResume();
-		m_gps_button.onResume();
+//		m_gps_button.onResume();
+		fbGPS.onResume();
+
 	};
 
 	// ToDo
@@ -1033,7 +1186,8 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 	protected void onPause() {
 		super.onPause();
 		GIEditLayersKeeper.Instance().onPause();
-		m_gps_button.onPause();
+//		m_gps_button.onPause();
+		fbGPS.onPause();
 		// GIEditLayersKeeper.Instance().m_position = null;
 		map.Synhronize();
 		String SaveAsPath = getResources().getString(R.string.default_project_path);
