@@ -170,7 +170,8 @@ public class GISensors
 	
 	private void getActualDeviceOrientation()
 	{
-		if(SensorManager.getRotationMatrix(inR, null, valuesAccelerometer, valuesMagnet))
+
+		if(SensorManager.getRotationMatrix(inR, new float[9], valuesAccelerometer, valuesMagnet))
 		{
 			int x_axis = SensorManager.AXIS_X;
 			int y_axis = SensorManager.AXIS_Y;

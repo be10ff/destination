@@ -44,6 +44,8 @@ import ru.tcgeo.application.home_screen.MarkersAdapter;
 import ru.tcgeo.application.home_screen.MarkersAdapterItem;
 import ru.tcgeo.application.home_screen.ProjectsAdapter;
 import ru.tcgeo.application.home_screen.ProjectsAdapterItem;
+import ru.tcgeo.application.home_screen.SettingsDialog;
+import ru.tcgeo.application.local_project_management.SettingsFragment;
 import ru.tcgeo.application.utils.ScreenUtils;
 import ru.tcgeo.application.views.GIScaleControl;
 import ru.tcgeo.application.views.OpenFileDialog;
@@ -51,6 +53,8 @@ import ru.tcgeo.application.wkt.GI_WktGeometry;
 import ru.tcgeo.application.wkt.GI_WktPoint;
 import android.app.Activity;
 import android.app.Dialog;
+//import android.app.DialogFragment;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.SharedPreferences;
@@ -64,6 +68,8 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -86,15 +92,17 @@ import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
-public class Geoinfo extends Activity implements IFolderItemListener// implements
+public class Geoinfo extends FragmentActivity implements IFolderItemListener// implements
 																	// OnTouchListener
 {
+	public static String SETTINGS_FRAGMENT_TAG="settings_fragment_tag";
 	GIMap map;
 	GITouchControl touchControl;
 	SharedPreferences sp;
 
 	final public String SAVED_PATH = "default_project_path";
 	Dialog projects_dialog;
+	Dialog settings_dialog;
 	Dialog markers_dialog;
 	Dialog editablelayers_dialog;
 
@@ -104,7 +112,7 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 	//LocationManager m_location_manager;
 	GIGPSLocationListener m_location_listener;
 	//View
-	FrameLayout m_top_bar;
+//	FrameLayout m_top_bar;
 	//GICompassView m_compass_view;
 	GILocatorView m_locator;
 //	GIGPSButtonView m_gps_button;
@@ -291,9 +299,9 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 
 			@Override
 			public void onClick(View v) {
-				OpenFileDialog dlg = new OpenFileDialog(getApplicationContext());
+				OpenFileDialog dlg = new OpenFileDialog();
 				dlg.setIFolderItemListener(m_fileOpenListener);
-				dlg.show(getFragmentManager(), "open_dlg");
+				dlg.show(getSupportFragmentManager(), "open_dlg");
 			}
 		});
 		layers_list.addHeaderView(header);
@@ -304,9 +312,9 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 
 			@Override
 			public void onClick(View v) {
-				OpenFileDialog dlg = new OpenFileDialog(getApplicationContext());
+				OpenFileDialog dlg = new OpenFileDialog();
 				dlg.setIFolderItemListener(m_fileOpenListener);
-				dlg.show(getFragmentManager(), "open_dlg");
+				dlg.show(getSupportFragmentManager(), "open_dlg");
 				layers_dialog.dismiss();
 			}
 		});
@@ -493,16 +501,92 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 		editablelayers_dialog.show();
 	}
 
-//	public void GPSDialogClicked(final View button) {
-//		// GIEditLayersKeeper.Instance().setMap(map);
-//		GIEditLayersKeeper.Instance().GPSDialog();
+	//todo
+	public void SettingsDialogClicked(final View button) {
+
+		DialogFragment dlg = new SettingsDialog();
+//		dlg.getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+//		dlg.getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+//		dlg.getDialog().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		dlg.show(getSupportFragmentManager(), "settings_dialog" );
+
+
+//		button.setActivated(true);
 //
-//	}
-	
-	public void CompassClicked(final View button) 
-	{
-		GIEditLayersKeeper.Instance().CompassView();
-	}	
+//		settings_dialog = new Dialog(this, R.style.Theme_layers_dialog);
+//		settings_dialog.setContentView(R.layout.project_settings_dialog);
+//		settings_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+//		settings_dialog.setCanceledOnTouchOutside(true);
+//
+//		//
+//		LayoutParams parameters = settings_dialog.getWindow().getAttributes();
+//		settings_dialog.getWindow().setAttributes(parameters);
+//		//
+//
+//		settings_dialog.setOnDismissListener(new OnDismissListener() {
+//			public void onDismiss(DialogInterface dialog) {
+//				button.setActivated(false);
+//			}
+//		});
+//
+//		ListView project_list = (ListView) settings_dialog.findViewById(R.id.projects_list);
+//		ListView layers_list = (ListView) settings_dialog.findViewById(R.id.layers_list);
+//		FrameLayout attributes_frame = (FrameLayout) settings_dialog.findViewById(R.id.attributes_frame);
+//
+//
+//
+//
+//		ProjectsAdapter projects_adapter = new ProjectsAdapter(this,
+//				R.layout.project_selector_list_item,
+//				R.id.project_list_item_path);
+//		AddProjects(projects_adapter);
+//		project_list.setAdapter(projects_adapter);
+//
+//		/**/
+//		LayersAdapter adapter = new LayersAdapter(this,
+//				R.layout.layers_list_item, R.id.layers_list_item_text);
+//
+//		View header = getLayoutInflater().inflate(
+//				R.layout.add_layer_header_layout, null);
+//		header.setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				OpenFileDialog dlg = new OpenFileDialog(getApplicationContext());
+//				dlg.setIFolderItemListener(m_fileOpenListener);
+//				dlg.show(getFragmentManager(), "open_dlg");
+//			}
+//		});
+//		layers_list.addHeaderView(header);
+//
+////		ImageButton additional = (ImageButton) layers_dialog
+////				.findViewById(R.id.layers_additional_button);
+////		additional.setOnClickListener(new OnClickListener() {
+////
+////			@Override
+////			public void onClick(View v) {
+////				OpenFileDialog dlg = new OpenFileDialog(getApplicationContext());
+////				dlg.setIFolderItemListener(m_fileOpenListener);
+////				dlg.show(getFragmentManager(), "open_dlg");
+////				layers_dialog.dismiss();
+////			}
+////		});
+//
+//		add_layers((GIGroupLayer) map.m_layers, adapter);
+//		layers_list.setAdapter(adapter);
+//		/**/
+//
+//
+//
+//		settings_dialog.show();
+//
+//
+//		/**/
+////		FragmentTransaction ft = ((FragmentActivity) settings_dialog.getOwnerActivity()).getFragmentManager().beginTransaction();
+////		ft.add(R.id.attributes_frame, new SettingsFragment()).commit();
+//		/**/
+	}
+
 
 
 
@@ -516,11 +600,10 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 		GIEditLayersKeeper.Instance().ClearLayers();
 		loadGroup(current_group);
 		// touchControl.m_project_settings = map.ps;
-		GIProjectProperties prop = map.ps;
+//		GIProjectProperties prop = map.ps;
 	}
 
-	// private void loadGroup(ru.tcgeo.gilib.parser.GIPropertiesGroup
-	// current_layer2)
+
 	private void loadGroup(GIPropertiesGroup current_layer2)
 	{
 		for (GIPropertiesLayer current_layer : current_layer2.m_Entries)
@@ -912,10 +995,6 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-
-//		GIEditLayersKeeper.Instance().setContext(this);
-
 		getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 		//getWindow().addFlags(LayoutParams.FLAG_FULLSCREEN);
 		// ?????
@@ -924,51 +1003,7 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 		setContentView(R.layout.main);
 
 		touchControl = (GITouchControl) findViewById(R.id.touchcontrol);
-		
-		// map = (GIMap)findViewById(R.id.map);
-//		m_gps_button = (GIGPSButtonView)findViewById(R.id.top_bar_gps_button);
 
-
-		if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_NORMAL) 
-		{
-			//View
-			m_top_bar = (FrameLayout) findViewById(R.id.top_bar_layout);
-			//m_top_bar = (View) findViewById(R.id.horizontalScrollView2);
-			//horizontalScrollView2
-			findViewById(R.id.slide_button).setOnClickListener(
-					new OnClickListener() {
-
-						@Override
-						public void onClick(View v) 
-						{
-							if(m_top_bar.getVisibility() == View.VISIBLE)
-							{
-								m_top_bar.setVisibility(View.GONE);
-							}
-							else
-							{
-								m_top_bar.setVisibility(View.VISIBLE);
-							}
-
-						}
-					});
-			/*View surface_button = (View)findViewById(R.id.compass_surface_button);
-			surface_button.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					CompassClicked(v);					
-				}
-			});*/
-
-//			m_gps_button.setOnClickListener(new OnClickListener() {
-//
-//				@Override
-//				public void onClick(View v) {
-//					GPSDialogClicked(v);
-//				}
-//			});
-		}
 		createMap();
 
 		GIEditLayersKeeper.Instance().setFragmentManager(getFragmentManager());
@@ -993,25 +1028,6 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 		
 		m_location_listener = new GIGPSLocationListener(map);
 		GIEditLayersKeeper.Instance().m_location_manager = m_location_listener.m_location_manager;
-		
-//		m_gps_button.SetGPSEnabledStatus(m_location_listener.m_location_manager.isProviderEnabled(LocationManager.GPS_PROVIDER));
-		//GIEditLayersKeeper.Instance().UpdateGPSButton();
-		
-
-		// Set tint for position button, can't do through xml
-//		follow_button = (ImageButton) findViewById(R.id.button_position);
-//		follow_button.setOnTouchListener(new OnTouchListener() {
-//			public boolean onTouch(View v, MotionEvent event) {
-//				if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//					((ImageButton) v).setColorFilter(0x99000000);
-//				} else if (event.getAction() == MotionEvent.ACTION_UP) {
-//					((ImageButton) v).setColorFilter(Color.TRANSPARENT);
-//				}
-//				return false;
-//			}
-//		});
-
-
 
 		GIScaleControl m_scale_control_fixed = (GIScaleControl) findViewById(R.id.scale_control_screen);
 		m_scale_control_fixed.setMap(map);
@@ -1023,8 +1039,8 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 		// GPS buttons
 		//--------------------------------------------------------------------
 		fbGPS = new GIGPSButtonView(this);
-		FloatingActionButton.LayoutParams gps_menu_params = new FloatingActionButton.LayoutParams(ScreenUtils.dpToPx(108), ScreenUtils.dpToPx(108));
-		gps_menu_params.setMargins(ScreenUtils.dpToPx(12), ScreenUtils.dpToPx(12), ScreenUtils.dpToPx(12), ScreenUtils.dpToPx(12));
+		FloatingActionButton.LayoutParams gps_menu_params = new FloatingActionButton.LayoutParams(ScreenUtils.dpToPx(96), ScreenUtils.dpToPx(96));
+		gps_menu_params.setMargins(ScreenUtils.dpToPx(2), ScreenUtils.dpToPx(2), ScreenUtils.dpToPx(2), ScreenUtils.dpToPx(2));
 
 		FloatingActionButton gps_action_button = new FloatingActionButton.Builder(this)
 				.setContentView(fbGPS)
@@ -1034,7 +1050,7 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 				.build();
 
 		SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
-		FloatingActionButton.LayoutParams action_params = new FloatingActionButton.LayoutParams(ScreenUtils.dpToPx(96), ScreenUtils.dpToPx(96));
+		FloatingActionButton.LayoutParams action_params = new FloatingActionButton.LayoutParams(ScreenUtils.dpToPx(84), ScreenUtils.dpToPx(84));
 		itemBuilder.setLayoutParams(action_params);
 		fbGPS.SetGPSEnabledStatus(m_location_listener.m_location_manager.isProviderEnabled(LocationManager.GPS_PROVIDER));
 
@@ -1154,8 +1170,8 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 		// Compass buttons
 		//--------------------------------------------------------------------
 		GICompassView fbCompass = new GICompassView(this);
-		FloatingActionButton.LayoutParams compass_menu_params = new FloatingActionButton.LayoutParams(ScreenUtils.dpToPx(108), ScreenUtils.dpToPx(108));
-		compass_menu_params.setMargins(ScreenUtils.dpToPx(12), ScreenUtils.dpToPx(12), ScreenUtils.dpToPx(12), ScreenUtils.dpToPx(12));
+		FloatingActionButton.LayoutParams compass_menu_params = new FloatingActionButton.LayoutParams(ScreenUtils.dpToPx(96), ScreenUtils.dpToPx(96));
+		compass_menu_params.setMargins(ScreenUtils.dpToPx(2), ScreenUtils.dpToPx(2), ScreenUtils.dpToPx(2), ScreenUtils.dpToPx(2));
 
 		FloatingActionButton compass_action_button = new FloatingActionButton.Builder(this)
 				.setContentView(fbCompass)
@@ -1165,7 +1181,7 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 				.build();
 
 		SubActionButton.Builder compass_item_builder = new SubActionButton.Builder(this);
-		FloatingActionButton.LayoutParams compass_action_params = new FloatingActionButton.LayoutParams(ScreenUtils.dpToPx(96), ScreenUtils.dpToPx(96));
+		FloatingActionButton.LayoutParams compass_action_params = new FloatingActionButton.LayoutParams(ScreenUtils.dpToPx(84), ScreenUtils.dpToPx(84));
 		compass_item_builder.setLayoutParams(compass_action_params);
 
 		//--------------------------------------------------------------------
@@ -1175,10 +1191,51 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 		btnProjectSelectorButton.setImageResource(R.drawable.open);
 		btnProjectSelectorButton.setBackgroundDrawable(null);
 		SubActionButton fbOpen = itemBuilder.setContentView(btnProjectSelectorButton).build();
-		fbOpen.setOnClickListener(new View.OnClickListener() {
+		btnProjectSelectorButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+//				ProjectSelectorDialogClicked(v);
+				SettingsDialogClicked(v);
+			}
+		});
+		//--------------------------------------------------------------------
+		// COMPASS_OPEN_Layers
+		//--------------------------------------------------------------------
+		final ImageButton btnLayers = new ImageButton(this);
+		btnLayers.setImageResource(R.drawable.top_bar_layers_button);
+		btnLayers.setBackgroundDrawable(null);
+		SubActionButton fbLayers = itemBuilder.setContentView(btnLayers).build();
+		btnLayers.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				layersDialogClicked(v);
 
+			}
+		});
+		//--------------------------------------------------------------------
+		// COMPASS_EDIT_Layers
+		//--------------------------------------------------------------------
+		final ImageButton btnEditLayers = new ImageButton(this);
+		btnEditLayers.setImageResource(android.R.drawable.ic_menu_edit);
+		btnEditLayers.setBackgroundDrawable(null);
+		SubActionButton fbEditLayers = itemBuilder.setContentView(btnEditLayers).build();
+		btnEditLayers.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				EditableLayersDialogClicked(v);
+			}
+		});
+		//--------------------------------------------------------------------
+		// COMPASS_MARKERS
+		//--------------------------------------------------------------------
+		final ImageButton btnMarkers = new ImageButton(this);
+		btnMarkers.setImageResource(R.drawable.poi);
+		btnMarkers.setBackgroundDrawable(null);
+		SubActionButton fbMarkers= itemBuilder.setContentView(btnMarkers).build();
+		btnMarkers.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				MarkersDialogClicked(v);
 			}
 		});
 		//--------------------------------------------------------------------
@@ -1187,7 +1244,9 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 		FloatingActionMenu compassActionMenu = new FloatingActionMenu.Builder(this)
 
 				.addSubActionView(fbOpen)
-
+				.addSubActionView(fbLayers)
+				.addSubActionView(fbEditLayers)
+				.addSubActionView(fbMarkers)
 
 				.attachTo(compass_action_button)
 				.setRadius(ScreenUtils.dpToPx(150))
@@ -1273,17 +1332,6 @@ public class Geoinfo extends Activity implements IFolderItemListener// implement
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 
-//		ImageView top_bar = (ImageView) findViewById(R.id.top_bar);
-//		if (top_bar != null) {
-//			top_bar.setImageDrawable(getResources().getDrawable(
-//					R.drawable.top_bar));
-//		}
-//		View edittext = (View) findViewById(R.id.search_text);
-//
-//		Bitmap bkg = ((BitmapDrawable) getResources().getDrawable(
-//				R.drawable.searchbar_background)).getBitmap();
-//		BitmapDrawable bkgbt = new BitmapDrawable(getResources(), bkg);
-//		edittext.setBackgroundDrawable((Drawable) bkgbt);
 	}
 
 	private boolean createMap() {

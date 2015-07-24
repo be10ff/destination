@@ -46,7 +46,7 @@ public class ProjectsAdapter extends ArrayAdapter<ProjectsAdapterItem> {
         }
 
 
-        v.setOnClickListener(new View.OnClickListener() {
+        text_name.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {

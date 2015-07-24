@@ -120,6 +120,13 @@
     <string name="dd_mm_hint">DD° MM.MMMMMM\'</string>
     <string name="dd_hint">DD.DDDDDDDD°</string>
 
+    <string name="layer_name">Layer Name</string>
+    <string name="layer_type">Layer Type</string>
+    <string name="layer_location">Layer Location</string>
+    <string name="layer_zoom">Layer zoom</string>
+    <string name="layer_range">Layer Range </string>
+    <string name="from">from</string>
+    <string name="to">to</string>
 
 
 

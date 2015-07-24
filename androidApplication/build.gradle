@@ -22,6 +22,9 @@ android {
 
 dependencies {
 //    compile "com.android.support:support-v4:${supportVersion}"
+
+    compile 'com.android.support:support-v4:21.0.3'
+//    compile 'com.android.support:appcompat-v7:21.0.3'
 //    compile "com.android.support:support-v13:${supportVersion}"
 //    compile "com.android.support:appcompat-v7:${supportVersion}"
 
@@ -36,6 +39,6 @@ dependencies {
     compile 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
     //http://team.158ltd.com/2015/04/30/part-of-new-design-in-android-floating-action-button/
 
-//    compile 'com.pubnub:pubnub-android:3.7.4'
-    compile 'com.pubnub:pubnub-android-debug:3.7.+' //For the debug version
+    compile 'com.pubnub:pubnub-android:3.7.4'
+//    compile 'com.pubnub:pubnub-android-debug:3.7.+' //For the debug version
 }

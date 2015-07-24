@@ -3,5 +3,7 @@
     <color name="layers_dialog_dividers">#22222222</color>
        <color name="measure_line_color">#ff0fb129</color>
 
+    <color name="black_text">#ff333333</color>
+
     
 </resources>

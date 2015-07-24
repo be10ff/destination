@@ -6,10 +6,10 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,13 +34,14 @@ public class OpenFileDialog extends DialogFragment implements OnItemClickListene
 	private String m_root = "/";//Environment.getExternalStorageDirectory().getAbsolutePath();
 	private TextView m_PathTextView;
 	private ListView m_ListView;
-	
-	public OpenFileDialog(Context context) 
+
+	public OpenFileDialog()
 	{
-		m_context = context;
 	}
+	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInctanceState)
 	{
+		m_context = container.getContext();
 		View v = inflater.inflate(R.layout.open_filedialog_layout, null);
 		m_PathTextView = (TextView)v.findViewById(R.id.path);
 		m_ListView = (ListView)v.findViewById(R.id.filelist);	

@@ -60,4 +60,21 @@ public class GIScaleRange
 			
 		return true;
 	}
+
+
+	public double getMin() {
+		return m_min;
+	}
+
+	public void setMin(double m_min) {
+		this.m_min = m_min;
+	}
+
+	public double getMax() {
+		return m_max;
+	}
+
+	public void setMax(double m_max) {
+		this.m_max = m_max;
+	}
 }
