@@ -599,8 +599,6 @@ public class Geoinfo extends FragmentActivity implements IFolderItemListener// i
 		GIPropertiesGroup current_group = map.ps.m_Group;
 		GIEditLayersKeeper.Instance().ClearLayers();
 		loadGroup(current_group);
-		// touchControl.m_project_settings = map.ps;
-//		GIProjectProperties prop = map.ps;
 	}
 
 

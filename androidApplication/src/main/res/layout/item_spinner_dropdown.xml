@@ -8,7 +8,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:gravity="right|center"
-    android:padding="6dp"
+    android:padding="12dp"
     tools:text="Type"
     />
     <!--android:drawableRight="@drawable/arrow_drop"-->

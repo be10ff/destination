@@ -77,4 +77,12 @@ public class GIScaleRange
 	public void setMax(double m_max) {
 		this.m_max = m_max;
 	}
+
+//	public void setIntMin(int min){
+//		m_min = 1/((double)min);
+//	}
+//
+//	public void setIntMax(int max){
+//		m_max = 1/((double)max);
+//	}
 }

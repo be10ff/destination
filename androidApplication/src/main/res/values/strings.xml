@@ -120,14 +120,64 @@
     <string name="dd_mm_hint">DD° MM.MMMMMM\'</string>
     <string name="dd_hint">DD.DDDDDDDD°</string>
 
-    <string name="layer_name">Layer Name</string>
-    <string name="layer_type">Layer Type</string>
-    <string name="layer_location">Layer Location</string>
-    <string name="layer_zoom">Layer zoom</string>
-    <string name="layer_range">Layer Range </string>
+    <string name="layer_name">Name</string>
+    <string name="layer_type">Type</string>
+    <string name="layer_location">Location</string>
+    <string name="layer_zoom">Zoom</string>
+    <string name="layer_range">Range </string>
     <string name="from">from</string>
     <string name="to">to</string>
 
+    <string-array name="zoom_type">
+        <item>auto</item>
+        <item>smart</item>
+        <item>adaptive</item>
+    </string-array>
+    <string-array name="layer_type">
+        <item>SQL_YANDEX_LAYER</item>
+        <item>SQL_LAYER</item>
+        <!--<item>XML</item>-->
+        <!--<item>PLIST</item>-->
+        <!--<item>LAYER_GROUP</item>-->
+        <!--<item>RASTER_LAYER</item>-->
+        <!--<item>VECTOR_LAYER</item>-->
+        <!--<item>TILE_LAYER</item>-->
+        <!--<item>ON_LINE</item>-->
+        <!--<item>DBASE</item>-->
 
+    </string-array>
+    <string-array name="source_type">
+        <item>local</item>
+        <item>text</item>
+        <item>absolute</item>
+    </string-array>
+
+    <string-array name="zoom_levels">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+    </string-array>
 
 </resources>

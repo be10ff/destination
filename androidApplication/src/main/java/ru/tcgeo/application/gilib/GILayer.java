@@ -16,6 +16,9 @@ public abstract class GILayer
 
 	public enum GILayerType
 	{
+		// SQL_LAYER -> GITileInfoOSM
+		// SQL_YANDEX_LAYER -> GISQLYandexTile
+
 		LAYER_GROUP, RASTER_LAYER, VECTOR_LAYER, TILE_LAYER, ON_LINE, SQL_LAYER, DBASE, XML, SQL_YANDEX_LAYER, PLIST;
 	}
 

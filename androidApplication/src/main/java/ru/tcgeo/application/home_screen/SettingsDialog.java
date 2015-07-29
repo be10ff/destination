@@ -101,7 +101,7 @@ public class SettingsDialog extends DialogFragment implements IFolderItemListene
                 mProjectsList.requestLayout();
                 mProperties.requestLayout();
 
-                final LayersAdapterItem item = adapter.getItem(position);
+                final LayersAdapterItem item = adapter.getItem(position - mLayersList.getHeaderViewsCount());
 
                 FragmentTransaction ft = getChildFragmentManager().beginTransaction();
                 ft.replace(R.id.content, new SettingsFragment(item)).commit();

@@ -32,14 +32,21 @@
         <item name="android:textSize">@dimen/caption_size</item>
     </style>
 
+    <style name="SpinnerText" parent="BaseTextStyle">
+        <item name="android:textSize">@dimen/spinner_text_size</item>
+    </style>
+
     <style name="DefaultText" parent="BaseTextStyle">
         <item name="android:textSize">@dimen/text_size</item>
     </style>
 
     <style name="ProfileSpinner" parent="@android:style/Widget.Holo.Light.Spinner">
         <!--<item name="fontFamily">sans-serif</item>-->
-        <item name="android:textSize">@dimen/text_size</item>
+        <item name="android:textSize">@dimen/spinner_text_size</item>
         <item name="android:textColor">@color/black_text</item>
+        <item name="android:padding">6dp</item>
+        <item name="android:width">0dp</item>
+        <item name="android:layout_weight">1</item>
         <!--<item name="android:background">@drawable/oorraa_illuminated_edit_text_background</item>-->
         <item name="android:dropDownSelector">@drawable/arrow_drop</item>
     </style>
