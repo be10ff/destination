@@ -76,7 +76,7 @@ public class GILocator extends View implements GIControl
     protected void onDraw(Canvas canvas)
 	{
 		GILonLat center = GIProjection.ReprojectLonLat(m_map.Center(), m_map.Projection(), GIProjection.WGS84());
-		float[] orientation =  GISensors.Instance().getOrientation();
+		float[] orientation =  GISensors.Instance(getContext()).getOrientation();
 		double azimuth = orientation[0] + MapUtils.GetAzimuth(center, m_lon_lat_poi);
 
 		path.reset();

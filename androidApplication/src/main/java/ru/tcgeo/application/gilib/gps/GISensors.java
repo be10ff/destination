@@ -18,12 +18,13 @@ import ru.tcgeo.application.App;
 public class GISensors 
 {
 	private static GISensors instance;
-	public static GISensors Instance()
+	public static GISensors Instance(Context context)
 	{
 		if(instance == null)
 		{
-			instance = new GISensors();
+			instance = new GISensors(context);
 		}
+		instance.m_context = context;
 		return instance;
 	}
 //	public static GISensors Instance(Context context)
@@ -34,10 +35,10 @@ public class GISensors
 //		}
 //		return instance;
 //	}
-	private GISensors()
+	private GISensors(Context context)
 	{
-		m_context = App.getInstance();
-		App.getInstance();
+//		m_context = App.getInstance();
+		m_context = context;
 		m_sensor_manager = (SensorManager)m_context.getSystemService(Context.SENSOR_SERVICE);
 		m_sensor_gravity = m_sensor_manager.getDefaultSensor(Sensor.TYPE_GRAVITY);
 		m_sensor_accelerometer = m_sensor_manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);

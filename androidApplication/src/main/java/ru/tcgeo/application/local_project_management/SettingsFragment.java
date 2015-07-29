@@ -111,7 +111,7 @@ public class SettingsFragment extends Fragment {
 
 
         mItem.m_tuple.scale_range.setMin(1 / ((double)from));
-        mItem.m_tuple.scale_range.setMax((double)to);
+        mItem.m_tuple.scale_range.setMax(1/(double)to);
 
         ((Geoinfo)getActivity()).getMap().UpdateMap();
     }

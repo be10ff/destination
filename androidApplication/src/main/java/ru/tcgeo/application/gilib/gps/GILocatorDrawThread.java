@@ -1,5 +1,6 @@
 package ru.tcgeo.application.gilib.gps;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -38,9 +39,12 @@ public class GILocatorDrawThread extends Thread
 	Paint paint_fill;
 	//Paint paint_stroke;
 	Rect bounds;
+	Context mContext;
+
 	
-	public GILocatorDrawThread(SurfaceHolder surfaceHolder,GI_WktGeometry poi)
+	public GILocatorDrawThread(SurfaceHolder surfaceHolder,GI_WktGeometry poi, Context context)
 	{
+		mContext = context;
 		this.surfaceHolder = surfaceHolder;
 		arrow = BitmapFactory.decodeResource(App.getInstance().getResources(), R.drawable.locator_big);
 		m_POI = poi;
@@ -79,7 +83,7 @@ public class GILocatorDrawThread extends Thread
 				if(canvas == null) continue;
 				canvas.drawColor(0, PorterDuff.Mode.CLEAR);
 				GILonLat center = GIProjection.ReprojectLonLat(m_map.Center(), m_map.Projection(), GIProjection.WGS84());
-				float[] orientation =  GISensors.Instance().getOrientation();
+				float[] orientation =  GISensors.Instance(mContext).getOrientation();
 				double azimuth = - orientation[0] + MapUtils.GetAzimuth(center, m_lon_lat_poi);
 				canvas.rotate((float) azimuth , canvas.getWidth()/2,canvas.getHeight()/2);
 				canvas.drawBitmap(arrow, new Rect(0, 0, (int)arrow_width, (int)arrow_height), new Rect(0, 0, canvas.getWidth(), canvas.getHeight()), null); 

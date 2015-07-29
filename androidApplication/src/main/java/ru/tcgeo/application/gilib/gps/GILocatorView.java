@@ -42,7 +42,7 @@ public class GILocatorView extends SurfaceView implements SurfaceHolder.Callback
 	public void setTarget(GI_WktGeometry poi)
 	{
 		  m_POI = poi;
-	      drawThread = new GILocatorDrawThread(getHolder(), poi);
+	      drawThread = new GILocatorDrawThread(getHolder(), poi, getContext());
 	      drawThread.setRunning(true);
 	      drawThread.start();
 	}
