@@ -14,11 +14,15 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 import butterknife.OnClick;
+import ru.tcgeo.application.App;
 import ru.tcgeo.application.Geoinfo;
 import ru.tcgeo.application.R;
+import ru.tcgeo.application.gilib.GIGroupLayer;
 import ru.tcgeo.application.gilib.GILayer;
+import ru.tcgeo.application.gilib.GIMap;
 import ru.tcgeo.application.gilib.GISQLLayer;
 import ru.tcgeo.application.home_screen.LayersAdapterItem;
+import ru.tcgeo.application.utils.ProjectChangedEvent;
 
 /**
  * Created by a_belov on 22.07.15.
@@ -47,10 +51,13 @@ public class SettingsFragment extends Fragment {
     Spinner mZoomMax;
 
     LayersAdapterItem mItem;
+    GIMap mMap;
+
     public SettingsFragment(){}
 
-    public SettingsFragment(LayersAdapterItem item){
+    public SettingsFragment(GIMap map, LayersAdapterItem item){
         mItem = item;
+        mMap = map;
     }
 
     @Override
@@ -85,14 +92,14 @@ public class SettingsFragment extends Fragment {
         //zomming type
         mItem.m_tuple.layer.m_layer_properties.m_sqldb.m_zoom_type =  mZoomType.getSelectedItem().toString();
         String zoom_type = mZoomType.getSelectedItem().toString();
-        if(zoom_type.equalsIgnoreCase("adaptive"))
-        {
+        if(zoom_type.equalsIgnoreCase("adaptive")) {
             ((GISQLLayer)mItem.m_tuple.layer).m_zooming_type = GISQLLayer.GISQLiteZoomingType.ADAPTIVE;
         } else if(zoom_type.equalsIgnoreCase("smart")) {
             ((GISQLLayer)mItem.m_tuple.layer).m_zooming_type = GISQLLayer.GISQLiteZoomingType.SMART;
         } else {
             ((GISQLLayer)mItem.m_tuple.layer).m_zooming_type = GISQLLayer.GISQLiteZoomingType.AUTO;
         }
+        mItem.m_tuple.layer.m_layer_properties.m_sqldb.m_zoom_type = zoom_type;
         //zoom
         mItem.m_tuple.layer.m_layer_properties.m_sqldb.m_max_z =  Integer.valueOf(mZoomMax.getSelectedItem().toString());
         mItem.m_tuple.layer.m_layer_properties.m_sqldb.m_min_z =  Integer.valueOf(mZoomMin.getSelectedItem().toString());
@@ -197,5 +204,19 @@ public class SettingsFragment extends Fragment {
                 mZoomMin.setSelection(i);
             }
         }
+    }
+
+    @OnClick(R.id.move_down)
+    public void onDown(View v){
+        mMap.m_layers.moveDown(mItem.m_tuple);
+        mMap.ps.m_Group.moveDown(mItem.m_tuple.layer.m_layer_properties);
+        App.getInstance().getEventBus().post(new ProjectChangedEvent());
+
+    }
+    @OnClick(R.id.move_up)
+    public void onUp(View v){
+        mMap.m_layers.moveUp(mItem.m_tuple);
+        mMap.ps.m_Group.moveUp(mItem.m_tuple.layer.m_layer_properties);
+        App.getInstance().getEventBus().post(new ProjectChangedEvent());
     }
 }

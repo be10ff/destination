@@ -9,8 +9,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import ru.tcgeo.application.App;
 import ru.tcgeo.application.Geoinfo;
 import ru.tcgeo.application.R;
+import ru.tcgeo.application.utils.ProjectChangedEvent;
 
 /**
  * Created by a_belov on 06.07.15.
@@ -60,7 +62,8 @@ public class ProjectsAdapter extends ArrayAdapter<ProjectsAdapterItem> {
                             item.m_project_settings.m_path);
                     editor.apply();
                     editor.commit();
-                    mActivity.getProjectsDialog().cancel();
+//                    mActivity.getProjectsDialog().cancel();
+                    App.getInstance().getEventBus().post(new ProjectChangedEvent());
                 }
             }
         });

@@ -3,6 +3,7 @@ package ru.tcgeo.application;
 import java.io.File;
 
 import ru.tcgeo.application.gilib.gps.GICompassView;
+import ru.tcgeo.application.gilib.gps.GISensors;
 import ru.tcgeo.application.gilib.models.GIBounds;
 import ru.tcgeo.application.gilib.models.GIColor;
 import ru.tcgeo.application.gilib.GIControlFloating;
@@ -91,11 +92,14 @@ import android.widget.ToggleButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
+import com.squareup.otto.Bus;
 
 public class Geoinfo extends FragmentActivity implements IFolderItemListener// implements
 																	// OnTouchListener
 {
 	public static String SETTINGS_FRAGMENT_TAG="settings_fragment_tag";
+
+
 	GIMap map;
 	GITouchControl touchControl;
 	SharedPreferences sp;
@@ -572,7 +576,7 @@ public class Geoinfo extends FragmentActivity implements IFolderItemListener// i
 ////			}
 ////		});
 //
-//		add_layers((GIGroupLayer) map.m_layers, adapter);
+//		addLayers((GIGroupLayer) map.m_layers, adapter);
 //		layers_list.setAdapter(adapter);
 //		/**/
 //
@@ -999,7 +1003,6 @@ public class Geoinfo extends FragmentActivity implements IFolderItemListener// i
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		setContentView(R.layout.main);
-
 		touchControl = (GITouchControl) findViewById(R.id.touchcontrol);
 
 		createMap();
@@ -1267,6 +1270,7 @@ public class Geoinfo extends FragmentActivity implements IFolderItemListener// i
 	protected void onResume() {
 		super.onResume();
 		GIEditLayersKeeper.Instance().onResume();
+		GISensors.Instance(this).run(true);
 //		m_gps_button.onResume();
 		fbGPS.onResume();
 
@@ -1291,6 +1295,7 @@ public class Geoinfo extends FragmentActivity implements IFolderItemListener// i
 	protected void onPause() {
 		super.onPause();
 		GIEditLayersKeeper.Instance().onPause();
+		GISensors.Instance(this).run(false);
 //		m_gps_button.onPause();
 		fbGPS.onPause();
 		// GIEditLayersKeeper.Instance().m_position = null;

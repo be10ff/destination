@@ -65,6 +65,32 @@
                 </LinearLayout>
 
             </LinearLayout>
+            <!-- 1-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical">
+                    <TextView
+                        android:id="@+id/move_up"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/move_up"
+                        style="@style/SpinnerText"
+                        android:padding="12dp"
+                        android:gravity="right"/>
+
+                    <TextView
+                        android:id="@+id/move_down"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/move_down"
+                        style="@style/SpinnerText"
+                        android:padding="12dp"
+                        android:gravity="right"/>
+
+            </LinearLayout>
+            <!-- 2-->
             <ImageButton
                 android:id="@+id/button_apply"
                 android:layout_width="wrap_content"
@@ -193,10 +219,3 @@
         <!--</LinearLayout>-->
     </LinearLayout>
 </ScrollView>
-
-
-<!--<Layer name="Around50.sqlitedb" type="SQL_LAYER" enabled="false">-->
-<!--<Source location="text" name="Around50.sqlitedb" />-->
-<!--<sqlitedb zoom_type="auto" min="8" max="14" />-->
-<!--<Range from="200000" to="20000" />-->
-<!--</Layer>-->

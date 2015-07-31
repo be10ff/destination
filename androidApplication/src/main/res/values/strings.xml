@@ -128,6 +128,9 @@
     <string name="from">from</string>
     <string name="to">to</string>
 
+    <string name="move_up">Up</string>
+    <string name="move_down">Down</string>
+
     <string-array name="zoom_type">
         <item>auto</item>
         <item>smart</item>

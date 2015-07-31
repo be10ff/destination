@@ -18,8 +18,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.squareup.otto.Subscribe;
+
 import java.io.File;
 
+import ru.tcgeo.application.App;
 import ru.tcgeo.application.Geoinfo;
 import ru.tcgeo.application.IFolderItemListener;
 import ru.tcgeo.application.R;
@@ -34,6 +37,7 @@ import ru.tcgeo.application.gilib.parser.GIRange;
 import ru.tcgeo.application.gilib.parser.GISQLDB;
 import ru.tcgeo.application.gilib.parser.GISource;
 import ru.tcgeo.application.local_project_management.SettingsFragment;
+import ru.tcgeo.application.utils.ProjectChangedEvent;
 import ru.tcgeo.application.views.OpenFileDialog;
 
 /**
@@ -47,8 +51,11 @@ public class SettingsDialog extends DialogFragment implements IFolderItemListene
     FrameLayout mProperties;
     LinearLayout.LayoutParams projectsParams;
     LinearLayout.LayoutParams propertiesParams;
+    ProjectsAdapter projects_adapter;
+    LayersAdapter layersAdapter;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        App.getInstance().getEventBus().register(this);
         getDialog().setCanceledOnTouchOutside(true);
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         mMap = ((Geoinfo)getActivity()).getMap();
@@ -60,7 +67,7 @@ public class SettingsDialog extends DialogFragment implements IFolderItemListene
         propertiesParams = (LinearLayout.LayoutParams) mProperties.getLayoutParams();
         projectsParams = (LinearLayout.LayoutParams) mProjectsList.getLayoutParams();
         propertiesParams.weight = 0;
-        ProjectsAdapter projects_adapter = new ProjectsAdapter((Geoinfo)getActivity(),
+        projects_adapter = new ProjectsAdapter((Geoinfo)getActivity(),
                 R.layout.project_selector_list_item,
                 R.id.project_list_item_path);
         AddProjects(projects_adapter);
@@ -75,7 +82,7 @@ public class SettingsDialog extends DialogFragment implements IFolderItemListene
             }
         });
 
-        final LayersAdapter adapter = new LayersAdapter((Geoinfo)getActivity(),
+        layersAdapter = new LayersAdapter((Geoinfo)getActivity(),
                 R.layout.layers_list_item, R.id.layers_list_item_text);
 
         View header = inflater.inflate(
@@ -91,8 +98,8 @@ public class SettingsDialog extends DialogFragment implements IFolderItemListene
         });
         mLayersList.addHeaderView(header);
 
-        add_layers((GIGroupLayer) mMap.m_layers, adapter);
-        mLayersList.setAdapter(adapter);
+        addLayers((GIGroupLayer) mMap.m_layers, layersAdapter);
+        mLayersList.setAdapter(layersAdapter);
         mLayersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -101,10 +108,10 @@ public class SettingsDialog extends DialogFragment implements IFolderItemListene
                 mProjectsList.requestLayout();
                 mProperties.requestLayout();
 
-                final LayersAdapterItem item = adapter.getItem(position - mLayersList.getHeaderViewsCount());
+                final LayersAdapterItem item = layersAdapter.getItem(position - mLayersList.getHeaderViewsCount());
 
                 FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-                ft.replace(R.id.content, new SettingsFragment(item)).commit();
+                ft.replace(R.id.content, new SettingsFragment(mMap, item)).commit();
             }
         });
         return v;
@@ -140,11 +147,11 @@ public class SettingsDialog extends DialogFragment implements IFolderItemListene
         getDialog().getWindow().setLayout(dialogWidth, dialogHeight);
     }
 
-    public void add_layers(GIGroupLayer layer,
-                           ArrayAdapter<LayersAdapterItem> adapter) {
+    public void addLayers(GIGroupLayer layer,
+                          ArrayAdapter<LayersAdapterItem> adapter) {
         for (GITuple tuple : layer.m_list) {
             if (GILayer.GILayerType.LAYER_GROUP == tuple.layer.type_)
-                add_layers((GIGroupLayer) tuple.layer, adapter);
+                addLayers((GIGroupLayer) tuple.layer, adapter);
             else {
                 adapter.add(new LayersAdapterItem(tuple));
             }
@@ -175,7 +182,10 @@ public class SettingsDialog extends DialogFragment implements IFolderItemListene
 
     @Override
     public void OnFileClicked(File file) {
+
+//        App.getInstance().getEventBus().post(new ProjectChangedEvent());
         addLayer(file);
+        refresh(new ProjectChangedEvent());
     }
 
     public void addLayer(File file) {
@@ -219,6 +229,18 @@ public class SettingsDialog extends DialogFragment implements IFolderItemListene
             mMap.InsertLayerAt(layer, 0);
         }
         //else if(extention.equalsIgnoreCase("xml"))
+        mMap.UpdateMap();
+    }
+    @Subscribe  public void refresh(ProjectChangedEvent e){
+        projects_adapter.clear();
+//         projects_adapter = new ProjectsAdapter((Geoinfo)getActivity(),
+//                R.layout.project_selector_list_item,
+//                R.id.project_list_item_path);
+        AddProjects(projects_adapter);
+        layersAdapter.clear();
+//        adapter = new LayersAdapter((Geoinfo)getActivity(),
+//                R.layout.layers_list_item, R.id.layers_list_item_text);
+        addLayers((GIGroupLayer) mMap.m_layers, layersAdapter);
         mMap.UpdateMap();
     }
 }

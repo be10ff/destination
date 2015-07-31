@@ -171,46 +171,44 @@ public class GISensors
 	
 	private void getActualDeviceOrientation()
 	{
+		try {
+			if (SensorManager.getRotationMatrix(inR, new float[9], valuesAccelerometer, valuesMagnet)) {
+				int x_axis = SensorManager.AXIS_X;
+				int y_axis = SensorManager.AXIS_Y;
+				m_rotation = ((WindowManager) m_context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getOrientation();
+				switch (m_rotation) {
+					case (Surface.ROTATION_0):
+						break;
+					case (Surface.ROTATION_90): {
+						x_axis = SensorManager.AXIS_Y;
+						y_axis = SensorManager.AXIS_MINUS_X;
+						break;
+					}
+					case (Surface.ROTATION_180): {
+						x_axis = SensorManager.AXIS_X;
+						y_axis = SensorManager.AXIS_MINUS_Y;
+						break;
+					}
+					case (Surface.ROTATION_270): {
+						x_axis = SensorManager.AXIS_MINUS_Y;
+						y_axis = SensorManager.AXIS_X;
+						break;
+					}
+					default:
+						break;
+				}
 
-		if(SensorManager.getRotationMatrix(inR, new float[9], valuesAccelerometer, valuesMagnet))
-		{
-			int x_axis = SensorManager.AXIS_X;
-			int y_axis = SensorManager.AXIS_Y;
-			m_rotation = ((WindowManager)m_context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getOrientation();
-			switch(m_rotation)
-			{
-				case (Surface.ROTATION_0):
-					break;
-				case (Surface.ROTATION_90):
-				{
-					x_axis = SensorManager.AXIS_Y;
-					y_axis = SensorManager.AXIS_MINUS_X;
-					break;
-				}
-				case (Surface.ROTATION_180):
-				{
-					x_axis = SensorManager.AXIS_X;
-					y_axis = SensorManager.AXIS_MINUS_Y;
-					break;
-				}
-				case (Surface.ROTATION_270):
-				{
-					x_axis = SensorManager.AXIS_MINUS_Y;
-					y_axis = SensorManager.AXIS_X;
-					break;
-				}
-				default: 
-					break;
+				SensorManager.remapCoordinateSystem(inR, x_axis, y_axis, outR);
+				SensorManager.getOrientation(outR, valuesResult);
+				valuesResult[0] = (float) Math.toDegrees(valuesResult[0]);
+				valuesResult[1] = (float) Math.toDegrees(valuesResult[1]);
+				valuesResult[2] = (float) Math.toDegrees(valuesResult[2]);
+				m_azimuth.addValue(valuesResult[0]);
+				m_pitch.addValue(valuesResult[1]);
+				m_roll.addValue(valuesResult[2]);
 			}
-			
-			SensorManager.remapCoordinateSystem(inR, x_axis, y_axis, outR);
-			SensorManager.getOrientation(outR, valuesResult);
-			valuesResult[0] = (float)Math.toDegrees(valuesResult[0]);
-			valuesResult[1] = (float)Math.toDegrees(valuesResult[1]);
-			valuesResult[2] = (float)Math.toDegrees(valuesResult[2]);
-			m_azimuth.addValue(valuesResult[0]);
-			m_pitch.addValue(valuesResult[1]);
-			m_roll.addValue(valuesResult[2]);
+		} catch (Exception e){
+			String res = e.toString();
 		}
 		return;
 	}

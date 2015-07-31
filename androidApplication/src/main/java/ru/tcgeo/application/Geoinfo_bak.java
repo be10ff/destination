@@ -201,11 +201,11 @@
 ////	}
 //
 //	// Temporary substitution for a GILayer iterator
-//	public void add_layers(GIGroupLayer layer,
+//	public void addLayers(GIGroupLayer layer,
 //			ArrayAdapter<LayersAdapterItem> adapter) {
 //		for (GITuple tuple : layer.m_list) {
 //			if (GILayerType.LAYER_GROUP == tuple.layer.type_)
-//				add_layers((GIGroupLayer) tuple.layer, adapter);
+//				addLayers((GIGroupLayer) tuple.layer, adapter);
 //			else {
 //				adapter.add(new LayersAdapterItem(tuple));
 //			}
@@ -291,7 +291,7 @@
 //			}
 //		});
 //		/**/
-//		add_layers((GIGroupLayer) map.m_layers, adapter);
+//		addLayers((GIGroupLayer) map.m_layers, adapter);
 //		layers_list.setAdapter(adapter);
 //		layers_dialog.show();
 //	}

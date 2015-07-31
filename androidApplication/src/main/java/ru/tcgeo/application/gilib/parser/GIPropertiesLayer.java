@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.xmlpull.v1.XmlSerializer;
 
+import ru.tcgeo.application.gilib.GITuple;
 import ru.tcgeo.application.gilib.models.GIColor;
 import ru.tcgeo.application.gilib.models.GIEncoding;
 import ru.tcgeo.application.gilib.GILayer;
@@ -114,5 +115,23 @@ public class GIPropertiesLayer implements ILayersRoot
 
 		serializer.endTag("", "Layer");
 		return serializer;
+	}
+
+	public void moveUp(GIPropertiesLayer layer){
+		int index = m_Entries.indexOf(layer);
+		if(index != -1 && index > 0 ){
+			GIPropertiesLayer tmp = m_Entries.get(index - 1);
+			m_Entries.set(index - 1 ,m_Entries.get(index));
+			m_Entries.set(index, tmp);
+		}
+	}
+
+	public void moveDown(GIPropertiesLayer layer){
+		int index = m_Entries.indexOf(layer);
+		if(index != -1 && index < m_Entries.size() - 1 ){
+			GIPropertiesLayer tmp = m_Entries.get(index + 1);
+			m_Entries.set(index + 1 ,m_Entries.get(index));
+			m_Entries.set(index, tmp);
+		}
 	}
 }

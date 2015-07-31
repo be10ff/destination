@@ -26,7 +26,6 @@ import ru.tcgeo.application.R;
 
 public class OpenFileDialog extends DialogFragment implements OnItemClickListener{
 
-	Context m_context;
 	IFolderItemListener folderListener;
 	private List<String> m_item = null;
 	private List<String> m_path = null;
@@ -41,12 +40,12 @@ public class OpenFileDialog extends DialogFragment implements OnItemClickListene
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInctanceState)
 	{
-		m_context = container.getContext();
+//		m_context = container.getContext();
 		View v = inflater.inflate(R.layout.open_filedialog_layout, null);
 		m_PathTextView = (TextView)v.findViewById(R.id.path);
 		m_ListView = (ListView)v.findViewById(R.id.filelist);	
 		m_ext = new ArrayList<String>();
-		String[] exts = m_context.getResources().getStringArray(R.array.extentions);
+		String[] exts = getActivity().getResources().getStringArray(R.array.extentions);
 		for(String ext : exts)
 		{
 			m_ext.add(ext);
@@ -169,7 +168,7 @@ public class OpenFileDialog extends DialogFragment implements OnItemClickListene
     }
     public void setItemList(List<String> item)
     {
-        ArrayAdapter<String> fileList = new ArrayAdapter<String>(m_context, R.layout.file_list_row_layout, item);
+        ArrayAdapter<String> fileList = new ArrayAdapter<String>(getActivity(), R.layout.file_list_row_layout, item);
         m_ListView.setAdapter(fileList);
         m_ListView.setOnItemClickListener(this);
     }
