@@ -46,7 +46,7 @@ public class GIScaleControl extends RelativeLayout implements GIControl
     public String getCoordString(double coord)
     {
     	int degrees = (int)Math.floor(coord);//º   ° ctrl+shift+u +code +space
-    	int mins = (int)Math.floor((coord - degrees)*60);
+    	int mins = (int)Math.floor((coord - degrees)*60); //
     	double secs = ((coord - degrees)*60-mins)*60;
     	return String.format("%d° %d\' %.4f\"", degrees, mins, secs);
     }
