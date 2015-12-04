@@ -42,4 +42,5 @@ dependencies {
 
     compile 'com.pubnub:pubnub-android:3.7.4'
 //    compile 'com.pubnub:pubnub-android-debug:3.7.+' //For the debug version
+    compile 'com.google.code.gson:gson:2.5'
 }

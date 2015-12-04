@@ -89,6 +89,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.google.gson.Gson;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
@@ -1307,6 +1308,10 @@ public class Geoinfo extends FragmentActivity implements IFolderItemListener// i
 			}
 		}
 		map.ps.SavePro(SaveAsPath);
+		Gson mGson = new Gson();
+		String json = mGson.toJson(map.ps);
+		int length = json.length();
+
 	};
 
 	//
